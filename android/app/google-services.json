@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "3117428222",
+    "project_id": "dtmtest-49703",
+    "storage_bucket": "dtmtest-49703.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3117428222:android:dd117ae33f435bfe60e4af",
+        "android_client_info": {
+          "package_name": "com.example.dtmtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3117428222-rpsgi9fnup877uvk5aefr8ia4j116qmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH44ywqd8A6RCEg5yF-S-ZmqkE3UO8YtA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3117428222-rpsgi9fnup877uvk5aefr8ia4j116qmh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3117428222-ev164tfunkfe9rna8ovquh1n67pisbgt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simpl.dtmtest"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3117428222:android:35a5d0c4eb9e3dcd60e4af",
+        "android_client_info": {
+          "package_name": "com.simpl.dtmtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3117428222-pg9dn53l31g5mm45p7sg7n75t3e700b7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simpl.dtmtest",
+            "certificate_hash": "3683069be26010696edef723bbb8ecd157c13d58"
+          }
+        },
+        {
+          "client_id": "3117428222-rpsgi9fnup877uvk5aefr8ia4j116qmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH44ywqd8A6RCEg5yF-S-ZmqkE3UO8YtA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3117428222-rpsgi9fnup877uvk5aefr8ia4j116qmh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3117428222-ev164tfunkfe9rna8ovquh1n67pisbgt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.simpl.dtmtest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

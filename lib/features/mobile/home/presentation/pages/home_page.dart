@@ -1,0 +1,181 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dtmtest/common/components/custom_appbar.dart';
+import 'package:dtmtest/common/costomaizable.dart';
+import 'package:dtmtest/common/extentions.dart';
+import 'package:dtmtest/features/mobile/home/presentation/widgets/home_carousel_widget.dart';
+import 'package:dtmtest/features/mobile/home/presentation/widgets/statistics_widget.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../../common/res/res.dart';
+
+@RoutePage()
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  CarouselController carouselController = CarouselController();
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: AppGradient.backgroundGradient,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: ColorName.white,
+                      width: 1,
+                    ),
+                    shape: BoxShape.circle,
+                    color: ColorName.borderColor,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: Assets.images.statisticsProfileImage.image(
+                      fit: BoxFit.fill,
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+                ),
+                13.w,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Xayrli kun !",
+                      style: AppTextStyles.body12w7.copyWith(
+                        color: ColorName.white,
+                      ),
+                    ),
+                    Text(
+                      "Sharlotta Shea",
+                      style: AppTextStyles.body20w7.copyWith(
+                        color: ColorName.white,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                // ignore: deprecated_member_use_from_same_package
+                Assets.icons.notification.svg(
+                  // ignore: deprecated_member_use_from_same_package
+                  color: ColorName.grey[500],
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              CarouselWidgetHome(carouselController: carouselController),
+              20.h,
+              SizedBox(
+                width: double.infinity,
+                height: 110,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: InkWell(
+                        onTap: () {},
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          height: 110,
+                          width: 150,
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: ColorName.white,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 6,
+                                color: ColorName.black.withOpacity(.25),
+                                offset: const Offset(6, 6),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 45,
+                                height: 45,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: ColorName.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4,
+                                      offset: const Offset(3, 4),
+                                      color: ColorName.black.withOpacity(.25),
+                                      blurStyle: BlurStyle.normal,
+                                    ),
+                                  ],
+                                ),
+                                child: Assets.images.bookImage.image(),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "New",
+                                    style: AppTextStyles.body12w7.copyWith(
+                                      color: ColorName.red,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      "Matematika",
+                                      style: AppTextStyles.body20w7.copyWith(
+                                        color: ColorName.customColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              20.h,
+              const StatisticsWidget(),
+              20.h,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,1 @@
+enum EditAdd { add, edit }
