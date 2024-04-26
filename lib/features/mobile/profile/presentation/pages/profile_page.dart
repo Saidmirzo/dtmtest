@@ -1,17 +1,11 @@
-import 'package:dtmtest/common/components/custom_appbar.dart';
 import 'package:dtmtest/common/costomaizable.dart';
-import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/extentions.dart';
-import 'package:dtmtest/common/material_button.dart';
-import 'package:dtmtest/common/res/app_router.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../widgets/about_user_widget.dart';
 
 @RoutePage()
@@ -125,6 +119,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     UserPlanWidget(
                       isEditInfo: isEditInfo,
                       list: _dropDownValues,
+                    ),
+                    BlocConsumer<AuthBloc, AuthState>(
+                      listenWhen: (previous, current) =>
+                          previous.logOutStatus != current.logOutStatus,
+                      listener: (context, state) {
+                        if (state.logOutStatus.isComplated) {
+                          context.replaceRoute(const MobileLoginRoute());
+                        }
+                      },
+                      builder: (context, state) {
+                        return IconButton(
+                          onPressed: () {
+                            context.read<AuthBloc>().add(LogOutEvent());
+                          },
+                          icon: const Icon(Icons.logout),
+                        );
+                      },
                     ),
                   ],
                 ),
