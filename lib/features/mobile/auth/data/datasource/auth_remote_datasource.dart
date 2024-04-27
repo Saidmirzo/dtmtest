@@ -103,7 +103,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final User? user = result.user;
     final UserModel userModel = UserModel(
       email: result.user?.email,
-      fullName: result.user?.displayName,
+      fullName: userRegisterModel.fullName,
       uid: result.user?.uid,
       phoneNumber: result.user?.phoneNumber,
       userImage: result.user?.photoURL,
