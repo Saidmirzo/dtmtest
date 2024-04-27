@@ -1,17 +1,13 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/res.dart';
-import 'package:dtmtest/features/mobile/category/data/local_data.dart';
 
-// ignore: must_be_immutable
 class CategoryCustomContainer extends StatelessWidget {
-  int index;
-  Widget child;
-  String scienceName;
-  CategoryCustomContainer({
+  final int index;
+  final Widget child;
+  final String scienceName;
+  const CategoryCustomContainer({
     super.key,
     required this.index,
     required this.child,

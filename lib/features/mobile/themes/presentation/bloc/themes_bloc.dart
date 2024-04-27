@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
 import 'package:dtmtest/features/mobile/themes/domain/repository/themes_repository.dart';
 import 'package:equatable/equatable.dart';
+// ignore: depend_on_referenced_packages
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'themes_event.dart';

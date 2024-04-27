@@ -82,9 +82,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
     if (user != null) {
       authLocaleDataSource.saveLocaleUserDtat(userModel);
-      final userCount = await userCollection
-          .where('email', isEqualTo: result.user?.email)
-          .get();
+      // final userCount = await userCollection
+      //     .where('email', isEqualTo: result.user?.email)
+      //     .get();
 
       // final model = userCollection.doc(result.user?.uid);
       // if (userCount.docs.isEmpty) {

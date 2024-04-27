@@ -7,18 +7,16 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/widgets/themes_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-// ignore: must_be_immutable
 class ThemesPage extends StatefulWidget {
-  String scienceName;
-  int index;
-  ThemesPage({
+  final String scienceName;
+  final int index;
+  const ThemesPage({
     super.key,
     required this.scienceName,
     required this.index,

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserImageInfoWidget extends StatelessWidget {
-  bool isEditInfo;
-  UserImageInfoWidget({
+  final bool isEditInfo;
+  const UserImageInfoWidget({
     super.key,
     required this.isEditInfo,
   });

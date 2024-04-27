@@ -36,6 +36,7 @@ class _TestItemWidgetState extends State<TestItemWidget>
   int activeIndex = -1;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: [
         Padding(

@@ -6,7 +6,6 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/widgets/help_about_us_widget.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/widgets/user_image_info.dart';
-import 'package:dtmtest/features/mobile/profile/presentation/widgets/user_plan_widget.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
