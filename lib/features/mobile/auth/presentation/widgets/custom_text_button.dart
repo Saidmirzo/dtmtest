@@ -10,12 +10,14 @@ class CustomTextButton extends StatelessWidget {
     required this.onTap,
     this.color,
     this.borderColor,
+    this.borderRadius,
   });
   final Widget? preficWidget;
   final Widget? suffixWidget;
   final Function() onTap;
   final Color? color;
   final Color? borderColor;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CustomTextButton extends StatelessWidget {
         border: BorderSide(
           color: borderColor ?? ColorName.white.withOpacity(.35),
         ),
-        borderRadius: 50,
+        borderRadius:borderRadius?? 50,
       ),
       onPressed: onTap,
       child: Row(

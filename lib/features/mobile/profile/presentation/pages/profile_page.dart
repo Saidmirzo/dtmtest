@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           previous.logOutStatus != current.logOutStatus,
                       listener: (context, state) {
                         if (state.logOutStatus.isComplated) {
-                          context.replaceRoute(const MobileLoginRoute());
+                          context.replaceRoute(const SignInRoute());
                         }
                       },
                       builder: (context, state) {

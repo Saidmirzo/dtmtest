@@ -9,6 +9,8 @@ import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.d
 import 'package:dtmtest/features/admin_panel/web_quizes/presentation/web_quizes.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_users.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/mobile_login_page.dart';
+import 'package:dtmtest/features/mobile/auth/presentation/pages/sifn_in_page.dart';
+import 'package:dtmtest/features/mobile/auth/presentation/pages/sign_up_page.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/splash_page.dart';
 import 'package:dtmtest/features/mobile/category/presentation/pages/category_page.dart';
 import 'package:dtmtest/features/mobile/chat/presentation/pages/chat.dart';
@@ -28,6 +30,8 @@ class AppRouter extends _$AppRouter {
   static const String webMainRoute = '/WebMainRoute';
   static const String mainRoute = '/WebMainRoute';
   static const String mobileLoginRoute = '/MobileLoginRoute';
+  static const String signInRoute = '/signInRoute';
+  static const String signUpRoute = '/signUpRoute';
   static const String splashRoute = '/';
   static const String themesPage = '/themesPage';
   static const String plansPage = '/plansPage';
@@ -104,6 +108,14 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
       page: SplashRoute.page,
       path: splashRoute,
+    ),
+     AutoRoute(
+      page: SignInRoute.page,
+      path: signInRoute,
+    ),
+     AutoRoute(
+      page: SignUpRoute.page,
+      path: signUpRoute,
     ),
   ];
 }

@@ -7,14 +7,18 @@ sealed class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class LoginWithGoogleEvent extends AuthEvent {}
 
-class LoginWithGoogleEvent extends AuthEvent{
-  
+class GetLocaleUserEvent extends AuthEvent {}
+
+class LogOutEvent extends AuthEvent {}
+
+class RegisterUserEvent extends AuthEvent {
+  final UserRegisterModel userRegisterModel;
+  const RegisterUserEvent({required this.userRegisterModel});
 }
 
-class GetLocaleUserEvent extends AuthEvent{
-  
-}
-class LogOutEvent extends AuthEvent{
-  
+class LoginWithEmailEvent extends AuthEvent {
+  final UserRegisterModel userRegisterModel;
+  const LoginWithEmailEvent({required this.userRegisterModel});
 }
