@@ -14,6 +14,7 @@ import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.da
 import 'package:dtmtest/features/mobile/category/data/repositories/category_repository_impl.dart';
 import 'package:dtmtest/features/mobile/category/domain/repositories/category_repository.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
+import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/data/repository/themes_repository_impl.dart';
 import 'package:dtmtest/features/mobile/themes/domain/repository/themes_repository.dart';
@@ -40,6 +41,7 @@ Future<void> init() async {
   di.registerFactory(() => CategoryBloc(categoryRepository: di()));
   di.registerFactory(() => WebCategoriesBloc(webRepository: di()));
   di.registerFactory(() => ThemesBloc(themesRepository: di()));
+  di.registerFactory(() => PlansBloc(webRepository: di()));
   di.registerFactory(() => HistoryBloc(webRepository: di()));
 
   //UseCases
