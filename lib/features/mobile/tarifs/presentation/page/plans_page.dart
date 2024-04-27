@@ -1,11 +1,16 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
+import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/tarifs/data/plans_local_data.dart';
+import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/widget/plan_switch_adapter.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/widget/plans_custom_container.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dtmtest/common/extentions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class PlansPage extends StatefulWidget {
@@ -18,12 +23,19 @@ class PlansPage extends StatefulWidget {
 class _PlansPageState extends State<PlansPage> {
   bool switchAdapter = false;
   final plansLocalData = PlansLocalData();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<PlansBloc>().add(GetAllPlansEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Premium",
+          "Plans",
         ),
         leading: IconButton(
           alignment: Alignment.center,
@@ -38,65 +50,66 @@ class _PlansPageState extends State<PlansPage> {
           iconSize: 30,
         ),
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            20.h,
-            Text(
-              "Our Plans",
-              style: AppTextStyles.body40w5.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+      body: BlocConsumer<PlansBloc, PlansState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state.getAllPlanStatus == BlocStatus.inProgress) {
+            return Center(
+              child: UI.spinner(),
+            );
+          }
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                20.h,
+                Text(
+                  "Our Plans",
+                  style: AppTextStyles.body40w5.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                20.h,
+                // SwitchApdapterWidget(
+                //   switchAdapter: switchAdapter,
+                //   function: () {
+                //     setState(() {
+                //       switchAdapter = !switchAdapter;
+                //     });
+                //   },
+                // ),
+                // 25.h,
+                SizedBox(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero.copyWith(bottom: 30),
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        height: 25,
+                      );
+                    },
+                    itemCount: state.listCategories?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return PlansContainer(
+                        plansPrice: state.listCategories?[index].price ?? '0',
+                        plansType: state.listCategories?[index].name ?? '',
+                        assets: Assets.images.proPlanImage.image(
+                          width: 200,
+                          height: 125,
+                        ),
+                        period: state.listCategories?[index].days ?? 0,
+                        dataList: [
+                          state.listCategories?[index].desciption ?? "",
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-            20.h,
-            SwitchApdapterWidget(
-              switchAdapter: switchAdapter,
-              function: () {
-                setState(() {
-                  switchAdapter = !switchAdapter;
-                });
-              },
-            ),
-            25.h,
-            PlansContainer(
-              plansPrice: plansLocalData.plansPrice[0],
-              plansType: plansLocalData.plansType[0],
-              assets: Assets.images.proPlanImage.image(
-                width: 200,
-                height: 125,
-              ),
-              dataList: plansLocalData.proList,
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            PlansContainer(
-              plansPrice: plansLocalData.plansPrice[1],
-              plansType: plansLocalData.plansType[1],
-              assets: Assets.images.premiumPlansImage.image(
-                width: 200,
-                height: 125,
-              ),
-              dataList: plansLocalData.premuimList,
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            PlansContainer(
-              plansPrice: plansLocalData.plansPrice[2],
-              plansType: plansLocalData.plansType[2],
-              assets: Assets.images.businessPlanImage.image(
-                width: 200,
-                height: 125,
-              ),
-              dataList: plansLocalData.businessList,
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

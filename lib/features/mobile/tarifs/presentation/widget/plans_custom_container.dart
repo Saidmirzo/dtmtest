@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
-
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
@@ -8,13 +7,16 @@ import 'package:dtmtest/common/res/res.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class PlansContainer extends StatelessWidget {
   List<String> dataList;
   Widget assets;
   String plansType;
   String plansPrice;
+  int period;
   PlansContainer({
     super.key,
+    required this.period,
     required this.dataList,
     required this.assets,
     required this.plansType,
@@ -55,7 +57,7 @@ class PlansContainer extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    "/Month",
+                    "/$period",
                     style: AppTextStyles.body16w6.copyWith(
                       color: ColorName.greyTextColor,
                     ),
@@ -74,7 +76,7 @@ class PlansContainer extends StatelessWidget {
             SizedBox(
               child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
+                itemCount: 1,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return Row(
@@ -112,7 +114,7 @@ class PlansContainer extends StatelessWidget {
                   color: ColorName.white,
                 ),
               ),
-              text: "Select plan",
+              text: "Change plan",
               radius: 30,
               height: 52,
               elevation: 2,

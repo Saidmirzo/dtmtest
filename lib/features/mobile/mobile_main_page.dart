@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
               ),
               BottomNavigationBarItem(
                 label: tr(LocaleKeys.inbox),
-                icon: Assets.icons.inbox.svg(
+                icon: Assets.icons.inbox.svg(  
                   // ignore: deprecated_member_use_from_same_package
                   color: tabsRouter.activeIndex == 1
                       ? ColorName.blue[500]

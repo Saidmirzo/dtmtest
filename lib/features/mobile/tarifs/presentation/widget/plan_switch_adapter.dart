@@ -1,4 +1,3 @@
-// ignore: must_be_immutable
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/res.dart';
