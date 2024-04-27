@@ -1,6 +1,8 @@
-import 'package:dtmtest/common/res/app_router.dart';
-import 'package:dtmtest/common/res/res.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:dtmtest/common/res/app_router.dart';
+import 'package:dtmtest/common/res/assets.gen.dart';
+import 'package:dtmtest/common/res/colors.gen.dart';
+import 'package:dtmtest/common/res/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +22,8 @@ class _MainPageState extends State<MainPage> {
       body: AutoTabsScaffold(
         routes: const [
           HomeRoute(),
-          ChatRoute(),
           CategoryRoute(),
+          HistoryRoute(),
           ProfileRoute(),
         ],
         bottomNavigationBuilder: (_, tabsRouter) {
@@ -43,35 +45,34 @@ class _MainPageState extends State<MainPage> {
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
-            selectedItemColor: ColorName.blue[500],
+            selectedItemColor: ColorName.customColor,
             unselectedItemColor: ColorName.black,
             showUnselectedLabels: true,
             items: [
               BottomNavigationBarItem(
                 label: tr(LocaleKeys.home),
-                icon: Assets.icons.icon.svg(
+                icon: Assets.icons.home.svg(
                   // ignore: deprecated_member_use_from_same_package
                   color: tabsRouter.activeIndex == 0
-                      ? ColorName.blue[500]
-                      : ColorName.black,
+                      ? ColorName.customColor
+                      : null,
                 ),
               ),
               BottomNavigationBarItem(
                 label: tr(LocaleKeys.inbox),
-                icon: Assets.icons.inbox.svg(
-                  // ignore: deprecated_member_use_from_same_package
+                icon: Assets.icons.category.svg(
                   color: tabsRouter.activeIndex == 1
-                      ? ColorName.blue[500]
-                      : ColorName.black,
+                      ? ColorName.customColor
+                      : null,
                 ),
               ),
               BottomNavigationBarItem(
                 label: tr(LocaleKeys.menu),
-                icon: Assets.icons.menu.svg(
+                icon: Assets.icons.history.svg(
                   // ignore: deprecated_member_use_from_same_package
                   color: tabsRouter.activeIndex == 2
-                      ? ColorName.blue[500]
-                      : ColorName.black,
+                      ? ColorName.customColor
+                      : null,
                 ),
               ),
               BottomNavigationBarItem(
@@ -79,8 +80,8 @@ class _MainPageState extends State<MainPage> {
                 icon: Assets.icons.profile.svg(
                   // ignore: deprecated_member_use_from_same_package
                   color: tabsRouter.activeIndex == 3
-                      ? ColorName.blue[500]
-                      : ColorName.black,
+                      ? ColorName.customColor
+                      : null,
                 ),
               ),
             ],

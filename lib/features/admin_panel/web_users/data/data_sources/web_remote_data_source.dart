@@ -7,7 +7,9 @@ import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_m
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
+import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
+import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 
 abstract class WebRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
@@ -24,14 +26,18 @@ abstract class WebRemoteDataSource {
   Future<String> deletePlan(PlanModel? model);
   Future<List<PlanModel>> getPlan();
   Future<List<AdminModel>> getAdmins();
+  Future<List<HistoryModel>> getAllHistory();
 }
 
 class WebRemoteDataSourceImpl implements WebRemoteDataSource {
+  WebRemoteDataSourceImpl({required this.authLocaleDataSource});
+
+  final AuthLocaleDataSource authLocaleDataSource;
+
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
   final CollectionReference categoryCollection =
       FirebaseFirestore.instance.collection('category');
-
   final CollectionReference advertisingCollection =
       FirebaseFirestore.instance.collection('advertising');
   final CollectionReference planCollection =
@@ -185,5 +191,19 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
       return AdminModel.fromJson(data);
     }).toList();
     return admins;
+  }
+
+  @override
+  Future<List<HistoryModel>> getAllHistory() async {
+    final UserModel? userModel = await authLocaleDataSource.getLocaleUserDtat();
+    List<HistoryModel> listHistory;
+    final String id = userModel?.uid ?? "";
+    final CollectionReference historyCollection =
+        userCollection.doc(id).collection('history');
+    final result = await historyCollection.get();
+    listHistory = result.docs
+        .map((e) => HistoryModel.fromJson(jsonDecode(jsonEncode(e))))
+        .toList();
+    return listHistory;
   }
 }
