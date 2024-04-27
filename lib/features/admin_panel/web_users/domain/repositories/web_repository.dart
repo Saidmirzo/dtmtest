@@ -8,6 +8,7 @@ import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.d
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
+import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 
 abstract class WebRepository {
   Future<Either<Failure, List<UserModel>>> getAllUsers();
@@ -27,4 +28,5 @@ abstract class WebRepository {
   Future<Either<Failure, String>> addPlan(PlanModel? model);
   Future<Either<Failure, List<PlanModel>>> getPlan();
   Future<Either<Failure, List<AdminModel>>> getAdmins();
+  Future<Either<Failure, List<HistoryModel>>> getAllHistory();
 }

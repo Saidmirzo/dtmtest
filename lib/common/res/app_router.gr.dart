@@ -21,10 +21,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CategoryPage(),
       );
     },
-    ChatRoute.name: (routeData) {
+    HistoryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ChatPage(),
+        child: const HistoryPage(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -156,15 +156,15 @@ class CategoryRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ChatPage]
-class ChatRoute extends PageRouteInfo<void> {
-  const ChatRoute({List<PageRouteInfo>? children})
+/// [HistoryPage]
+class HistoryRoute extends PageRouteInfo<void> {
+  const HistoryRoute({List<PageRouteInfo>? children})
       : super(
-          ChatRoute.name,
+          HistoryRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ChatRoute';
+  static const String name = 'HistoryRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

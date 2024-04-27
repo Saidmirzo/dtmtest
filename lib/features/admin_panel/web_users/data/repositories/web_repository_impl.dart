@@ -2,12 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/admin_panel/web_admins/models/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
+import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
 
@@ -194,6 +195,16 @@ class WebRepositoryImpl implements WebRepository {
       return Right(result);
     } catch (e) {
       return const Left(ServerFailure('add category Error'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<HistoryModel>>> getAllHistory() async {
+    try {
+      final result = await webRemoteDataSource.getAllHistory();
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('add history Error'));
     }
   }
 }

@@ -11,7 +11,7 @@ import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_us
 import 'package:dtmtest/features/mobile/auth/presentation/pages/mobile_login_page.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/splash_page.dart';
 import 'package:dtmtest/features/mobile/category/presentation/pages/category_page.dart';
-import 'package:dtmtest/features/mobile/chat/presentation/pages/chat.dart';
+import 'package:dtmtest/features/mobile/history/history.dart';
 import 'package:dtmtest/features/mobile/home/presentation/pages/home_page.dart';
 import 'package:dtmtest/features/mobile/mobile_main_page.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/pages/profile_page.dart';
@@ -71,7 +71,7 @@ class AppRouter extends _$AppRouter {
           page: CategoryRoute.page,
         ),
         AutoRoute(
-          page: ChatRoute.page,
+          page: HistoryRoute.page,
         ),
         AutoRoute(
           page: ProfileRoute.page,

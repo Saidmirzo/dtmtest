@@ -255,6 +255,13 @@ abstract class AppTextStyles {
       fontSize: 11,
       color: Colors.black);
 
+  static TextStyle body11w7 = const TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w700,
+      fontStyle: FontStyle.normal,
+      fontSize: 11,
+      color: Colors.black);
+
   static TextStyle body16w3 = const TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w300,

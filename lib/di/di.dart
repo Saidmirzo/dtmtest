@@ -74,7 +74,7 @@ Future<void> init() async {
     () => AuthRemoteDataSourceImpl(authLocaleDataSource: di()),
   );
   di.registerLazySingleton<WebRemoteDataSource>(
-    () => WebRemoteDataSourceImpl(),
+    () => WebRemoteDataSourceImpl(authLocaleDataSource: di()),
   );
 
   /// Network

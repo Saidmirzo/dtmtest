@@ -55,6 +55,9 @@ class $AssetsIconsGen {
   SvgGenImage get categories =>
       const SvgGenImage('assets/icons/categories.svg');
 
+  /// File path: assets/icons/category.svg
+  SvgGenImage get category => const SvgGenImage('assets/icons/category.svg');
+
   /// File path: assets/icons/check_icon.svg
   SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check_icon.svg');
 
@@ -70,14 +73,11 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
 
+  /// File path: assets/icons/history.svg
+  SvgGenImage get history => const SvgGenImage('assets/icons/history.svg');
+
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
-
-  /// File path: assets/icons/icon.svg
-  SvgGenImage get icon => const SvgGenImage('assets/icons/icon.svg');
-
-  /// File path: assets/icons/inbox.svg
-  SvgGenImage get inbox => const SvgGenImage('assets/icons/inbox.svg');
 
   /// File path: assets/icons/menu.svg
   SvgGenImage get menu => const SvgGenImage('assets/icons/menu.svg');
@@ -129,14 +129,14 @@ class $AssetsIconsGen {
         basket,
         cash,
         categories,
+        category,
         checkIcon,
         dots,
         edit,
         editIcon,
         google,
+        history,
         home,
-        icon,
-        inbox,
         menu,
         money,
         news,
