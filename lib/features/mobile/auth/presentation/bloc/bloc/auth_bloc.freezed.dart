@@ -19,6 +19,8 @@ mixin _$AuthState {
   BlocStatus get loginWithGoogleStaus => throw _privateConstructorUsedError;
   BlocStatus get getLocaleUserStatus => throw _privateConstructorUsedError;
   BlocStatus get logOutStatus => throw _privateConstructorUsedError;
+  BlocStatus get loginWithEmailState => throw _privateConstructorUsedError;
+  BlocStatus get registerWithEmailState => throw _privateConstructorUsedError;
   UserModel? get userModel => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
@@ -36,6 +38,8 @@ abstract class $AuthStateCopyWith<$Res> {
       {BlocStatus loginWithGoogleStaus,
       BlocStatus getLocaleUserStatus,
       BlocStatus logOutStatus,
+      BlocStatus loginWithEmailState,
+      BlocStatus registerWithEmailState,
       UserModel? userModel,
       String? message});
 }
@@ -56,6 +60,8 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     Object? loginWithGoogleStaus = null,
     Object? getLocaleUserStatus = null,
     Object? logOutStatus = null,
+    Object? loginWithEmailState = null,
+    Object? registerWithEmailState = null,
     Object? userModel = freezed,
     Object? message = freezed,
   }) {
@@ -71,6 +77,14 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
       logOutStatus: null == logOutStatus
           ? _value.logOutStatus
           : logOutStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      loginWithEmailState: null == loginWithEmailState
+          ? _value.loginWithEmailState
+          : loginWithEmailState // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      registerWithEmailState: null == registerWithEmailState
+          ? _value.registerWithEmailState
+          : registerWithEmailState // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       userModel: freezed == userModel
           ? _value.userModel
@@ -96,6 +110,8 @@ abstract class _$$AuthStateImplCopyWith<$Res>
       {BlocStatus loginWithGoogleStaus,
       BlocStatus getLocaleUserStatus,
       BlocStatus logOutStatus,
+      BlocStatus loginWithEmailState,
+      BlocStatus registerWithEmailState,
       UserModel? userModel,
       String? message});
 }
@@ -114,6 +130,8 @@ class __$$AuthStateImplCopyWithImpl<$Res>
     Object? loginWithGoogleStaus = null,
     Object? getLocaleUserStatus = null,
     Object? logOutStatus = null,
+    Object? loginWithEmailState = null,
+    Object? registerWithEmailState = null,
     Object? userModel = freezed,
     Object? message = freezed,
   }) {
@@ -129,6 +147,14 @@ class __$$AuthStateImplCopyWithImpl<$Res>
       logOutStatus: null == logOutStatus
           ? _value.logOutStatus
           : logOutStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      loginWithEmailState: null == loginWithEmailState
+          ? _value.loginWithEmailState
+          : loginWithEmailState // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      registerWithEmailState: null == registerWithEmailState
+          ? _value.registerWithEmailState
+          : registerWithEmailState // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       userModel: freezed == userModel
           ? _value.userModel
@@ -149,6 +175,8 @@ class _$AuthStateImpl extends _AuthState {
       {this.loginWithGoogleStaus = BlocStatus.notInitialized,
       this.getLocaleUserStatus = BlocStatus.notInitialized,
       this.logOutStatus = BlocStatus.notInitialized,
+      this.loginWithEmailState = BlocStatus.notInitialized,
+      this.registerWithEmailState = BlocStatus.notInitialized,
       this.userModel,
       this.message})
       : super._();
@@ -163,13 +191,19 @@ class _$AuthStateImpl extends _AuthState {
   @JsonKey()
   final BlocStatus logOutStatus;
   @override
+  @JsonKey()
+  final BlocStatus loginWithEmailState;
+  @override
+  @JsonKey()
+  final BlocStatus registerWithEmailState;
+  @override
   final UserModel? userModel;
   @override
   final String? message;
 
   @override
   String toString() {
-    return 'AuthState(loginWithGoogleStaus: $loginWithGoogleStaus, getLocaleUserStatus: $getLocaleUserStatus, logOutStatus: $logOutStatus, userModel: $userModel, message: $message)';
+    return 'AuthState(loginWithGoogleStaus: $loginWithGoogleStaus, getLocaleUserStatus: $getLocaleUserStatus, logOutStatus: $logOutStatus, loginWithEmailState: $loginWithEmailState, registerWithEmailState: $registerWithEmailState, userModel: $userModel, message: $message)';
   }
 
   @override
@@ -183,14 +217,25 @@ class _$AuthStateImpl extends _AuthState {
                 other.getLocaleUserStatus == getLocaleUserStatus) &&
             (identical(other.logOutStatus, logOutStatus) ||
                 other.logOutStatus == logOutStatus) &&
+            (identical(other.loginWithEmailState, loginWithEmailState) ||
+                other.loginWithEmailState == loginWithEmailState) &&
+            (identical(other.registerWithEmailState, registerWithEmailState) ||
+                other.registerWithEmailState == registerWithEmailState) &&
             (identical(other.userModel, userModel) ||
                 other.userModel == userModel) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loginWithGoogleStaus,
-      getLocaleUserStatus, logOutStatus, userModel, message);
+  int get hashCode => Object.hash(
+      runtimeType,
+      loginWithGoogleStaus,
+      getLocaleUserStatus,
+      logOutStatus,
+      loginWithEmailState,
+      registerWithEmailState,
+      userModel,
+      message);
 
   @JsonKey(ignore: true)
   @override
@@ -204,6 +249,8 @@ abstract class _AuthState extends AuthState {
       {final BlocStatus loginWithGoogleStaus,
       final BlocStatus getLocaleUserStatus,
       final BlocStatus logOutStatus,
+      final BlocStatus loginWithEmailState,
+      final BlocStatus registerWithEmailState,
       final UserModel? userModel,
       final String? message}) = _$AuthStateImpl;
   const _AuthState._() : super._();
@@ -214,6 +261,10 @@ abstract class _AuthState extends AuthState {
   BlocStatus get getLocaleUserStatus;
   @override
   BlocStatus get logOutStatus;
+  @override
+  BlocStatus get loginWithEmailState;
+  @override
+  BlocStatus get registerWithEmailState;
   @override
   UserModel? get userModel;
   @override

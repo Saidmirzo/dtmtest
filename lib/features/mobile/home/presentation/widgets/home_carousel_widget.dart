@@ -44,6 +44,7 @@ class CarouselWidgetHome extends StatelessWidget {
       },
       options: CarouselOptions(
         aspectRatio: 16 / 7,
+        viewportFraction: .7,
         reverse: false,
         enlargeCenterPage: true,
         enableInfiniteScroll: false,

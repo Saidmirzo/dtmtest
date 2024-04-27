@@ -8,6 +8,7 @@ import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/w
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
+import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => di<WebCategoriesBloc>()),
           BlocProvider(create: (context) => di<ThemesBloc>()),
           BlocProvider(create: (context) => di<PlansBloc>()),
+          BlocProvider(create: (context) => di<HistoryBloc>()),
         ],
         child: MaterialApp.router(
           routerConfig: _appRouter.config(),
