@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
           } else if (state.userModel != null) {
             context.replaceRoute(const MainRoute());
           } else {
-            context.replaceRoute(const MobileLoginRoute());
+            context.replaceRoute(const SignInRoute());
           }
         }
         return const Scaffold(

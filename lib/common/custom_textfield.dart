@@ -71,7 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscuringCharacter: '*',
         onTap: widget.onTap,
         focusNode: widget.focusNode,
-        maxLines: widget.maxLines,
+        // maxLines: widget.maxLines,
         minLines: widget.minLines,
         style: widget.style ?? AppTextStyles.body16w4,
         controller: widget.controller,
