@@ -1,18 +1,25 @@
 class HistoryModel {
-  int? collectionCount;
+  String? categoryName;
+  int? correctCount;
   List<QuizCollection>? quizCollection;
   int? quizCount;
   String? time;
 
-  HistoryModel(
-      {this.collectionCount, this.quizCollection, this.quizCount, this.time});
+  HistoryModel({
+    this.categoryName,
+    this.correctCount,
+    this.quizCollection,
+    this.quizCount,
+    this.time,
+  });
 
   HistoryModel.fromJson(Map<String, dynamic> json) {
-    collectionCount = json['collection_count'];
+    categoryName = json['category_name'];
+    correctCount = json['correct_count'];
     if (json['quiz_collection'] != null) {
       quizCollection = <QuizCollection>[];
       json['quiz_collection'].forEach((v) {
-        quizCollection!.add( QuizCollection.fromJson(v));
+        quizCollection!.add(QuizCollection.fromJson(v));
       });
     }
     quizCount = json['quiz_count'];
@@ -20,14 +27,14 @@ class HistoryModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
-    data['collection_count'] = this.collectionCount;
-    if (this.quizCollection != null) {
-      data['quiz_collection'] =
-          this.quizCollection!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['category_name'] = categoryName;
+    data['correct_count'] = correctCount;
+    if (quizCollection != null) {
+      data['quiz_collection'] = quizCollection!.map((v) => v.toJson()).toList();
     }
-    data['quiz_count'] = this.quizCount;
-    data['time'] = this.time;
+    data['quiz_count'] = quizCount;
+    data['time'] = time;
     return data;
   }
 }
@@ -48,11 +55,11 @@ class QuizCollection {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['answer'] = this.answer;
-    data['correct_answer'] = this.correctAnswer;
-    data['question'] = this.question;
-    data['time'] = this.time;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['answer'] = answer;
+    data['correct_answer'] = correctAnswer;
+    data['question'] = question;
+    data['time'] = time;
     return data;
   }
 }

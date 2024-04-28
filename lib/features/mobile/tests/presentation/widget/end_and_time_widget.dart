@@ -9,8 +9,10 @@ class EndTestsAndTimeWidget extends StatefulWidget {
   const EndTestsAndTimeWidget({
     super.key,
     required this.time,
+    required this.onTap,
   });
   final int time;
+  final Function() onTap;
 
   @override
   State<EndTestsAndTimeWidget> createState() => _EndTestsAndTimeWidgetState();
@@ -54,13 +56,16 @@ class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              InnerShadowWidget(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                child: Text(
-                  "Yakunlash...",
-                  style: AppTextStyles.body12w7.copyWith(
-                    color: ColorName.white,
+              InkWell(
+                onTap: widget.onTap,
+                child: InnerShadowWidget(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                  child: Text(
+                    "Yakunlash...",
+                    style: AppTextStyles.body12w7.copyWith(
+                      color: ColorName.white,
+                    ),
                   ),
                 ),
               ),

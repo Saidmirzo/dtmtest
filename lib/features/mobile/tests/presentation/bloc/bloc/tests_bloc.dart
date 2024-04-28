@@ -13,6 +13,10 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
   TestsBloc() : super(const TestsState()) {
     on<TestsEvent>((event, emit) {});
     on<AddHistorEvent>(_addHistoryEvent);
+    on<SaveToHistoryEvent>(_closeTestEvent);
   }
   _addHistoryEvent(AddHistorEvent event, emit) {}
+  _closeTestEvent(event, emit)async{
+
+  }
 }

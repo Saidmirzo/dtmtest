@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TestsState {
-  BlocStatus get postHistory => throw _privateConstructorUsedError;
+  BlocStatus get closeTestStatus => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $TestsStateCopyWith<$Res> {
           TestsState value, $Res Function(TestsState) then) =
       _$TestsStateCopyWithImpl<$Res, TestsState>;
   @useResult
-  $Res call({BlocStatus postHistory, String? message});
+  $Res call({BlocStatus closeTestStatus, String? message});
 }
 
 /// @nodoc
@@ -46,13 +46,13 @@ class _$TestsStateCopyWithImpl<$Res, $Val extends TestsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? postHistory = null,
+    Object? closeTestStatus = null,
     Object? message = freezed,
   }) {
     return _then(_value.copyWith(
-      postHistory: null == postHistory
-          ? _value.postHistory
-          : postHistory // ignore: cast_nullable_to_non_nullable
+      closeTestStatus: null == closeTestStatus
+          ? _value.closeTestStatus
+          : closeTestStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -70,7 +70,7 @@ abstract class _$$TestsStateImplCopyWith<$Res>
       __$$TestsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BlocStatus postHistory, String? message});
+  $Res call({BlocStatus closeTestStatus, String? message});
 }
 
 /// @nodoc
@@ -84,13 +84,13 @@ class __$$TestsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? postHistory = null,
+    Object? closeTestStatus = null,
     Object? message = freezed,
   }) {
     return _then(_$TestsStateImpl(
-      postHistory: null == postHistory
-          ? _value.postHistory
-          : postHistory // ignore: cast_nullable_to_non_nullable
+      closeTestStatus: null == closeTestStatus
+          ? _value.closeTestStatus
+          : closeTestStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -104,18 +104,18 @@ class __$$TestsStateImplCopyWithImpl<$Res>
 
 class _$TestsStateImpl extends _TestsState {
   const _$TestsStateImpl(
-      {this.postHistory = BlocStatus.notInitialized, this.message})
+      {this.closeTestStatus = BlocStatus.notInitialized, this.message})
       : super._();
 
   @override
   @JsonKey()
-  final BlocStatus postHistory;
+  final BlocStatus closeTestStatus;
   @override
   final String? message;
 
   @override
   String toString() {
-    return 'TestsState(postHistory: $postHistory, message: $message)';
+    return 'TestsState(closeTestStatus: $closeTestStatus, message: $message)';
   }
 
   @override
@@ -123,13 +123,13 @@ class _$TestsStateImpl extends _TestsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TestsStateImpl &&
-            (identical(other.postHistory, postHistory) ||
-                other.postHistory == postHistory) &&
+            (identical(other.closeTestStatus, closeTestStatus) ||
+                other.closeTestStatus == closeTestStatus) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, postHistory, message);
+  int get hashCode => Object.hash(runtimeType, closeTestStatus, message);
 
   @JsonKey(ignore: true)
   @override
@@ -140,11 +140,12 @@ class _$TestsStateImpl extends _TestsState {
 
 abstract class _TestsState extends TestsState {
   const factory _TestsState(
-      {final BlocStatus postHistory, final String? message}) = _$TestsStateImpl;
+      {final BlocStatus closeTestStatus,
+      final String? message}) = _$TestsStateImpl;
   const _TestsState._() : super._();
 
   @override
-  BlocStatus get postHistory;
+  BlocStatus get closeTestStatus;
   @override
   String? get message;
   @override

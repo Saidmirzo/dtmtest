@@ -16,6 +16,9 @@ import 'package:dtmtest/features/mobile/category/domain/repositories/category_re
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
+import 'package:dtmtest/features/mobile/tests/data/repository/tests_repository_impl.dart';
+import 'package:dtmtest/features/mobile/tests/domain/repository/tests_repository.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/data/repository/themes_repository_impl.dart';
 import 'package:dtmtest/features/mobile/themes/domain/repository/themes_repository.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
@@ -43,6 +46,7 @@ Future<void> init() async {
   di.registerFactory(() => ThemesBloc(themesRepository: di()));
   di.registerFactory(() => PlansBloc(webRepository: di()));
   di.registerFactory(() => HistoryBloc(webRepository: di()));
+  di.registerFactory(() => TestsBloc());
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
@@ -69,6 +73,9 @@ Future<void> init() async {
     () => ThemesRepositoryImpl(
       webRemoteDataSource: di(),
     ),
+  );
+  di.registerFactory<TestsRepository>(
+    () => TestsRepositoryImpl(testsRemoteDataSource: di()),
   );
   // DataSource
   di.registerLazySingleton<AuthLocaleDataSource>(
