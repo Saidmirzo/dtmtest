@@ -1,15 +1,13 @@
 import 'package:dtmtest/common/res/app_router.dart';
-import 'package:dtmtest/common/res/app_text_style.dart';
-import 'package:dtmtest/common/res/colors.gen.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/admin_panel/web_admins/bloc/web_admins_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
-import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
+import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -70,15 +68,6 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          theme: ThemeData(
-            scaffoldBackgroundColor: ColorName.backgroundColor[500],
-            appBarTheme: AppBarTheme(
-              centerTitle: true,
-              elevation: 0,
-              backgroundColor: ColorName.backgroundColorAccent,
-              titleTextStyle: AppTextStyles.body15w6,
-            ),
-          ),
           title: "DTM Test AdminDashboard",
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,
