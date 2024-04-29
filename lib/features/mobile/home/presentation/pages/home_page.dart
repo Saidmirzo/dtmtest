@@ -1,12 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dtmtest/common/costomaizable.dart';
+import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
+import 'package:dtmtest/common/res/app_router.dart';
+import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/home/presentation/widgets/home_carousel_widget.dart';
 import 'package:dtmtest/features/mobile/home/presentation/widgets/statistics_widget.dart';
+import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../common/res/res.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -18,6 +22,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   CarouselController carouselController = CarouselController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<CategoryBloc>().add(GetAllCategoriesEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +38,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
           slivers: [
             SliverAppBar(
               backgroundColor: Colors.transparent,
@@ -87,91 +99,113 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-                child:
-                    CarouselWidgetHome(carouselController: carouselController)),
+              child: CarouselWidgetHome(carouselController: carouselController),
+            ),
+            SliverToBoxAdapter(
+              child: 30.h,
+            ),
             SliverToBoxAdapter(
               child: SizedBox(
                 width: double.infinity,
                 height: 110,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          height: 110,
-                          width: 150,
-                          margin: const EdgeInsets.symmetric(vertical: 5),
+                child: BlocConsumer<CategoryBloc, CategoryState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
+                      return UI.spinner();
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.listCategories?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: ColorName.white,
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 6,
-                                color: ColorName.black.withOpacity(.25),
-                                offset: const Offset(6, 6),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 45,
-                                height: 45,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: ColorName.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 4,
-                                      offset: const Offset(3, 4),
-                                      color: ColorName.black.withOpacity(.25),
-                                      blurStyle: BlurStyle.normal,
-                                    ),
-                                  ],
+                          child: InkWell(
+                            onTap: () {
+                              AutoRouter.of(context).push(
+                                ThemesRoute(
+                                  scienceName:
+                                      state.listCategories?[index].name ?? '',
+                                  index: index,
                                 ),
-                                child: Assets.images.bookImage.image(),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "New",
-                                    style: AppTextStyles.body12w7.copyWith(
-                                      color: ColorName.red,
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      "Matematika",
-                                      style: AppTextStyles.body20w7.copyWith(
-                                        color: ColorName.customColor,
-                                      ),
-                                    ),
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              height: 110,
+                              width: 150,
+                              margin: const EdgeInsets.symmetric(vertical: 5),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: ColorName.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 6,
+                                    color: ColorName.black.withOpacity(.25),
+                                    offset: const Offset(6, 6),
                                   ),
                                 ],
                               ),
-                            ],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 45,
+                                    height: 45,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: ColorName.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4,
+                                          offset: const Offset(3, 4),
+                                          color:
+                                              ColorName.black.withOpacity(.25),
+                                          blurStyle: BlurStyle.normal,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Assets.images.bookImage.image(),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "New",
+                                      style: AppTextStyles.body12w7.copyWith(
+                                        color: ColorName.red,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    state.listCategories?[index].name ??
+                                        "Matematika",
+                                    style: AppTextStyles.body20w7.copyWith(
+                                      color: ColorName.customColor,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     );
                   },
                 ),
               ),
             ),
-            const SliverToBoxAdapter(child: StatisticsWidget()),
+            const SliverToBoxAdapter(
+              child: StatisticsWidget(),
+            ),
           ],
         ),
       ),

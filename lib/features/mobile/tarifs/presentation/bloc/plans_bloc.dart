@@ -28,8 +28,7 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
                 getAllPlanStatus: BlocStatus.failed,
                 message: l.message,
               ),
-            ), (r) {
-      log("$r");
+            ), (r) {      
       emit(
         state.copyWith(
           getAllPlanStatus: BlocStatus.completed,

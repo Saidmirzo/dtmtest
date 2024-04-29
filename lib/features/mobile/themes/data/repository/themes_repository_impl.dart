@@ -12,8 +12,7 @@ class ThemesRepositoryImpl implements ThemesRepository {
   @override
   Future<Either<Failure, List<ThemeModel>>> getAllThemes() async {
     try {
-      final result = await webRemoteDataSource.getAllThemes();
-      log("${result.length}");
+      final result = await webRemoteDataSource.getAllThemes();      
       return Right(result);
     } catch (e) {
       return const Left(ServerFailure("get themes error"));
