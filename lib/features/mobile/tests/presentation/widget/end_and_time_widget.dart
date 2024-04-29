@@ -1,18 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:dtmtest/common/extentions.dart';
-import 'package:dtmtest/common/res/res.dart';
-import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
+import 'package:dtmtest/common/ui.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dtmtest/common/extentions.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 
 class EndTestsAndTimeWidget extends StatefulWidget {
   const EndTestsAndTimeWidget({
     super.key,
     required this.time,
     required this.onTap,
+    this.isLoading = false,
   });
   final int time;
   final Function() onTap;
+  final bool isLoading;
 
   @override
   State<EndTestsAndTimeWidget> createState() => _EndTestsAndTimeWidgetState();
@@ -61,12 +65,14 @@ class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
                 child: InnerShadowWidget(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                  child: Text(
-                    "Yakunlash...",
-                    style: AppTextStyles.body12w7.copyWith(
-                      color: ColorName.white,
-                    ),
-                  ),
+                  child: widget.isLoading
+                      ? UI.spinner()
+                      : Text(
+                          "Yakunlash...",
+                          style: AppTextStyles.body12w7.copyWith(
+                            color: ColorName.white,
+                          ),
+                        ),
                 ),
               ),
               InnerShadowWidget(

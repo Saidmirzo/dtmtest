@@ -67,10 +67,10 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
         gradient: AppGradient.backgroundGradient,
         child: BlocConsumer<TestsBloc, TestsState>(
           listener: (context, state) {
-            if (state.closeTestStatus == BlocStatus.failed) {
+            if (state.saveToHistoryStatus == BlocStatus.failed) {
               showSnackBar(context, text: "Error");
             }
-            if (state.closeTestStatus.isComplated) {
+            if (state.saveToHistoryStatus.isComplated) {
               context.maybePop();
             }
           },
@@ -88,6 +88,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                   ),
                   20.h,
                   EndTestsAndTimeWidget(
+                    isLoading: state.saveToHistoryStatus.isProgress,
                     onTap: () {
                       int count = 0;
                       for (var element in quizColection) {
