@@ -122,9 +122,10 @@ class AppRouter extends _$AppRouter {
       page: SignUpRoute.page,
       path: signUpRoute,
     ),
-     AutoRoute(
+    AutoRoute(
       page: TestsResultRoute.page,
       path: testsResultPage,
+    ),
     AutoRoute(
       page: HistoryDatailRoute.page,
       path: signUpRoute,
