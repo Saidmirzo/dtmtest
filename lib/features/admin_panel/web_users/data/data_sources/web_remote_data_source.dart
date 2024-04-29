@@ -202,7 +202,13 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
         userCollection.doc(id).collection('history');
     final result = await historyCollection.get();
     listHistory = result.docs
-        .map((e) => HistoryModel.fromJson(jsonDecode(jsonEncode(e))))
+        .map(
+          (e) => HistoryModel.fromJson(
+            jsonDecode(
+              jsonEncode(e.data()),
+            ),
+          ),
+        )
         .toList();
     return listHistory;
   }

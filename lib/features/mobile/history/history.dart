@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dtmtest/common/components/circular_percent_indicator.dart';
+import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
-import 'package:dtmtest/common/res/app_text_style.dart';
-import 'package:dtmtest/common/res/colors.gen.dart';
+import 'package:dtmtest/common/res/app_router.dart';
+import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
+import 'package:dtmtest/features/mobile/history/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,74 +21,55 @@ class HistoryPage extends StatelessWidget {
       child: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (context, state) {
           if (state.getAllHistoryStatus == BlocStatus.inProgress) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return Center(child: UI.spinner());
           }
-          return ListView.separated(
-            itemCount: state.listHistory?.length ?? 0,
-            padding: const EdgeInsets.all(18),
-            itemBuilder: (_, index) => Container(
-              padding: const EdgeInsets.all(10),
-              height: 65,
-              decoration: (BoxDecoration(
-                  border: Border.all(color: ColorName.customColor),
-                  borderRadius: BorderRadius.circular(7))),
-              child: Row(
-                children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: ColorName.white),
-                  ),
-                  10.w,
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Tarix",
-                        style: AppTextStyles.body16w7
-                            .copyWith(color: ColorName.customColor),
-                      ),
-                      Text(
-                        "Tarix",
-                        style: AppTextStyles.body12w6
-                            .copyWith(color: ColorName.customColor),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "18.04.2024",
-                        style: AppTextStyles.body12w7
-                            .copyWith(color: ColorName.customColor),
-                      ),
-                      Text(
-                        "16:30",
-                        style: AppTextStyles.body11w7
-                            .copyWith(color: ColorName.customColor),
-                      ),
-                    ],
-                  ),
-                  10.w,
-                  CircularPercentIndicator(
-                    radius: 20.0,
-                    lineWidth: 3.0,
-                    percent: 0.6,
-                    center: const Text("100%"),
-                    progressColor: Colors.green,
-                  )
-                ],
-              ),
+          return Container(
+            decoration: BoxDecoration(
+              gradient: AppGradient.backgroundGradient,
             ),
-            separatorBuilder: (_, index) => 10.h,
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  title: Text(
+                    "History",
+                    style:
+                        AppTextStyles.body20w5.copyWith(color: ColorName.white),
+                  ),
+                ),
+                SliverFillRemaining(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 50),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                        color: ColorName.white),
+                    child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.listHistory?.length ?? 0,
+                      padding: const EdgeInsets.all(18),
+                      itemBuilder: (_, index) => HistoryWidget(
+                        onTap: () {
+                          context.pushRoute(HistoryDatailRoute(
+                              historyList:
+                                  state.listHistory?[index].quizCollection ??
+                                      []));
+                        },
+                        name: state.listHistory?[index].categoryName ?? '',
+                        subname: state.listHistory?[index].categoryName ?? '',
+                        date: '',
+                        time: state.listHistory?[index].time ?? '',
+                        correctCount:
+                            state.listHistory?[index].correctCount ?? 0,
+                        quizCount: state.listHistory?[index].quizCount ?? 0,
+                      ),
+                      separatorBuilder: (_, index) => 10.h,
+                    ),
+                  ),
+                )
+              ],
+            ),
           );
         },
       ),

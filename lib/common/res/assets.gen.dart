@@ -79,6 +79,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
+  /// File path: assets/icons/icon.png
+  AssetGenImage get icon => const AssetGenImage('assets/icons/icon.png');
+
   /// File path: assets/icons/menu.svg
   SvgGenImage get menu => const SvgGenImage('assets/icons/menu.svg');
 
@@ -122,7 +125,7 @@ class $AssetsIconsGen {
   SvgGenImage get upload => const SvgGenImage('assets/icons/upload.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [
+  List<dynamic> get values => [
         add,
         advertising,
         arrowRight,
@@ -137,6 +140,7 @@ class $AssetsIconsGen {
         google,
         history,
         home,
+        icon,
         menu,
         money,
         news,

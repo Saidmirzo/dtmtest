@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -9,6 +9,7 @@ import 'package:dtmtest/features/mobile/profile/presentation/widgets/user_image_
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../widgets/about_user_widget.dart';
 
 @RoutePage()

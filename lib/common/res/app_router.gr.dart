@@ -21,6 +21,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CategoryPage(),
       );
     },
+    HistoryDatailRoute.name: (routeData) {
+      final args = routeData.argsAs<HistoryDatailRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: HistoryDatailPage(
+          key: args.key,
+          historyList: args.historyList,
+        ),
+      );
+    },
     HistoryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -165,6 +175,44 @@ class CategoryRoute extends PageRouteInfo<void> {
   static const String name = 'CategoryRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HistoryDatailPage]
+class HistoryDatailRoute extends PageRouteInfo<HistoryDatailRouteArgs> {
+  HistoryDatailRoute({
+    Key? key,
+    required List<QuizCollection> historyList,
+    List<PageRouteInfo>? children,
+  }) : super(
+          HistoryDatailRoute.name,
+          args: HistoryDatailRouteArgs(
+            key: key,
+            historyList: historyList,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'HistoryDatailRoute';
+
+  static const PageInfo<HistoryDatailRouteArgs> page =
+      PageInfo<HistoryDatailRouteArgs>(name);
+}
+
+class HistoryDatailRouteArgs {
+  const HistoryDatailRouteArgs({
+    this.key,
+    required this.historyList,
+  });
+
+  final Key? key;
+
+  final List<QuizCollection> historyList;
+
+  @override
+  String toString() {
+    return 'HistoryDatailRouteArgs{key: $key, historyList: $historyList}';
+  }
 }
 
 /// generated route for
