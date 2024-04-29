@@ -101,6 +101,12 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    TestsResultRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TestsResultPage(),
+      );
+    },
     ThemesRoute.name: (routeData) {
       final args = routeData.argsAs<ThemesRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -390,6 +396,20 @@ class TestsRouteArgs {
   String toString() {
     return 'TestsRouteArgs{key: $key, themeModel: $themeModel}';
   }
+}
+
+/// generated route for
+/// [TestsResultPage]
+class TestsResultRoute extends PageRouteInfo<void> {
+  const TestsResultRoute({List<PageRouteInfo>? children})
+      : super(
+          TestsResultRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TestsResultRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

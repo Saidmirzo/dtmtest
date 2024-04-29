@@ -7,6 +7,7 @@ import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 
 abstract class TestsRemoteDataSource {
   Future<List<HistoryModel>> getAllHistory();
+  Future<String> saveToHistory(HistoryModel historyModel);
 }
 
 class TestsRemoteDataSourceImpl implements TestsRemoteDataSource {
@@ -28,6 +29,20 @@ class TestsRemoteDataSourceImpl implements TestsRemoteDataSource {
           .map((e) => HistoryModel.fromJson(jsonDecode(jsonEncode(e))))
           .toList();
       return listHistory;
+    } else {
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<String> saveToHistory(HistoryModel historyModel) async {
+    final UserModel? userModel = await authLocaleDataSource.getLocaleUserDtat();
+    if (userModel != null) {
+      final String id = userModel.uid ?? "";
+      final CollectionReference historyCollection =
+          userCollection.doc(id).collection('history');
+      await historyCollection.add(historyModel.toJson());
+      return 'Success';
     } else {
       throw Exception();
     }

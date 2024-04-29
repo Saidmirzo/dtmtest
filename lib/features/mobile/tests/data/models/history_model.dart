@@ -5,12 +5,13 @@ class HistoryModel {
   int? quizCount;
   String? time;
 
-  HistoryModel(
-      {this.categoryName,
-      this.correctCount,
-      this.quizCollection,
-      this.quizCount,
-      this.time});
+  HistoryModel({
+    this.categoryName,
+    this.correctCount,
+    this.quizCollection,
+    this.quizCount,
+    this.time,
+  });
 
   HistoryModel.fromJson(Map<String, dynamic> json) {
     categoryName = json['category_name'];

@@ -22,36 +22,38 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
   _registerUserEvent(RegisterUserEvent event, emit) async {
     emit(state.copyWith(registerWithEmailState: BlocStatus.inProgress));
-    try {
-      await authRepository.registerWithEmail(event.userRegisterModel);
-      emit(state.copyWith(registerWithEmailState: BlocStatus.completed));
-    } catch (e) {
-      emit(
+    final result =
+        await authRepository.registerWithEmail(event.userRegisterModel);
+    result.fold(
+      (l) => emit(
         state.copyWith(
           registerWithEmailState: BlocStatus.failed,
-          message: e.toString(),
+          message: l.message,
         ),
-      );
-    }
+      ),
+      (r) => emit(
+        state.copyWith(registerWithEmailState: BlocStatus.completed),
+      ),
+    );
   }
 
   _loginWithEmail(LoginWithEmailEvent event, emit) async {
     emit(state.copyWith(loginWithEmailState: BlocStatus.inProgress));
-    try {
-      await authRepository.loginWithEmail(
-        email: event.userRegisterModel.email,
-        password: event.userRegisterModel.password,
-      );
-
-      emit(state.copyWith(loginWithEmailState: BlocStatus.completed));
-    } catch (e) {
-      emit(
+    final result = await authRepository.loginWithEmail(
+      email: event.userRegisterModel.email,
+      password: event.userRegisterModel.password,
+    );
+    result.fold(
+      (l) => emit(
         state.copyWith(
           loginWithEmailState: BlocStatus.failed,
-          message: e.toString(),
+          message: l.message,
         ),
-      );
-    }
+      ),
+      (r) => emit(
+        state.copyWith(loginWithEmailState: BlocStatus.completed),
+      ),
+    );
   }
 
   _loginWithGoogleEvent(event, emit) async {

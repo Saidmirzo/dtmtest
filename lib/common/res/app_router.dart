@@ -22,6 +22,7 @@ import 'package:dtmtest/features/mobile/quizs/presentation/pages/quizs_page.dart
 import 'package:dtmtest/features/mobile/tarifs/presentation/page/plans_page.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/page/tests_page.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/page/tests_result_page.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/page/themes_page.dart';
 import 'package:flutter/foundation.dart';
 
@@ -39,6 +40,7 @@ class AppRouter extends _$AppRouter {
   static const String plansPage = '/plansPage';
   static const String quizsPage = '/quizsPage';
   static const String testsPage = '/testsPage';
+  static const String testsResultPage = '/testsResultPage';
   static const String historyDetailPage = '/historyDetailPage';
 
   @override
@@ -120,6 +122,9 @@ class AppRouter extends _$AppRouter {
       page: SignUpRoute.page,
       path: signUpRoute,
     ),
+     AutoRoute(
+      page: TestsResultRoute.page,
+      path: testsResultPage,
     AutoRoute(
       page: HistoryDatailRoute.page,
       path: signUpRoute,
