@@ -1,4 +1,5 @@
 import 'package:dtmtest/common/res/assets.gen.dart';
+import 'package:dtmtest/common/res/locale_keys.g.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/tarifs.dart';
 import 'package:dtmtest/features/admin_panel/web_admins/presentation/web_admins.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/web_advertising.dart';
@@ -6,6 +7,7 @@ import 'package:dtmtest/features/admin_panel/web_categories/presentation/web_cat
 import 'package:dtmtest/features/admin_panel/web_home/presentation/web_home.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/presentation/web_quizes.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_users.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 List<String> adminMenu = [
   "Home",
@@ -46,3 +48,16 @@ getPage(int index) {
       return const WebHomePage();
   }
 }
+
+List<String> labels = [
+  tr(LocaleKeys.home),
+  tr(LocaleKeys.inbox),
+  tr(LocaleKeys.menu),
+  tr(LocaleKeys.account)
+];
+List<SvgGenImage> listIcons = [
+  Assets.icons.home,
+  Assets.icons.category,
+  Assets.icons.history,
+  Assets.icons.profile
+];
