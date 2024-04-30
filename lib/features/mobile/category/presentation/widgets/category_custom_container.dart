@@ -1,17 +1,16 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 import 'package:dtmtest/common/res/app_router.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
+import 'package:flutter/material.dart';
 import 'package:dtmtest/common/res/res.dart';
 
 class CategoryCustomContainer extends StatelessWidget {
-  final int index;
   final Widget child;
-  final String scienceName;
+  final CategoryModel categoryModel;
   const CategoryCustomContainer({
     super.key,
-    required this.index,
     required this.child,
-    required this.scienceName,
+    required this.categoryModel,
   });
 
   @override
@@ -19,11 +18,8 @@ class CategoryCustomContainer extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: () {
-        AutoRouter.of(context).push(
-          ThemesRoute(
-            scienceName: scienceName,
-            index: index,
-          ),
+        context.pushRoute(
+          ThemesRoute(categoryModel: categoryModel),
         );
       },
       child: Container(
@@ -57,7 +53,7 @@ class CategoryCustomContainer extends StatelessWidget {
               child: child,
             ),
             Text(
-              scienceName,
+              categoryModel.name ?? "Unknown",
               style: AppTextStyles.body20w6,
             ),
           ],

@@ -8,7 +8,6 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/home/presentation/widgets/home_carousel_widget.dart';
 import 'package:dtmtest/features/mobile/home/presentation/widgets/statistics_widget.dart';
-import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -126,9 +125,8 @@ class _HomePageState extends State<HomePage> {
                             onTap: () {
                               AutoRouter.of(context).push(
                                 ThemesRoute(
-                                  scienceName:
-                                      state.listCategories?[index].name ?? '',
-                                  index: index,
+                                  categoryModel:
+                                      (state.listCategories?[index])!,
                                 ),
                               );
                             },

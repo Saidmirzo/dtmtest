@@ -117,8 +117,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: ThemesPage(
           key: args.key,
-          scienceName: args.scienceName,
-          index: args.index,
+          categoryModel: args.categoryModel,
         ),
       );
     },
@@ -445,15 +444,13 @@ class TestsResultRouteArgs {
 class ThemesRoute extends PageRouteInfo<ThemesRouteArgs> {
   ThemesRoute({
     Key? key,
-    required String scienceName,
-    required int index,
+    required CategoryModel categoryModel,
     List<PageRouteInfo>? children,
   }) : super(
           ThemesRoute.name,
           args: ThemesRouteArgs(
             key: key,
-            scienceName: scienceName,
-            index: index,
+            categoryModel: categoryModel,
           ),
           initialChildren: children,
         );
@@ -466,19 +463,16 @@ class ThemesRoute extends PageRouteInfo<ThemesRouteArgs> {
 class ThemesRouteArgs {
   const ThemesRouteArgs({
     this.key,
-    required this.scienceName,
-    required this.index,
+    required this.categoryModel,
   });
 
   final Key? key;
 
-  final String scienceName;
-
-  final int index;
+  final CategoryModel categoryModel;
 
   @override
   String toString() {
-    return 'ThemesRouteArgs{key: $key, scienceName: $scienceName, index: $index}';
+    return 'ThemesRouteArgs{key: $key, categoryModel: $categoryModel}';
   }
 }
 

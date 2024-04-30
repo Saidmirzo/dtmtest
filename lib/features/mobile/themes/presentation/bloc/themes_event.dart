@@ -7,4 +7,7 @@ sealed class ThemesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllThemesEvent extends ThemesEvent {}
+class GetThemesEvent extends ThemesEvent {
+  final String id;
+  const GetThemesEvent({required this.id});
+}

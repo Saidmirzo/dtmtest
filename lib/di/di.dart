@@ -21,6 +21,7 @@ import 'package:dtmtest/features/mobile/tests/data/datasource/tests_remote_datas
 import 'package:dtmtest/features/mobile/tests/data/repository/tests_repository_impl.dart';
 import 'package:dtmtest/features/mobile/tests/domain/repository/tests_repository.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
+import 'package:dtmtest/features/mobile/themes/data/datasource/themes_remote_datasource.dart';
 import 'package:dtmtest/features/mobile/themes/data/repository/themes_repository_impl.dart';
 import 'package:dtmtest/features/mobile/themes/domain/repository/themes_repository.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
@@ -35,7 +36,6 @@ final di = GetIt.instance;
 // Alice alice = Alice(navigatorKey: AppRoutes.rootNavigatorKey);
 
 Future<void> init() async {
-
   await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
@@ -78,6 +78,7 @@ Future<void> init() async {
   di.registerFactory<ThemesRepository>(
     () => ThemesRepositoryImpl(
       webRemoteDataSource: di(),
+      themesDataSource: di(),
     ),
   );
   di.registerFactory<TestsRepository>(
@@ -95,6 +96,9 @@ Future<void> init() async {
   );
   di.registerLazySingleton<TestsRemoteDataSource>(
     () => TestsRemoteDataSourceImpl(authLocaleDataSource: di()),
+  );
+  di.registerLazySingleton<ThemesDataSource>(
+    () => ThemesDataSourceImpl(),
   );
 
   /// Network
