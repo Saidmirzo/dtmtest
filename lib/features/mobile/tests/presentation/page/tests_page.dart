@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
@@ -32,11 +33,21 @@ class TestsPage extends StatefulWidget {
 class _TestsPageState extends State<TestsPage> with DialogMixin {
   late PageController pageController;
   late List<QuizCollection> quizColection;
+
+  _genrateCollection() {
+    quizColection = List.generate(
+      widget.themeModel.quizCount ?? 0,
+      (index) => QuizCollection(
+        question: widget.themeModel.quiz?[index].question,
+        correctAnswer: widget.themeModel.quiz?[index].options?.first,
+      ),
+    );
+  }
+
   @override
   void initState() {
-    quizColection =
-        List.filled(widget.themeModel.quizCount ?? 0, QuizCollection());
     super.initState();
+    _genrateCollection();
     pageController = PageController();
     pageController.addListener(
       () {
@@ -71,6 +82,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
               showSnackBar(context, text: "Error");
             }
             if (state.saveToHistoryStatus.isComplated) {
+              _genrateCollection();
               context.maybePop();
             }
           },
@@ -90,23 +102,26 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                   EndTestsAndTimeWidget(
                     isLoading: state.saveToHistoryStatus.isProgress,
                     onTap: () {
-                      int count = 0;
-                      for (var element in quizColection) {
-                        if (element.answer == element.correctAnswer) count++;
-                      }
-                      context.read<TestsBloc>().add(
-                            SaveToHistoryEvent(
-                              historyModel: HistoryModel(
-                                quizCollection: quizColection,
-                                correctCount: count,
-                                quizCount: quizColection.length,
-                                time: DateTime.now()
-                                    .millisecondsSinceEpoch
-                                    .toString(),
-                                categoryName: '',
-                              ),
-                            ),
+                      showAccessDialog(
+                        context,
+                        text: 'Are you shure close test',
+                        onYes: () {
+                          final HistoryModel historyModel = HistoryModel(
+                            quizCollection: quizColection,
+                            correctCount: calcCorrectCount(),
+                            quizCount: quizColection.length,
+                            time: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                            categoryName: '',
                           );
+                          context.replaceRoute(
+                            TestsResultRoute(historyModel: historyModel),
+                          );
+                          context.read<TestsBloc>().add(
+                              SaveToHistoryEvent(historyModel: historyModel));
+                        },
+                      );
                     },
                     time: themeModel.duration ?? 0,
                   ),
@@ -137,16 +152,20 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                     ),
                   ),
                   BackNextWidgetOnTest(
-                    backFunction: () {
-                      if (activeIndex >= 1) {
-                        _animateToPage(--activeIndex);
-                      }
-                    },
-                    nextFunction: () {
-                      if (activeIndex < themeModel.quiz!.length) {
-                        _animateToPage(++activeIndex);
-                      }
-                    },
+                    backFunction: !(activeIndex >= 1)
+                        ? null
+                        : () {
+                            if (activeIndex >= 1) {
+                              _animateToPage(--activeIndex);
+                            }
+                          },
+                    nextFunction: (activeIndex == themeModel.quiz!.length - 1)
+                        ? null
+                        : () {
+                            if (activeIndex < themeModel.quiz!.length) {
+                              _animateToPage(++activeIndex);
+                            }
+                          },
                   ),
                 ],
               ),
@@ -163,5 +182,16 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
       duration: const Duration(milliseconds: 500),
       curve: Curves.bounceInOut,
     );
+  }
+
+  int calcCorrectCount() {
+    int count = 0;
+    for (var element in quizColection) {
+      if ((element.answer != null && element.correctAnswer != null) &&
+          (element.answer == element.correctAnswer)) {
+        count++;
+      }
+    }
+    return count;
   }
 }

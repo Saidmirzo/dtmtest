@@ -22,53 +22,59 @@ class BackNextWidgetOnTest extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(
-            onTap: backFunction,
-            child: InnerShadowWidget(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    CupertinoIcons.back,
-                    color: ColorName.white,
-                    size: 25,
-                  ),
-                  Text(
-                    "Orqaga",
-                    style: AppTextStyles.body16w6.copyWith(
-                      color: ColorName.white,
+          backFunction == null
+              ? const SizedBox.shrink()
+              : InkWell(
+                  onTap: backFunction,
+                  child: InnerShadowWidget(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.back,
+                          color: ColorName.white,
+                          size: 25,
+                        ),
+                        Text(
+                          "Orqaga",
+                          style: AppTextStyles.body16w6.copyWith(
+                            color: ColorName.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: nextFunction,
-            child: InnerShadowWidget(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Oldinga",
-                    style: AppTextStyles.body16w6.copyWith(
-                      color: ColorName.white,
+                ),
+          nextFunction == null
+              ? const SizedBox.shrink()
+              : InkWell(
+                  onTap: nextFunction,
+                  child: InnerShadowWidget(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Oldinga",
+                          style: AppTextStyles.body16w6.copyWith(
+                            color: ColorName.white,
+                          ),
+                        ),
+                        Transform.rotate(
+                          angle: pi,
+                          child: const Icon(
+                            CupertinoIcons.back,
+                            color: ColorName.white,
+                            size: 25,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Transform.rotate(
-                    angle: pi,
-                    child: const Icon(
-                      CupertinoIcons.back,
-                      color: ColorName.white,
-                      size: 25,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                ),
         ],
       ),
     );

@@ -102,9 +102,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     TestsResultRoute.name: (routeData) {
+      final args = routeData.argsAs<TestsResultRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const TestsResultPage(),
+        child: TestsResultPage(
+          key: args.key,
+          historyModel: args.historyModel,
+        ),
       );
     },
     ThemesRoute.name: (routeData) {
@@ -400,16 +404,40 @@ class TestsRouteArgs {
 
 /// generated route for
 /// [TestsResultPage]
-class TestsResultRoute extends PageRouteInfo<void> {
-  const TestsResultRoute({List<PageRouteInfo>? children})
-      : super(
+class TestsResultRoute extends PageRouteInfo<TestsResultRouteArgs> {
+  TestsResultRoute({
+    Key? key,
+    required HistoryModel historyModel,
+    List<PageRouteInfo>? children,
+  }) : super(
           TestsResultRoute.name,
+          args: TestsResultRouteArgs(
+            key: key,
+            historyModel: historyModel,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'TestsResultRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<TestsResultRouteArgs> page =
+      PageInfo<TestsResultRouteArgs>(name);
+}
+
+class TestsResultRouteArgs {
+  const TestsResultRouteArgs({
+    this.key,
+    required this.historyModel,
+  });
+
+  final Key? key;
+
+  final HistoryModel historyModel;
+
+  @override
+  String toString() {
+    return 'TestsResultRouteArgs{key: $key, historyModel: $historyModel}';
+  }
 }
 
 /// generated route for
