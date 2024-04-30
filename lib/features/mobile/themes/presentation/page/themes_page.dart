@@ -7,6 +7,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/widgets/themes_container_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ThemesPage extends StatefulWidget {
-  final String scienceName;
-  final int index;
+  final CategoryModel categoryModel;
   const ThemesPage({
     super.key,
-    required this.scienceName,
-    required this.index,
+    required this.categoryModel,
   });
 
   @override
@@ -32,7 +31,9 @@ class _ThemesPageState extends State<ThemesPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ThemesBloc>().add(GetAllThemesEvent());
+    context
+        .read<ThemesBloc>()
+        .add(GetThemesEvent(id: widget.categoryModel.id ?? ''));
   }
 
   @override
@@ -44,13 +45,18 @@ class _ThemesPageState extends State<ThemesPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
-          text: widget.scienceName,
+          text: widget.categoryModel.name,
         ),
         body: BlocConsumer<ThemesBloc, ThemesState>(
           listener: (context, state) {},
           builder: (context, state) {
             if (state.getAllThemesStatus == BlocStatus.inProgress) {
               return UI.spinner();
+            }
+            if (state.listThemes?.length == 0) {
+              return const Center(
+                child: Text('List is empty'),
+              );
             }
             return Column(
               children: [
