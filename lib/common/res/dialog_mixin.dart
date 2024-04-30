@@ -18,6 +18,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 mixin DialogMixin {
+  void showAccessDialog(
+    BuildContext context, {
+    String? text,
+    Function()? onNo,
+    required Function() onYes,
+  }) {
+    showAdaptiveDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(
+           text?? '',
+            style: AppTextStyles.body16w5,
+          ),
+          actions: [
+            TextButton(
+              onPressed:onNo?? () => context.maybePop(),
+              style: AppDecorations.buttonStyle(),
+              child: Text(
+                'NO',
+                style: AppTextStyles.body16w5,
+              ),
+            ),
+            TextButton(
+              onPressed: onYes,
+              style: AppDecorations.buttonStyle(),
+              child: Text(
+                'YES',
+                style: AppTextStyles.body16w5,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<dynamic> addCategoryDialog(
       BuildContext context, EditAdd editAdd, CategoryModel? model, int index) {
     TextEditingController nameController = TextEditingController();

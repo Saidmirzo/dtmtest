@@ -20,6 +20,16 @@ class TestsBloc extends Bloc<TestsEvent, TestsState> {
   _saveToHistoryEvent(SaveToHistoryEvent event, emit) async {
     emit(state.copyWith(saveToHistoryStatus: BlocStatus.inProgress));
     final result = await testsRepository.saveToHistory(event.historyModel);
-    result.fold((l) => null, (r) => null);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          saveToHistoryStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(saveToHistoryStatus: BlocStatus.completed),
+      ),
+    );
   }
 }

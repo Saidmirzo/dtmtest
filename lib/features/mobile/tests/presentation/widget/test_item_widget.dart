@@ -70,12 +70,14 @@ class _TestItemWidgetState extends State<TestItemWidget>
               color:
                   activeIndex == index ? ColorName.blueAccent : ColorName.white,
               function: () {
-                widget.onChange(QuizCollection(
-                  answer: listOptions[index],
-                  correctAnswer: widget.quiz.options?.first,
-                  question: widget.quiz.question,
-                  time: DateTime.now().millisecondsSinceEpoch.toString(),
-                ));
+                widget.onChange(
+                  QuizCollection(
+                    answer: listOptions[index],
+                    correctAnswer: widget.quiz.options?.first,
+                    question: widget.quiz.question,
+                    time: DateTime.now().millisecondsSinceEpoch.toString(),
+                  ),
+                );
                 setState(() {
                   activeIndex = index;
                 });
@@ -110,8 +112,10 @@ class _TestItemWidgetState extends State<TestItemWidget>
   }
 
   List<String> _shuffleList(List<String> list) {
-    list.shuffle();
-    return list;
+    List<String> result=[];
+    result.addAll(list);
+    result.shuffle();
+    return result;
   }
 
   @override

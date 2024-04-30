@@ -24,12 +24,13 @@ class EndTestsAndTimeWidget extends StatefulWidget {
 
 class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
   late int time;
+  late final Timer timer;
 
   @override
   void initState() {
     super.initState();
     time = widget.time * 60;
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (timer.tick == time) {
         timer.cancel();
       }
@@ -98,5 +99,11 @@ class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
     } else {
       return '0$number';
     }
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 }
