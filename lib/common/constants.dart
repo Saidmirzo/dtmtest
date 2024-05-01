@@ -2,7 +2,7 @@ import 'package:dtmtest/common/res/assets.gen.dart';
 import 'package:dtmtest/common/res/locale_keys.g.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/tarifs.dart';
 import 'package:dtmtest/features/admin_panel/web_admins/presentation/web_admins.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/presentation/web_advertising.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/presentation/pages/web_advertising.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/web_categories.dart';
 import 'package:dtmtest/features/admin_panel/web_home/presentation/web_home.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/presentation/web_quizes.dart';

@@ -217,35 +217,35 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
   }
 }
 
-Future<void> _uploadImage() async {
-  if (_imageFile == null) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("No image selected")));
-    return;
-  }
+// Future<void> _uploadImage() async {
+//   if (_imageFile == null) {
+//     ScaffoldMessenger.of(context)
+//         .showSnackBar(const SnackBar(content: Text("No image selected")));
+//     return;
+//   }
 
-  var dio = Dio();
-  var formData = FormData.fromMap({
-    'file': await MultipartFile.fromFile(_imageFile!.path,
-        contentType: MediaType('image', 'jpeg')),
-    'upload_preset': 'kxjpuwhs'
-  });
+//   var dio = Dio();
+//   var formData = FormData.fromMap({
+//     'file': await MultipartFile.fromFile(_imageFile!.path,
+//         contentType: MediaType('image', 'jpeg')),
+//     'upload_preset': 'kxjpuwhs'
+//   });
 
-  try {
-    var response = await dio.post(
-        'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
-        data: formData);
+//   try {
+//     var response = await dio.post(
+//         'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
+//         data: formData);
 
-    if (response.statusCode == 200) {
-      print(response.data["secure_url"]); //this is url of image
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Image uploaded successfully")));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to upload image")));
-    }
-  } on DioError catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error during upload: ${e.message}")));
-  }
-}
+//     if (response.statusCode == 200) {
+//       print(response.data["secure_url"]); //this is url of image
+//       ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(content: Text("Image uploaded successfully")));
+//     } else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(content: Text("Failed to upload image")));
+//     }
+//   } on DioError catch (e) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text("Error during upload: ${e.message}")));
+//   }
+// }

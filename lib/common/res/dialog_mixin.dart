@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
@@ -8,7 +7,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dropdown.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widgets/add_advertising_dialog.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
@@ -29,12 +28,12 @@ mixin DialogMixin {
       builder: (context) {
         return AlertDialog(
           content: Text(
-           text?? '',
+            text ?? '',
             style: AppTextStyles.body16w5,
           ),
           actions: [
             TextButton(
-              onPressed:onNo?? () => context.maybePop(),
+              onPressed: onNo ?? () => context.maybePop(),
               style: AppDecorations.buttonStyle(),
               child: Text(
                 'NO',
@@ -413,126 +412,12 @@ mixin DialogMixin {
   }
 
   Future<dynamic> addAdvertisingDialog(BuildContext context, EditAdd editAdd) {
-    final titleController = TextEditingController();
-    final linkController = TextEditingController();
-    final desciptionController = TextEditingController();
-
     return showAdaptiveDialog(
       barrierDismissible: true,
       context: context,
       builder: (_) {
-        var size = MediaQuery.of(context).size;
-        return AlertDialog(
-          title: Text(editAdd == EditAdd.add ? "Add advertising" : "Edit"),
-          backgroundColor: ColorName.backgroundColor,
-          content: SizedBox(
-            width: size.width * .25,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text("Image"),
-                10.h,
-                GestureDetector(
-                  onTap: () async {
-                    // Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: ColorName.grey,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-                20.h,
-                const Text("Title"),
-                10.h,
-                CustomTextField(
-                  controller: titleController,
-                  backgroundColor: ColorName.backgroundColor,
-                  hintText: "title",
-                  leading: const Padding(
-                    padding: EdgeInsets.only(left: 25, right: 10),
-                    child: Icon(Icons.search),
-                  ),
-                  borderColor: Colors.transparent,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-                ),
-                20.h,
-                const Text("Description"),
-                10.h,
-                CustomTextField(
-                  controller: desciptionController,
-                  backgroundColor: ColorName.backgroundColor,
-                  hintText: "Description",
-                  leading: const Padding(
-                    padding: EdgeInsets.only(left: 25, right: 10),
-                    child: Icon(Icons.search),
-                  ),
-                  borderColor: Colors.transparent,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-                ),
-                20.h,
-                const Text("Link"),
-                10.h,
-                CustomTextField(
-                  controller: linkController,
-                  backgroundColor: ColorName.backgroundColor,
-                  hintText: "Link",
-                  leading: const Padding(
-                    padding: EdgeInsets.only(left: 25, right: 10),
-                    child: Icon(Icons.search),
-                  ),
-                  borderColor: Colors.transparent,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-                ),
-                20.h,
-                BlocConsumer<WebBloc, WebState>(
-                  listener: (context, state) {
-                    if (state.addNewadvertisingStatus.isComplated) {
-                      context.maybePop();
-                      showSnackBar(context, text: "Success");
-                    } else if (state.addNewadvertisingStatus ==
-                        BlocStatus.failed) {
-                      showSnackBar(context, text: "Error");
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state.addNewadvertisingStatus.isProgress) {
-                      return UI.spinner();
-                    }
-                    return GradientButton(
-                      radius: 20,
-                      onPressed: () {
-                        if (desciptionController.text.isNotEmpty &&
-                            linkController.text.isNotEmpty &&
-                            titleController.text.isNotEmpty) {
-                          context.read<WebBloc>().add(
-                                AddNewAdvertising(
-                                  advertisingModel: AdvertisingModel(
-                                    description: desciptionController.text,
-                                    link: linkController.text,
-                                    title: titleController.text,
-                                  ),
-                                ),
-                              );
-                        } else {
-                          showSnackBar(context, text: "Some fields are empty");
-                        }
-                      },
-                      text: "Add",
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
+        return AddAdvertisingDialog(
+          editAdd: editAdd,
         );
       },
     );
