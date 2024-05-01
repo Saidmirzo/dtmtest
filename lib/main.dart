@@ -6,6 +6,8 @@ import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/w
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
+import 'package:dtmtest/features/mobile/home/presentation/bloc/home_bloc.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => di<PlansBloc>()),
           BlocProvider(create: (context) => di<HistoryBloc>()),
           BlocProvider(create: (context) => di<TestsBloc>()),
+          BlocProvider(create: (context) => di<HomeBloc>()),
         ],
         child: MaterialApp.router(
           routerConfig: _appRouter.config(),

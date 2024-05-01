@@ -14,6 +14,7 @@ import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.da
 import 'package:dtmtest/features/mobile/category/data/repositories/category_repository_impl.dart';
 import 'package:dtmtest/features/mobile/category/domain/repositories/category_repository.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
+import 'package:dtmtest/features/mobile/home/presentation/bloc/home_bloc.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/data/datasource/tests_remote_datasource.dart';
@@ -51,6 +52,7 @@ Future<void> init() async {
   di.registerFactory(() => PlansBloc(webRepository: di()));
   di.registerFactory(() => HistoryBloc(webRepository: di()));
   di.registerFactory(() => TestsBloc(testsRepository: di()));
+  di.registerFactory(() => HomeBloc(repository: di()));
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
