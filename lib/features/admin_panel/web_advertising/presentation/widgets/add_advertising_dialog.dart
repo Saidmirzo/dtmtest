@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
@@ -36,7 +35,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
   final desciptionController = TextEditingController();
 
   Image? image;
-  List<int> uIntList = [];
+  List<int> uIntList=[];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -57,10 +56,12 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                 FilePickerResult? result =
                     await FilePicker.platform.pickFiles();
 
-                if (result?.files.single.path != null) {
+                if (result?.files.single.bytes != null) {
                   final Uint8List byte = result!.files.single.bytes!;
-                  image = Image.file(File(result.files.single.path ?? ""));
+                  image = Image.memory(byte);
+                  uIntList=byte.toList();
                   setState(() {});
+
                 }
               },
               child: Container(
