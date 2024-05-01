@@ -13,3 +13,5 @@ class GetAllHomeEvent extends HomeEvent {}
 class GetAllStatisticsEvent extends HomeEvent {}
 
 class GetAllCarouselImageEvent extends HomeEvent {}
+
+class GetUserModelEvent extends HomeEvent {}
