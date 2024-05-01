@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/res/app_router.dart';
@@ -35,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state.getLocaleUserStatus.isComplated) {
-          if (kIsWeb) {
+          if (kIsWeb || Platform.isMacOS) {
             context.replaceRoute(const WebMainRoute());
           } else if (state.userModel != null) {
             context.replaceRoute(const MainRoute());
