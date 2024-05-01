@@ -1,22 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'home_bloc.freezed.dart';
 part 'home_event.dart';
 part 'home_state.dart';
-part 'home_bloc.freezed.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   WebRepository repository;
   HomeBloc({required this.repository}) : super(const HomeState()) {
-    on<HomeEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<GetAllStatisticsEvent>(_getAllStatisticsEvent);
+    on<GetAllCarouselImageEvent>(_getAllCaruselImagesEvent);
   }
 
   _getAllStatisticsEvent(event, emit) async {
@@ -33,6 +31,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.copyWith(
           getAllStatisticsStatus: BlocStatus.completed,
           listStatistics: r,
+        ),
+      ),
+    );
+  }
+
+  _getAllCaruselImagesEvent(event, emit) async {
+    emit(state.copyWith(getAllCarouselImageStatus: BlocStatus.inProgress));
+    final result = await repository.getAllAdvertising();
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          getAllCarouselImageStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          getAllCarouselImageStatus: BlocStatus.completed,
+          listAdvertisiong: r,
         ),
       ),
     );

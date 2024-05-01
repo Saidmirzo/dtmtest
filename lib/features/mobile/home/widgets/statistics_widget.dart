@@ -2,7 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/mobile/home/presentation/bloc/home_bloc.dart';
+import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';

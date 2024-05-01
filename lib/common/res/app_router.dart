@@ -16,7 +16,7 @@ import 'package:dtmtest/features/mobile/auth/presentation/pages/splash_page.dart
 import 'package:dtmtest/features/mobile/category/presentation/pages/category_page.dart';
 import 'package:dtmtest/features/mobile/history/history.dart';
 import 'package:dtmtest/features/mobile/history/history_detail.dart';
-import 'package:dtmtest/features/mobile/home/presentation/pages/home_page.dart';
+import 'package:dtmtest/features/mobile/home/pages/home_page.dart';
 import 'package:dtmtest/features/mobile/mobile_main_page.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/pages/profile_page.dart';
 import 'package:dtmtest/features/mobile/quizs/presentation/pages/quizs_page.dart';

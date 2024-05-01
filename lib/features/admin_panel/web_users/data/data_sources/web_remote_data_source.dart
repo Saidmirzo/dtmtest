@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:dtmtest/features/admin_panel/web_admins/models/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
@@ -10,6 +11,8 @@ import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
+import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
 
 abstract class WebRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
@@ -211,5 +214,38 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
         )
         .toList();
     return listHistory;
+  }
+}
+
+Future<void> _uploadImage() async {
+  if (_imageFile == null) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("No image selected")));
+    return;
+  }
+
+  var dio = Dio();
+  var formData = FormData.fromMap({
+    'file': await MultipartFile.fromFile(_imageFile!.path,
+        contentType: MediaType('image', 'jpeg')),
+    'upload_preset': 'kxjpuwhs'
+  });
+
+  try {
+    var response = await dio.post(
+        'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
+        data: formData);
+
+    if (response.statusCode == 200) {
+      print(response.data["secure_url"]); //this is url of image
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Image uploaded successfully")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to upload image")));
+    }
+  } on DioError catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error during upload: ${e.message}")));
   }
 }
