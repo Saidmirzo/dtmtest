@@ -24,6 +24,7 @@ import 'package:dtmtest/features/mobile/themes/data/repository/themes_repository
 import 'package:dtmtest/features/mobile/themes/domain/repository/themes_repository.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:dtmtest/firebase_options.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -33,6 +34,8 @@ final di = GetIt.instance;
 // Alice alice = Alice(navigatorKey: AppRoutes.rootNavigatorKey);
 
 Future<void> init() async {
+
+  await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
 
