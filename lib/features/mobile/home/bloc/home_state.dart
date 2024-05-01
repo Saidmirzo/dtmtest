@@ -7,6 +7,7 @@ class HomeState with _$HomeState {
     @Default(BlocStatus.notInitialized) final BlocStatus getAllCarouselImageStatus,
     final String? message,
     final List<UserModel>? listStatistics,
+    final List<AdvertisingModel>? listAdvertisiong
   }) = _HomeState;
 
   const HomeState._();
