@@ -29,9 +29,7 @@ class AddNewAdvertising extends WebEvent {
 
 class GetAllAdvertisingEvent extends WebEvent {}
 
-
 class GetPlansEvent extends WebEvent {}
-
 
 class AddPlanEvent extends WebEvent {
   const AddPlanEvent({required this.model});
@@ -46,4 +44,10 @@ class DeletePlanEvent extends WebEvent {
 class EditPlanEvent extends WebEvent {
   const EditPlanEvent({required this.model});
   final PlanModel? model;
+}
+
+class UploadImageEvent extends WebEvent {
+  final Uint8List byte;
+  final String name;
+  const UploadImageEvent({required this.byte, required this.name});
 }

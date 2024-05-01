@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:html';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
@@ -35,7 +36,6 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
   final desciptionController = TextEditingController();
 
   Image? image;
-  List<int> uIntList=[];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -59,9 +59,13 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                 if (result?.files.single.bytes != null) {
                   final Uint8List byte = result!.files.single.bytes!;
                   image = Image.memory(byte);
-                  uIntList=byte.toList();
+                  context.read<WebBloc>().add(
+                        UploadImageEvent(
+                          byte: byte,
+                          name: result.files.single.name,
+                        ),
+                      );
                   setState(() {});
-
                 }
               },
               child: Container(
@@ -123,6 +127,21 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
             20.h,
             BlocConsumer<WebBloc, WebState>(
               listener: (context, state) {
+                if (state.uploadImageStatus.isProgress) {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => Container(
+                      color: ColorName.white,
+                      height: 50,
+                      width: 50,
+                      child: UI.spinner(),
+                    ),
+                  );
+                }
+                if (state.uploadImageStatus.isComplated) {
+                  context.maybePop();
+                }
                 if (state.addNewadvertisingStatus.isComplated) {
                   context.maybePop();
                   showSnackBar(context, text: "Success");
@@ -131,9 +150,11 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                 }
               },
               builder: (context, state) {
+                String imageLink = state.imageLink ?? '';
                 if (state.addNewadvertisingStatus.isProgress) {
                   return UI.spinner();
                 }
+
                 return GradientButton(
                   radius: 20,
                   onPressed: () {
@@ -146,7 +167,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                                 description: desciptionController.text,
                                 link: linkController.text,
                                 title: titleController.text,
-                                image: uIntList.toString(),
+                                image: imageLink,
                               ),
                             ),
                           );

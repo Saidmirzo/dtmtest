@@ -29,4 +29,5 @@ abstract class WebRepository {
   Future<Either<Failure, List<PlanModel>>> getPlan();
   Future<Either<Failure, List<AdminModel>>> getAdmins();
   Future<Either<Failure, List<HistoryModel>>> getAllHistory();
+  Future<Either<Failure, String>> uploadImage(Uint8List byte, String name);
 }

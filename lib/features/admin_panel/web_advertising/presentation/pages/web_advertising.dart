@@ -1,5 +1,5 @@
-
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
@@ -122,10 +122,17 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
                           decoration: BoxDecoration(
                             color: ColorName.backgroundColor,
                             borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                state.listAdvertising?[index].image ?? '',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          // child:listAdvertising[index].image==null?null :Image.memory(Uint8List.fromList(listAdvertising[index].image)),
+                          child: CachedNetworkImage(
+                            imageUrl: listAdvertising[index].image ?? "",
+                          ),
                         ),
-                        
                         const VerticalDivider(),
                         AdminRowWidget(
                           width: 200,

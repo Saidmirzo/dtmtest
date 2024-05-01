@@ -31,6 +31,26 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     on<AddPlanEvent>(_addPlanEvent);
     on<DeletePlanEvent>(_deletePlanEvent);
     on<EditPlanEvent>(_editPlanEvent);
+    on<UploadImageEvent>(_uploadIMageEvent);
+  }
+
+  _uploadIMageEvent(UploadImageEvent event, emit) async {
+    emit(state.copyWith(uploadImageStatus: BlocStatus.inProgress));
+    final result = await webRepository.uploadImage(event.byte, event.name);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          uploadImageStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          uploadImageStatus: BlocStatus.completed,
+          imageLink: r,
+        ),
+      ),
+    );
   }
 
   _getALlUserEvent(event, emit) async {

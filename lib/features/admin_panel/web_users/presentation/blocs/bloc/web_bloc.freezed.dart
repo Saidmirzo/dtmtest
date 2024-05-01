@@ -29,6 +29,7 @@ mixin _$WebState {
   BlocStatus get getAllCategoriesStatus => throw _privateConstructorUsedError;
   BlocStatus get deleteCategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get editategoryStatus => throw _privateConstructorUsedError;
+  BlocStatus get uploadImageStatus => throw _privateConstructorUsedError;
   List<CategoryModel>? get listCategories => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<UserModel>? get listUsers => throw _privateConstructorUsedError;
@@ -36,6 +37,7 @@ mixin _$WebState {
   List<AdvertisingModel>? get listAdvertising =>
       throw _privateConstructorUsedError;
   List<PlanModel>? get listPlans => throw _privateConstructorUsedError;
+  String? get imageLink => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WebStateCopyWith<WebState> get copyWith =>
@@ -61,12 +63,14 @@ abstract class $WebStateCopyWith<$Res> {
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
       BlocStatus editategoryStatus,
+      BlocStatus uploadImageStatus,
       List<CategoryModel>? listCategories,
       String? message,
       List<UserModel>? listUsers,
       List<ThemeModel>? listThemes,
       List<AdvertisingModel>? listAdvertising,
-      List<PlanModel>? listPlans});
+      List<PlanModel>? listPlans,
+      String? imageLink});
 }
 
 /// @nodoc
@@ -95,12 +99,14 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
     Object? editategoryStatus = null,
+    Object? uploadImageStatus = null,
     Object? listCategories = freezed,
     Object? message = freezed,
     Object? listUsers = freezed,
     Object? listThemes = freezed,
     Object? listAdvertising = freezed,
     Object? listPlans = freezed,
+    Object? imageLink = freezed,
   }) {
     return _then(_value.copyWith(
       getAllUsersStatus: null == getAllUsersStatus
@@ -155,6 +161,10 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
           ? _value.editategoryStatus
           : editategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      uploadImageStatus: null == uploadImageStatus
+          ? _value.uploadImageStatus
+          : uploadImageStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listCategories: freezed == listCategories
           ? _value.listCategories
           : listCategories // ignore: cast_nullable_to_non_nullable
@@ -179,6 +189,10 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
           ? _value.listPlans
           : listPlans // ignore: cast_nullable_to_non_nullable
               as List<PlanModel>?,
+      imageLink: freezed == imageLink
+          ? _value.imageLink
+          : imageLink // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -205,12 +219,14 @@ abstract class _$$WebStateImplCopyWith<$Res>
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
       BlocStatus editategoryStatus,
+      BlocStatus uploadImageStatus,
       List<CategoryModel>? listCategories,
       String? message,
       List<UserModel>? listUsers,
       List<ThemeModel>? listThemes,
       List<AdvertisingModel>? listAdvertising,
-      List<PlanModel>? listPlans});
+      List<PlanModel>? listPlans,
+      String? imageLink});
 }
 
 /// @nodoc
@@ -237,12 +253,14 @@ class __$$WebStateImplCopyWithImpl<$Res>
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
     Object? editategoryStatus = null,
+    Object? uploadImageStatus = null,
     Object? listCategories = freezed,
     Object? message = freezed,
     Object? listUsers = freezed,
     Object? listThemes = freezed,
     Object? listAdvertising = freezed,
     Object? listPlans = freezed,
+    Object? imageLink = freezed,
   }) {
     return _then(_$WebStateImpl(
       getAllUsersStatus: null == getAllUsersStatus
@@ -297,6 +315,10 @@ class __$$WebStateImplCopyWithImpl<$Res>
           ? _value.editategoryStatus
           : editategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      uploadImageStatus: null == uploadImageStatus
+          ? _value.uploadImageStatus
+          : uploadImageStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listCategories: freezed == listCategories
           ? _value._listCategories
           : listCategories // ignore: cast_nullable_to_non_nullable
@@ -321,6 +343,10 @@ class __$$WebStateImplCopyWithImpl<$Res>
           ? _value._listPlans
           : listPlans // ignore: cast_nullable_to_non_nullable
               as List<PlanModel>?,
+      imageLink: freezed == imageLink
+          ? _value.imageLink
+          : imageLink // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -342,12 +368,14 @@ class _$WebStateImpl extends _WebState {
       this.getAllCategoriesStatus = BlocStatus.notInitialized,
       this.deleteCategoryStatus = BlocStatus.notInitialized,
       this.editategoryStatus = BlocStatus.notInitialized,
+      this.uploadImageStatus = BlocStatus.notInitialized,
       final List<CategoryModel>? listCategories,
       this.message,
       final List<UserModel>? listUsers,
       final List<ThemeModel>? listThemes,
       final List<AdvertisingModel>? listAdvertising,
-      final List<PlanModel>? listPlans})
+      final List<PlanModel>? listPlans,
+      this.imageLink})
       : _listCategories = listCategories,
         _listUsers = listUsers,
         _listThemes = listThemes,
@@ -394,6 +422,9 @@ class _$WebStateImpl extends _WebState {
   @override
   @JsonKey()
   final BlocStatus editategoryStatus;
+  @override
+  @JsonKey()
+  final BlocStatus uploadImageStatus;
   final List<CategoryModel>? _listCategories;
   @override
   List<CategoryModel>? get listCategories {
@@ -447,8 +478,11 @@ class _$WebStateImpl extends _WebState {
   }
 
   @override
+  final String? imageLink;
+
+  @override
   String toString() {
-    return 'WebState(getAllUsersStatus: $getAllUsersStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, addNewadvertisingStatus: $addNewadvertisingStatus, getAllAdvertisingStatus: $getAllAdvertisingStatus, getAllPlansStatus: $getAllPlansStatus, addPlanStatus: $addPlanStatus, deletePlanStatus: $deletePlanStatus, editPlanStatus: $editPlanStatus, addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, listCategories: $listCategories, message: $message, listUsers: $listUsers, listThemes: $listThemes, listAdvertising: $listAdvertising, listPlans: $listPlans)';
+    return 'WebState(getAllUsersStatus: $getAllUsersStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, addNewadvertisingStatus: $addNewadvertisingStatus, getAllAdvertisingStatus: $getAllAdvertisingStatus, getAllPlansStatus: $getAllPlansStatus, addPlanStatus: $addPlanStatus, deletePlanStatus: $deletePlanStatus, editPlanStatus: $editPlanStatus, addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, uploadImageStatus: $uploadImageStatus, listCategories: $listCategories, message: $message, listUsers: $listUsers, listThemes: $listThemes, listAdvertising: $listAdvertising, listPlans: $listPlans, imageLink: $imageLink)';
   }
 
   @override
@@ -484,6 +518,8 @@ class _$WebStateImpl extends _WebState {
                 other.deleteCategoryStatus == deleteCategoryStatus) &&
             (identical(other.editategoryStatus, editategoryStatus) ||
                 other.editategoryStatus == editategoryStatus) &&
+            (identical(other.uploadImageStatus, uploadImageStatus) ||
+                other.uploadImageStatus == uploadImageStatus) &&
             const DeepCollectionEquality()
                 .equals(other._listCategories, _listCategories) &&
             (identical(other.message, message) || other.message == message) &&
@@ -494,7 +530,9 @@ class _$WebStateImpl extends _WebState {
             const DeepCollectionEquality()
                 .equals(other._listAdvertising, _listAdvertising) &&
             const DeepCollectionEquality()
-                .equals(other._listPlans, _listPlans));
+                .equals(other._listPlans, _listPlans) &&
+            (identical(other.imageLink, imageLink) ||
+                other.imageLink == imageLink));
   }
 
   @override
@@ -513,12 +551,14 @@ class _$WebStateImpl extends _WebState {
         getAllCategoriesStatus,
         deleteCategoryStatus,
         editategoryStatus,
+        uploadImageStatus,
         const DeepCollectionEquality().hash(_listCategories),
         message,
         const DeepCollectionEquality().hash(_listUsers),
         const DeepCollectionEquality().hash(_listThemes),
         const DeepCollectionEquality().hash(_listAdvertising),
-        const DeepCollectionEquality().hash(_listPlans)
+        const DeepCollectionEquality().hash(_listPlans),
+        imageLink
       ]);
 
   @JsonKey(ignore: true)
@@ -543,12 +583,14 @@ abstract class _WebState extends WebState {
       final BlocStatus getAllCategoriesStatus,
       final BlocStatus deleteCategoryStatus,
       final BlocStatus editategoryStatus,
+      final BlocStatus uploadImageStatus,
       final List<CategoryModel>? listCategories,
       final String? message,
       final List<UserModel>? listUsers,
       final List<ThemeModel>? listThemes,
       final List<AdvertisingModel>? listAdvertising,
-      final List<PlanModel>? listPlans}) = _$WebStateImpl;
+      final List<PlanModel>? listPlans,
+      final String? imageLink}) = _$WebStateImpl;
   const _WebState._() : super._();
 
   @override
@@ -578,6 +620,8 @@ abstract class _WebState extends WebState {
   @override
   BlocStatus get editategoryStatus;
   @override
+  BlocStatus get uploadImageStatus;
+  @override
   List<CategoryModel>? get listCategories;
   @override
   String? get message;
@@ -589,6 +633,8 @@ abstract class _WebState extends WebState {
   List<AdvertisingModel>? get listAdvertising;
   @override
   List<PlanModel>? get listPlans;
+  @override
+  String? get imageLink;
   @override
   @JsonKey(ignore: true)
   _$$WebStateImplCopyWith<_$WebStateImpl> get copyWith =>
