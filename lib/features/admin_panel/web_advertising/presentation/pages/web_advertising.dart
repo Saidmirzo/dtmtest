@@ -1,3 +1,4 @@
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
@@ -119,9 +120,12 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
                           width: 50,
                           height: 50,
                           decoration: BoxDecoration(
-                              color: ColorName.backgroundColor,
-                              borderRadius: BorderRadius.circular(5)),
+                            color: ColorName.backgroundColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          // child:listAdvertising[index].image==null?null :Image.memory(Uint8List.fromList(listAdvertising[index].image)),
                         ),
+                        
                         const VerticalDivider(),
                         AdminRowWidget(
                           width: 200,
