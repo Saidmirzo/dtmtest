@@ -49,7 +49,7 @@ Future<void> init() async {
   di.registerFactory(() => PlansBloc(webRepository: di()));
   di.registerFactory(() => HistoryBloc(webRepository: di()));
   di.registerFactory(() => TestsBloc(testsRepository: di()));
-  di.registerFactory(() => HomeBloc(repository: di()));
+  di.registerFactory(() => HomeBloc(repository: di(), authRepository: di()));
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));

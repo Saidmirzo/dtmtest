@@ -19,8 +19,10 @@ mixin _$HomeState {
   BlocStatus get getAllStatisticsStatus => throw _privateConstructorUsedError;
   BlocStatus get getAllCarouselImageStatus =>
       throw _privateConstructorUsedError;
+  BlocStatus get getUserModelStatus => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<UserModel>? get listStatistics => throw _privateConstructorUsedError;
+  UserModel? get userModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -35,8 +37,10 @@ abstract class $HomeStateCopyWith<$Res> {
   $Res call(
       {BlocStatus getAllStatisticsStatus,
       BlocStatus getAllCarouselImageStatus,
+      BlocStatus getUserModelStatus,
       String? message,
-      List<UserModel>? listStatistics});
+      List<UserModel>? listStatistics,
+      UserModel? userModel});
 }
 
 /// @nodoc
@@ -54,8 +58,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? getAllStatisticsStatus = null,
     Object? getAllCarouselImageStatus = null,
+    Object? getUserModelStatus = null,
     Object? message = freezed,
     Object? listStatistics = freezed,
+    Object? userModel = freezed,
   }) {
     return _then(_value.copyWith(
       getAllStatisticsStatus: null == getAllStatisticsStatus
@@ -66,6 +72,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.getAllCarouselImageStatus
           : getAllCarouselImageStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      getUserModelStatus: null == getUserModelStatus
+          ? _value.getUserModelStatus
+          : getUserModelStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -74,6 +84,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.listStatistics
           : listStatistics // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      userModel: freezed == userModel
+          ? _value.userModel
+          : userModel // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ) as $Val);
   }
 }
@@ -89,8 +103,10 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus getAllStatisticsStatus,
       BlocStatus getAllCarouselImageStatus,
+      BlocStatus getUserModelStatus,
       String? message,
-      List<UserModel>? listStatistics});
+      List<UserModel>? listStatistics,
+      UserModel? userModel});
 }
 
 /// @nodoc
@@ -106,8 +122,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? getAllStatisticsStatus = null,
     Object? getAllCarouselImageStatus = null,
+    Object? getUserModelStatus = null,
     Object? message = freezed,
     Object? listStatistics = freezed,
+    Object? userModel = freezed,
   }) {
     return _then(_$HomeStateImpl(
       getAllStatisticsStatus: null == getAllStatisticsStatus
@@ -118,6 +136,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.getAllCarouselImageStatus
           : getAllCarouselImageStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      getUserModelStatus: null == getUserModelStatus
+          ? _value.getUserModelStatus
+          : getUserModelStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -126,6 +148,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._listStatistics
           : listStatistics // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      userModel: freezed == userModel
+          ? _value.userModel
+          : userModel // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ));
   }
 }
@@ -136,8 +162,10 @@ class _$HomeStateImpl extends _HomeState {
   const _$HomeStateImpl(
       {this.getAllStatisticsStatus = BlocStatus.notInitialized,
       this.getAllCarouselImageStatus = BlocStatus.notInitialized,
+      this.getUserModelStatus = BlocStatus.notInitialized,
       this.message,
-      final List<UserModel>? listStatistics})
+      final List<UserModel>? listStatistics,
+      this.userModel})
       : _listStatistics = listStatistics,
         super._();
 
@@ -147,6 +175,9 @@ class _$HomeStateImpl extends _HomeState {
   @override
   @JsonKey()
   final BlocStatus getAllCarouselImageStatus;
+  @override
+  @JsonKey()
+  final BlocStatus getUserModelStatus;
   @override
   final String? message;
   final List<UserModel>? _listStatistics;
@@ -160,8 +191,11 @@ class _$HomeStateImpl extends _HomeState {
   }
 
   @override
+  final UserModel? userModel;
+
+  @override
   String toString() {
-    return 'HomeState(getAllStatisticsStatus: $getAllStatisticsStatus, getAllCarouselImageStatus: $getAllCarouselImageStatus, message: $message, listStatistics: $listStatistics)';
+    return 'HomeState(getAllStatisticsStatus: $getAllStatisticsStatus, getAllCarouselImageStatus: $getAllCarouselImageStatus, getUserModelStatus: $getUserModelStatus, message: $message, listStatistics: $listStatistics, userModel: $userModel)';
   }
 
   @override
@@ -174,9 +208,13 @@ class _$HomeStateImpl extends _HomeState {
             (identical(other.getAllCarouselImageStatus,
                     getAllCarouselImageStatus) ||
                 other.getAllCarouselImageStatus == getAllCarouselImageStatus) &&
+            (identical(other.getUserModelStatus, getUserModelStatus) ||
+                other.getUserModelStatus == getUserModelStatus) &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
-                .equals(other._listStatistics, _listStatistics));
+                .equals(other._listStatistics, _listStatistics) &&
+            (identical(other.userModel, userModel) ||
+                other.userModel == userModel));
   }
 
   @override
@@ -184,8 +222,10 @@ class _$HomeStateImpl extends _HomeState {
       runtimeType,
       getAllStatisticsStatus,
       getAllCarouselImageStatus,
+      getUserModelStatus,
       message,
-      const DeepCollectionEquality().hash(_listStatistics));
+      const DeepCollectionEquality().hash(_listStatistics),
+      userModel);
 
   @JsonKey(ignore: true)
   @override
@@ -198,8 +238,10 @@ abstract class _HomeState extends HomeState {
   const factory _HomeState(
       {final BlocStatus getAllStatisticsStatus,
       final BlocStatus getAllCarouselImageStatus,
+      final BlocStatus getUserModelStatus,
       final String? message,
-      final List<UserModel>? listStatistics}) = _$HomeStateImpl;
+      final List<UserModel>? listStatistics,
+      final UserModel? userModel}) = _$HomeStateImpl;
   const _HomeState._() : super._();
 
   @override
@@ -207,9 +249,13 @@ abstract class _HomeState extends HomeState {
   @override
   BlocStatus get getAllCarouselImageStatus;
   @override
+  BlocStatus get getUserModelStatus;
+  @override
   String? get message;
   @override
   List<UserModel>? get listStatistics;
+  @override
+  UserModel? get userModel;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
