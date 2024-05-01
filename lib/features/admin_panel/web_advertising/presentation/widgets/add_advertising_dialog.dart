@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
@@ -33,6 +35,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
   final desciptionController = TextEditingController();
 
   Image? image;
+  List<int> uIntList=[];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -54,8 +57,11 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                     await FilePicker.platform.pickFiles();
 
                 if (result?.files.single.bytes != null) {
-                  image = Image.memory(result!.files.single.bytes!);
+                  final Uint8List byte = result!.files.single.bytes!;
+                  image = Image.memory(byte);
+                  uIntList=byte.toList();
                   setState(() {});
+
                 }
               },
               child: Container(
@@ -140,6 +146,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                                 description: desciptionController.text,
                                 link: linkController.text,
                                 title: titleController.text,
+                                image: uIntList.toString(),
                               ),
                             ),
                           );
