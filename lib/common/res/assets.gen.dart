@@ -61,6 +61,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/check_icon.svg
   SvgGenImage get checkIcon => const SvgGenImage('assets/icons/check_icon.svg');
 
+  /// File path: assets/icons/closed.svg
+  SvgGenImage get closed => const SvgGenImage('assets/icons/closed.svg');
+
   /// File path: assets/icons/dots.svg
   SvgGenImage get dots => const SvgGenImage('assets/icons/dots.svg');
 
@@ -79,8 +82,8 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
-  /// File path: assets/icons/icon.png
-  AssetGenImage get icon => const AssetGenImage('assets/icons/icon.png');
+  /// File path: assets/icons/icon.jpg
+  AssetGenImage get icon => const AssetGenImage('assets/icons/icon.jpg');
 
   /// File path: assets/icons/menu.svg
   SvgGenImage get menu => const SvgGenImage('assets/icons/menu.svg');
@@ -134,6 +137,7 @@ class $AssetsIconsGen {
         categories,
         category,
         checkIcon,
+        closed,
         dots,
         edit,
         editIcon,

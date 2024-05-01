@@ -15,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class ThemesPage extends StatefulWidget {
-  final CategoryModel categoryModel;
+  final CategoryModel? categoryModel;
   const ThemesPage({
     super.key,
     required this.categoryModel,
@@ -33,7 +33,7 @@ class _ThemesPageState extends State<ThemesPage> {
     super.initState();
     context
         .read<ThemesBloc>()
-        .add(GetThemesEvent(id: widget.categoryModel.id ?? ''));
+        .add(GetThemesEvent(id: widget.categoryModel?.id ?? ''));
   }
 
   @override
@@ -45,7 +45,7 @@ class _ThemesPageState extends State<ThemesPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
-          text: widget.categoryModel.name,
+          text: widget.categoryModel?.name,
         ),
         body: BlocConsumer<ThemesBloc, ThemesState>(
           listener: (context, state) {},
