@@ -1,5 +1,6 @@
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:flutter/material.dart';
 
 class HistoryDetailWidget extends StatelessWidget {
@@ -27,11 +28,10 @@ class HistoryDetailWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    color: ColorName.customColor),
+              InnerShadowWidget(
+                width: 40,
+                height: 33,
+                alignment: Alignment.center,
                 child: Text(
                   "${index + 1}",
                   style:
@@ -51,25 +51,26 @@ class HistoryDetailWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Xato: ",
-                      style:
-                          AppTextStyles.body12w7.copyWith(color: ColorName.red),
-                    ),
-                    Flexible(
-                        child: Text(
-                      answer,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ))
-                  ],
-                ),
-              ),
-              20.w,
+              currentAnswer != answer
+                  ? Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Xato: ",
+                            style: AppTextStyles.body12w7
+                                .copyWith(color: ColorName.red),
+                          ),
+                          Flexible(
+                              child: Text(
+                            answer,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ))
+                        ],
+                      ),
+                    )
+                  : UI.nothing,
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +78,7 @@ class HistoryDetailWidget extends StatelessWidget {
                     Text(
                       "Togri: ",
                       style: AppTextStyles.body12w7
-                          .copyWith(color: ColorName.green),
+                          .copyWith(color: ColorName.customColor),
                     ),
                     Flexible(
                       child: Text(
@@ -88,7 +89,7 @@ class HistoryDetailWidget extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ],

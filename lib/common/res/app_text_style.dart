@@ -1,9 +1,10 @@
+import 'package:dtmtest/common/res/fonts.gen.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTextStyles {
   const AppTextStyles._();
 
-  static const String fontFamily = 'Montserrat';
+  static const String fontFamily = FontFamily.crimsonText;
 
   static TextStyle textStyle = const TextStyle(
       fontFamily: fontFamily, fontStyle: FontStyle.normal, color: Colors.black);
