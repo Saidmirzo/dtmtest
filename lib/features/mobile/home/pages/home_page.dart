@@ -5,6 +5,7 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/home/widgets/home_carousel_widget.dart';
 import 'package:dtmtest/features/mobile/home/widgets/statistics_widget.dart';
@@ -26,6 +27,20 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<CategoryBloc>().add(GetAllCategoriesEvent());
+  }
+
+  String timeFunction() {
+    int dateTime = DateTime.now().hour;
+    if (dateTime <= 9) {
+      return "Hayrli tong";
+    } else if (dateTime <= 17) {
+      return "Hayrli kun";
+    } else if (dateTime <= 22) {
+      return "Hayrli kech";
+    } else if (dateTime <= 4 || dateTime <= 24) {
+      return "Hayrli tun";
+    }
+    return "Hayrli kun";
   }
 
   @override
@@ -74,13 +89,14 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Xayrli kun !",
+                          timeFunction(),
                           style: AppTextStyles.body12w7.copyWith(
                             color: ColorName.white,
                           ),
                         ),
                         Text(
-                          "Sharlotta Shea",
+                          context.read<AuthBloc>().state.userModel?.fullName ??
+                              '',
                           style: AppTextStyles.body20w7.copyWith(
                             color: ColorName.white,
                           ),

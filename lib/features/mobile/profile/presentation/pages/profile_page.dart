@@ -9,6 +9,7 @@ import 'package:dtmtest/features/mobile/profile/presentation/widgets/user_image_
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/about_user_widget.dart';
 
@@ -25,6 +26,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController firstnameController = TextEditingController();
+  String telegramUrl = "https://t.me/akramjon_usmonov2";
+
+  Future<void> openExternalApplication(String url) async {
+    if (!await launchUrl(
+        Uri.parse(
+          url,
+        ),
+        mode: LaunchMode.externalApplication)) {
+      throw Exception("Can not lanch $url");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +167,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     15.h,
                     HelpAboutUsWIdget(
                       nameSectionText: "Help(Telegram)",
-                      function: () {},
+                      function: () {
+                        openExternalApplication(telegramUrl);
+                      },
                     ),
                     70.h,
                     BlocConsumer<AuthBloc, AuthState>(
