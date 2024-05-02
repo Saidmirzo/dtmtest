@@ -40,61 +40,64 @@ class _HomePageState extends State<HomePage> {
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverAppBar(
-              backgroundColor: Colors.transparent,
-              title: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: ColorName.white,
-                          width: 1,
-                        ),
-                        shape: BoxShape.circle,
-                        color: ColorName.borderColor,
-                      ),
-                      child: CustomNetworkImage(
-                        networkImage:
-                            context.read<AuthBloc>().state.userModel?.userImage,
-                        defWidget: ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Assets.icons.profileBold.svg(
-                            width: 40,
-                            height: 40,
-                          ),
-                        ),
-                      ),
-                    ),
-                    13.w,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                return SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          timeFunction(),
-                          style: AppTextStyles.body12w7.copyWith(
-                            color: ColorName.white,
+                        Container(
+                          width: 50,
+                          height: 50,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: ColorName.white,
+                              width: 1,
+                            ),
+                            shape: BoxShape.circle,
+                            color: ColorName.borderColor,
+                          ),
+                          child: CustomNetworkImage(
+                            networkImage: state.userModel?.userImage,
+                            defWidget: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Assets.icons.profileBold.svg(
+                                width: 40,
+                                height: 40,
+                              ),
+                            ),
                           ),
                         ),
-                        Text(
-                          context.read<AuthBloc>().state.userModel?.fullName ??
-                              '',
-                          style: AppTextStyles.body20w7.copyWith(
-                            color: ColorName.white,
-                          ),
+                        13.w,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              timeFunction(),
+                              style: AppTextStyles.body12w7.copyWith(
+                                color: ColorName.white,
+                              ),
+                            ),
+                            Text(
+                              state.userModel?.fullName ?? '',
+                              style: AppTextStyles.body20w7.copyWith(
+                                color: ColorName.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
             const SliverToBoxAdapter(
               child: Padding(
