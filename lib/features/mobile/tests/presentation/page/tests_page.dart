@@ -113,7 +113,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                             time: DateTime.now()
                                 .millisecondsSinceEpoch
                                 .toString(),
-                            categoryName: '',
+                            categoryName: widget.themeModel.name,
                           );
                           context.replaceRoute(
                             TestsResultRoute(historyModel: historyModel),

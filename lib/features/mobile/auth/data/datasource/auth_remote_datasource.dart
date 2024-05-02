@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +15,7 @@ abstract class AuthRemoteDataSource {
     required String email,
     required String password,
   });
+  Future<UserModel> getUserFromRemote(String id);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -72,24 +74,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       password: password,
     );
     final User? user = result.user;
-    final UserModel userModel = UserModel(
-      email: result.user?.email,
-      fullName: result.user?.displayName,
-      uid: result.user?.uid,
-      phoneNumber: result.user?.phoneNumber,
-      userImage: result.user?.photoURL,
-    );
 
     if (user != null) {
+      final UserModel userModel = await getUserFromRemote(user.uid);
       authLocaleDataSource.saveLocaleUserDtat(userModel);
-      // final userCount = await userCollection
-      //     .where('email', isEqualTo: result.user?.email)
-      //     .get();
-
-      // final model = userCollection.doc(result.user?.uid);
-      // if (userCount.docs.isEmpty) {
-      //   model.set(userModel.toJson());
-      // }
       return "Success";
     } else {
       throw Exception();
@@ -122,5 +110,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } else {
       throw Exception();
     }
+  }
+
+  @override
+  Future<UserModel> getUserFromRemote(String id) async {
+    final result = await userCollection.doc(id).get();
+    return UserModel.fromJson(
+      jsonDecode(
+        jsonEncode(
+          result.data(),
+        ),
+      ),
+    );
   }
 }
