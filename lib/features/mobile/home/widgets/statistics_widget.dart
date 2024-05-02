@@ -1,13 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:auto_route/auto_route.dart';
+import 'dart:developer';
+
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
+import 'package:dtmtest/features/mobile/auth/domain/repository/auth_repository.dart';
+import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
-import 'package:dtmtest/common/res/res.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsWidget extends StatefulWidget {
@@ -20,11 +24,31 @@ class StatisticsWidget extends StatefulWidget {
 }
 
 class _StatisticsWidgetState extends State<StatisticsWidget> {
+  List<UserModel?> raitingList = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<HomeBloc>().add(GetAllStatisticsEvent());
+  }
+
+  void func() {
+    List<UserModel?> usersList =
+        (context.read<HomeBloc>().state.listStatistics ?? [])
+            .map((e) => e)
+            .toList();
+
+    if (!usersList.any((element) =>
+        element?.uid == context.read<AuthBloc>().state.userModel?.uid)) {
+      usersList.add(context.read<AuthBloc>().state.userModel);
+    }
+
+    usersList.sort((a, b) => (b?.rating ?? 0).compareTo(a?.rating ?? 0));
+
+    raitingList = usersList.take(3).toList();
+    if (!raitingList.any(
+        (user) => user?.uid == context.read<AuthBloc>().state.userModel?.uid)) {
+      raitingList.add(context.read<AuthBloc>().state.userModel);
+    }
   }
 
   @override
@@ -42,7 +66,9 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
         20.h,
         BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state.getAllStatisticsStatus == BlocStatus.completed) {
+              func();
+            }
           },
           builder: (context, state) {
             if (state.getAllStatisticsStatus == BlocStatus.inProgress) {
@@ -66,24 +92,27 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: state.listStatistics?.length ?? 0,
+                  itemCount: raitingList.length ?? 0,
                   itemBuilder: (context, index) {
+                    final currentUser = raitingList[index];
+                    bool isLocalUserTopThree = currentUser != null &&
+                        currentUser.uid ==
+                            context.read<AuthBloc>().state.userModel?.uid &&
+                        index < 4;
                     return MaterialInkWellButton(
-                      function: () {
-                        
-                      },
+                      function: () {},
                       margin: EdgeInsets.zero,
                       borderRadius: BorderRadius.circular(12),
-                      color: index != state.listStatistics!.length - 1
-                          ? Colors.transparent
-                          : const Color(0xffE7E7E7),
+                      color: isLocalUserTopThree
+                          ? const Color(0xffE7E7E7)
+                          : Colors.transparent,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       width: double.infinity,
                       height: 52,
-                      child: StatisticsFavoriteWIdget(
+                      child: StatisticsFavoriteWidget(
                         index: index,
-                        name: state.listStatistics?[index].fullName ?? '',
-                        textXp: "30/30",
+                        name: currentUser?.fullName ?? '',
+                        raiting: currentUser?.rating ?? 0,
                       ),
                     );
                   },
@@ -102,15 +131,15 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
 }
 
 // ignore: must_be_immutable
-class StatisticsFavoriteWIdget extends StatelessWidget {
+class StatisticsFavoriteWidget extends StatelessWidget {
   int index;
   String name;
-  String textXp;
-  StatisticsFavoriteWIdget({
+  int? raiting;
+  StatisticsFavoriteWidget({
     super.key,
     required this.index,
     required this.name,
-    required this.textXp,
+    required this.raiting,
   });
 
   @override
@@ -125,12 +154,12 @@ class StatisticsFavoriteWIdget extends StatelessWidget {
             color: ColorName.customColor,
           ),
           child: Text(
-            index != (context.read<HomeBloc>().state.listStatistics!.length - 1) ? " ${index + 1}" : "...",
+            index != 3 ? " ${index + 1}" : "...",
             style: AppTextStyles.body12w5.copyWith(color: ColorName.white),
             textAlign: TextAlign.center,
           ),
         ),
-        const Spacer(),
+        15.w,
         Container(
           width: 40,
           height: 40,
@@ -146,19 +175,20 @@ class StatisticsFavoriteWIdget extends StatelessWidget {
             ),
           ),
         ),
-        const Spacer(),
+        10.w,
         SizedBox(
-          width: 130,
+          width: 150,
           child: Text(
             name,
-            style: AppTextStyles.body12w6,
+            style:
+                AppTextStyles.body16w6.copyWith(color: ColorName.customColor),
             overflow: TextOverflow.ellipsis,
           ),
         ),
         const Spacer(),
         Text(
-          textXp,
-          style: AppTextStyles.body10w4,
+          "$raiting",
+          style: AppTextStyles.body12w4.copyWith(color: ColorName.customColor),
         )
       ],
     );
