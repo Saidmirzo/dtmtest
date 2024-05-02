@@ -104,6 +104,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
 
+  /// File path: assets/icons/profile_bold.svg
+  SvgGenImage get profileBold =>
+      const SvgGenImage('assets/icons/profile_bold.svg');
+
   /// File path: assets/icons/quizes.svg
   SvgGenImage get quizes => const SvgGenImage('assets/icons/quizes.svg');
 
@@ -151,6 +155,7 @@ class $AssetsIconsGen {
         notification,
         person,
         profile,
+        profileBold,
         quizes,
         search,
         searchIcon,

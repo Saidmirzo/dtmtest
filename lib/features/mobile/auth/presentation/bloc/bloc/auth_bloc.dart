@@ -1,4 +1,5 @@
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_register_model.dart';
 import 'package:dtmtest/features/mobile/auth/domain/repository/auth_repository.dart';
@@ -25,12 +26,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final result =
         await authRepository.registerWithEmail(event.userRegisterModel);
     result.fold(
-      (l) => emit(
-        state.copyWith(
-          registerWithEmailState: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
+      (l) {
+        if (l is UnautorizedFailure) {
+          emit(
+            state.copyWith(
+              registerWithEmailState: BlocStatus.unAutorized,
+              message: l.message,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              registerWithEmailState: BlocStatus.failed,
+              message: l.message,
+            ),
+          );
+        }
+      },
       (r) => emit(
         state.copyWith(registerWithEmailState: BlocStatus.completed),
       ),
@@ -44,12 +56,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.userRegisterModel.password,
     );
     result.fold(
-      (l) => emit(
-        state.copyWith(
-          loginWithEmailState: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
+      (l) {
+        if (l is UnautorizedFailure) {
+          emit(
+            state.copyWith(
+              loginWithEmailState: BlocStatus.unAutorized,
+              message: l.message,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              loginWithEmailState: BlocStatus.failed,
+              message: l.message,
+            ),
+          );
+        }
+      },
       (r) => emit(
         state.copyWith(loginWithEmailState: BlocStatus.completed),
       ),
