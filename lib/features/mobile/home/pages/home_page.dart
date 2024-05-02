@@ -5,6 +5,7 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/home/widgets/home_carousel_widget.dart';
@@ -75,12 +76,15 @@ class _HomePageState extends State<HomePage> {
                         shape: BoxShape.circle,
                         color: ColorName.borderColor,
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: Assets.images.statisticsProfileImage.image(
-                          fit: BoxFit.fill,
-                          width: 50,
-                          height: 50,
+                      child: CustomNetworkImage(
+                        networkImage:
+                            context.read<AuthBloc>().state.userModel?.userImage,
+                        defWidget: ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: Assets.icons.profileBold.svg(
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                       ),
                     ),
