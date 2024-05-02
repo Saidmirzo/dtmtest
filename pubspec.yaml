@@ -66,13 +66,13 @@ dev_dependencies:
   hive_generator: ^2.0.1
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: "ic_launcher"
   ios: true
-  image_path: "assets/icons/icon.png"
+  image_path: "assets/icons/icon.jpg"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/icons/icon.png"
+    image_path: "assets/icons/icon.jpg"
     background_color: "#hexcode"
     theme_color: "#hexcode"
 
