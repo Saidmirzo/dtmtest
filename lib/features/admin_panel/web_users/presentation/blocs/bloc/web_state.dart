@@ -17,12 +17,14 @@ part of 'web_bloc.dart';
     @Default(BlocStatus.notInitialized) final BlocStatus getAllCategoriesStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus deleteCategoryStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus editategoryStatus,
+    @Default(BlocStatus.notInitialized) final BlocStatus uploadImageStatus,
     final List<CategoryModel>? listCategories,
     final String? message,
     final List<UserModel>? listUsers,
     final List<ThemeModel>? listThemes,
     final List<AdvertisingModel>? listAdvertising,
     final List<PlanModel>? listPlans,
+    final String? imageLink,
 
   })=_WebState;
 

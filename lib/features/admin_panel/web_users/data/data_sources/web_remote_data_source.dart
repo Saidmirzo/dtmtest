@@ -12,6 +12,7 @@ import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasou
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 
 abstract class WebRemoteDataSource {
@@ -30,6 +31,7 @@ abstract class WebRemoteDataSource {
   Future<List<PlanModel>> getPlan();
   Future<List<AdminModel>> getAdmins();
   Future<List<HistoryModel>> getAllHistory();
+  Future<String> postImage(Uint8List byte, String name);
 }
 
 class WebRemoteDataSourceImpl implements WebRemoteDataSource {
@@ -215,37 +217,26 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
         .toList();
     return listHistory;
   }
+
+  @override
+  Future<String> postImage(Uint8List byte, String name) async {
+    var dio = Dio();
+    var multiPartFile = MultipartFile.fromBytes(
+      byte,
+      filename: name,
+      contentType: MediaType('image', 'jpeg'),
+    );
+    var formData = FormData.fromMap(
+      {
+        'file': multiPartFile,
+        'upload_preset': 'kxjpuwhs',
+      },
+    );
+
+    var response = await dio.post(
+      'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
+      data: formData,
+    );
+    return response.data["secure_url"];
+  }
 }
-
-// Future<void> _uploadImage() async {
-//   if (_imageFile == null) {
-//     ScaffoldMessenger.of(context)
-//         .showSnackBar(const SnackBar(content: Text("No image selected")));
-//     return;
-//   }
-
-//   var dio = Dio();
-//   var formData = FormData.fromMap({
-//     'file': await MultipartFile.fromFile(_imageFile!.path,
-//         contentType: MediaType('image', 'jpeg')),
-//     'upload_preset': 'kxjpuwhs'
-//   });
-
-//   try {
-//     var response = await dio.post(
-//         'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
-//         data: formData);
-
-//     if (response.statusCode == 200) {
-//       print(response.data["secure_url"]); //this is url of image
-//       ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(content: Text("Image uploaded successfully")));
-//     } else {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(content: Text("Failed to upload image")));
-//     }
-//   } on DioError catch (e) {
-//     ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text("Error during upload: ${e.message}")));
-//   }
-// }
