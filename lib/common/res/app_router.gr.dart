@@ -444,7 +444,7 @@ class TestsResultRouteArgs {
 class ThemesRoute extends PageRouteInfo<ThemesRouteArgs> {
   ThemesRoute({
     Key? key,
-    required CategoryModel categoryModel,
+    required CategoryModel? categoryModel,
     List<PageRouteInfo>? children,
   }) : super(
           ThemesRoute.name,
@@ -468,7 +468,7 @@ class ThemesRouteArgs {
 
   final Key? key;
 
-  final CategoryModel categoryModel;
+  final CategoryModel? categoryModel;
 
   @override
   String toString() {

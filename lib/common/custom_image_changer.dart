@@ -9,7 +9,6 @@ class CustomImageChangerWidget extends StatelessWidget {
     super.key,
     this.image,
     this.onTap,
-    this.onTapImage,
     this.file,
     this.width,
     this.height,
@@ -22,7 +21,7 @@ class CustomImageChangerWidget extends StatelessWidget {
 
   final String? image, errorImage;
   final File? file;
-  final void Function()? onTap, onTapImage;
+  final void Function()? onTap;
   final double? width, height;
   final Widget? child;
   final BoxBorder? border;
@@ -31,63 +30,73 @@ class CustomImageChangerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return file?.path != null
-        ? Container(
-            width: width,
-            height: height,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              boxShadow: boxShadow,
-              border: border,
-              color: ColorName.red.withOpacity(.5),
-              borderRadius: borderRadiusDef,
-              image: DecorationImage(
-                image: FileImage(file ?? File('path')),
-                fit: BoxFit.cover,
-              ),
-            ),
-          )
-        : InkWell(
-            onTap: onTapImage,
-            child: CachedNetworkImage(
-              imageUrl: image ?? '',
-              fit: BoxFit.cover,
-              imageBuilder: (context, imageProvider) => Container(
+        ? Stack(
+            children: [
+              Container(
                 width: width,
                 height: height,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.white,
                   boxShadow: boxShadow,
                   border: border,
+                  color: ColorName.red.withOpacity(.5),
                   borderRadius: borderRadiusDef,
-                  image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                  image: DecorationImage(
+                    image: FileImage(file ?? File('path')),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              errorWidget: (context, url, error) {
-                return errorImage != null
-                    ? Container(
-                        width: width,
-                        height: height,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          boxShadow: boxShadow,
-                          border: border,
-                          color: ColorName.red.withOpacity(.5),
-                          borderRadius: borderRadiusDef,
-                          image: DecorationImage(
-                              image: AssetImage(errorImage ?? ''),
-                              fit: BoxFit.cover),
-                        ),
-                      )
-                    : UI.nothing;
-              },
-              progressIndicatorBuilder: (context, url, progress) =>
-                  CircularProgressIndicator(
-                strokeWidth: 2,
-                value: progress.progress,
-                color: ColorName.blue,
-                backgroundColor: Colors.grey,
-              ),
+              child ?? const SizedBox.shrink()
+            ],
+          )
+        : InkWell(
+            onTap: onTap,
+            child: Stack(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: image ?? '',
+                  fit: BoxFit.cover,
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: width,
+                    height: height,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: boxShadow,
+                      border: border,
+                      borderRadius: borderRadiusDef,
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.cover),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) {
+                    return errorImage != null
+                        ? Container(
+                            width: width,
+                            height: height,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              boxShadow: boxShadow,
+                              border: border,
+                              color: ColorName.red.withOpacity(.5),
+                              borderRadius: borderRadiusDef,
+                              image: DecorationImage(
+                                  image: AssetImage(errorImage ?? ''),
+                                  fit: BoxFit.cover),
+                            ),
+                          )
+                        : UI.nothing;
+                  },
+                  progressIndicatorBuilder: (context, url, progress) =>
+                      CircularProgressIndicator(
+                    strokeWidth: 2,
+                    value: progress.progress,
+                    color: ColorName.blue,
+                    backgroundColor: Colors.grey,
+                  ),
+                ),
+                child ?? const SizedBox.shrink()
+              ],
             ),
           );
   }

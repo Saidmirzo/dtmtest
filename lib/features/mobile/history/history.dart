@@ -46,7 +46,7 @@ class HistoryPage extends StatelessWidget {
                             topRight: Radius.circular(30)),
                         color: ColorName.white),
                     child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemCount: state.listHistory?.length ?? 0,
                       padding: const EdgeInsets.all(18),
                       itemBuilder: (_, index) => HistoryWidget(
