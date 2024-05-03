@@ -151,15 +151,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                     50.h,
-                    HelpAboutUsWIdget(
-                      nameSectionText: "Traffics",
-                      function: () {
-                        AutoRouter.of(context).push(
-                          const PlansRoute(),
-                        );
-                      },
-                    ),
-                    15.h,
+                    // HelpAboutUsWIdget(
+                    //   nameSectionText: "Traffics",
+                    //   function: () {
+                    //     AutoRouter.of(context).push(
+                    //       const PlansRoute(),
+                    //     );
+                    //   },
+                    // ),
+                    // 15.h,
                     HelpAboutUsWIdget(
                       nameSectionText: "About Us",
                       function: () {},

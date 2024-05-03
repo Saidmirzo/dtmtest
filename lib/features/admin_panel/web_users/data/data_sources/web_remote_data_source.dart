@@ -11,7 +11,6 @@ import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -112,7 +111,14 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
       data['id'] = e.id;
       return CategoryModel.fromJson(data);
     }).toList();
-
+    categories.sort((a, b) {
+      if ((a.isActive ?? false) && !(b.isActive ?? false)) {
+        return -1;
+      } else if (!(a.isActive ?? false) && (b.isActive ?? false)) {
+        return 1;
+      }
+      return 0;
+    });
     return categories;
   }
 

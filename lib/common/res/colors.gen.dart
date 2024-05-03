@@ -519,6 +519,48 @@ class ColorName {
   );
 
   /// MaterialColor:
+  ///   50: #FFFCF4E4
+  ///   100: #FFF7E3BD
+  ///   200: #FFF1D091
+  ///   300: #FFEBBD64
+  ///   400: #FFE7AF43
+  ///   500: #FFE3A122
+  ///   600: #FFE0991E
+  ///   700: #FFDC8F19
+  ///   800: #FFD88514
+  ///   900: #FFD0740C
+  static const MaterialColor orange = MaterialColor(
+    0xFFE3A122,
+    <int, Color>{
+      50: Color(0xFFFCF4E4),
+      100: Color(0xFFF7E3BD),
+      200: Color(0xFFF1D091),
+      300: Color(0xFFEBBD64),
+      400: Color(0xFFE7AF43),
+      500: Color(0xFFE3A122),
+      600: Color(0xFFE0991E),
+      700: Color(0xFFDC8F19),
+      800: Color(0xFFD88514),
+      900: Color(0xFFD0740C),
+    },
+  );
+
+  /// MaterialAccentColor:
+  ///   100: #FFFFEEE5
+  ///   200: #FFFFC5A8
+  ///   400: #FFFFB48E
+  ///   700: #FFFFAA7F
+  static const MaterialAccentColor orangeAccent = MaterialAccentColor(
+    0xFFFFC5A8,
+    <int, Color>{
+      100: Color(0xFFFFEEE5),
+      200: Color(0xFFFFC5A8),
+      400: Color(0xFFFFB48E),
+      700: Color(0xFFFFAA7F),
+    },
+  );
+
+  /// MaterialColor:
   ///   50: #FFFEE8E7
   ///   100: #FFFCC7C3
   ///   200: #FFFAA19B

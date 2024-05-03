@@ -3,11 +3,11 @@
     <color name="white" type="material material-accent">#FFffff</color>
     <color name="black" type="material material-accent">#000000</color>
     <color name="blue" type="material material-accent">#158AFE</color>
-    <color name="red" type="material material-accent">#F44336</color>   
-    <color name="scienceWidgetColor" type="material material-accent">#F7F4F4</color>  
-    <color name="customColor" type="material material-accent">#F006566</color>    
-    <color name="greyTextColor" type="material material-accent">#888888</color>    
-    <color name="innerShadowColor" type="material material-accent">#B9B9B9</color>    
+    <color name="red" type="material material-accent">#F44336</color>
+    <color name="scienceWidgetColor" type="material material-accent">#F7F4F4</color>
+    <color name="customColor" type="material material-accent">#F006566</color>
+    <color name="greyTextColor" type="material material-accent">#888888</color>
+    <color name="innerShadowColor" type="material material-accent">#B9B9B9</color>
     <color name="grey" type="material material-accent">#EEEEEE</color>
     <color name="borderColor" type="material material-accent">#DDDDDD</color>
     <color name="backgroundColor" type="material material-accent">#EAEEF1</color>
@@ -19,4 +19,5 @@
     <color name="customInnerShadowColor" type="material material-accent">#099B9C</color>
     <color name="testTextColor" type="material material-accent">#3C3C3C</color>
     <color name="green" type="material material-accent">#1CD550</color>
+    <color name="orange" type="material material-accent">#E3A122</color>
 </resources>

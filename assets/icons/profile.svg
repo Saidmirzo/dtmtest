@@ -1,5 +1,5 @@
-<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="15" cy="15" r="14.5" fill="#696969" fill-opacity="0.2" stroke="#696969"/>
-<circle cx="15" cy="7.5" r="4.5" fill="#696969"/>
-<path d="M3.75 19.9362V24H26.25V19.9362C26.25 19.9362 23.8816 15.4852 15.1184 14.9047C7.30263 14.8481 3.75 19.9362 3.75 19.9362Z" fill="#696969"/>
+<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="6" r="4" fill="#1C274C"/>
+<path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" fill="#1C274C"/>
 </svg>

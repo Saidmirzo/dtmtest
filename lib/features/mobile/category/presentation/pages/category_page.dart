@@ -78,10 +78,12 @@ class _CategoryPageState extends State<CategoryPage> {
                         file: null,
                         image: state.listCategories?[index].image,
                         onTap: () {
-                          context.pushRoute(
-                            ThemesRoute(
-                                categoryModel: state.listCategories?[index]),
-                          );
+                          if (state.listCategories?[index].isActive ?? false) {
+                            context.pushRoute(
+                              ThemesRoute(
+                                  categoryModel: state.listCategories?[index]),
+                            );
+                          }
                         },
                         child: state.listCategories?[index].isActive ?? false
                             ? const SizedBox.shrink()

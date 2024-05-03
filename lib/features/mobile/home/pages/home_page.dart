@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dtmtest/common/constants.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
@@ -21,26 +21,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  CarouselController carouselController = CarouselController();
-
   @override
   void initState() {
     super.initState();
     context.read<CategoryBloc>().add(GetAllCategoriesEvent());
-  }
-
-  String timeFunction() {
-    int dateTime = DateTime.now().hour;
-    if (dateTime <= 9) {
-      return "Hayrli tong";
-    } else if (dateTime <= 17) {
-      return "Hayrli kun";
-    } else if (dateTime <= 22) {
-      return "Hayrli kech";
-    } else if (dateTime <= 4 || dateTime <= 24) {
-      return "Hayrli tun";
-    }
-    return "Hayrli kun";
   }
 
   @override
@@ -103,18 +87,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    const Spacer(),
-                    // ignore: deprecated_member_use_from_same_package
-                    Assets.icons.notification.svg(
-                      // ignore: deprecated_member_use_from_same_package
-                      color: ColorName.grey[500],
-                    ),
                   ],
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: CarouselWidgetHome(carouselController: carouselController),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: CarouselWidgetHome(),
+              ),
             ),
             SliverToBoxAdapter(
               child: 30.h,

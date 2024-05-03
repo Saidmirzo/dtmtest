@@ -49,18 +49,28 @@ class _MainPageState extends State<MainPage> {
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),
-              selectedItemColor: ColorName.customColor,
-              unselectedItemColor: ColorName.black,
+              selectedItemColor: ColorName.orange,
+              unselectedItemColor: ColorName.customColor,
               showUnselectedLabels: true,
               items: List.generate(
                 labels.length,
                 (index) => BottomNavigationBarItem(
                   label: labels[index],
-                  icon: listIcons[index].svg(
-                    // ignore: deprecated_member_use_from_same_package
-                    color: tabsRouter.activeIndex == 0
-                        ? ColorName.customColor
-                        : null,
+                  icon: Container(
+                    width: 40,
+                    height: 40,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: tabsRouter.activeIndex == index
+                            ? ColorName.orange
+                            : null,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: listIcons[index].svg(
+                      // ignore: deprecated_member_use_from_same_package
+                      color: tabsRouter.activeIndex == index
+                          ? ColorName.white
+                          : ColorName.customColor,
+                    ),
                   ),
                 ),
               ),

@@ -1,21 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/res/res.dart';
-
-class CarouselWidgetHome extends StatelessWidget {
+class CarouselWidgetHome extends StatefulWidget {
   const CarouselWidgetHome({
     super.key,
-    required this.carouselController,
   });
+  @override
+  State<CarouselWidgetHome> createState() => _CarouselWidgetHomeState();
+}
 
-  final CarouselController carouselController;
-
+class _CarouselWidgetHomeState extends State<CarouselWidgetHome> {
+  CarouselController carouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -23,48 +24,37 @@ class CarouselWidgetHome extends StatelessWidget {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           if (state.getAllCarouselImageStatus == BlocStatus.inProgress) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return UI.spinner();
           }
           return CarouselSlider.builder(
             carouselController: carouselController,
             itemCount: state.listAdvertisiong?.length ?? 0,
             itemBuilder: (context, index, realIndex) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: InkWell(
+              return Container(
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                          image: CachedNetworkImageProvider(
-                            state.listAdvertisiong?[index].image ?? '',
-                          ),
-                          fit: BoxFit.cover),
-                      color: ColorName.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 6,
-                          offset: const Offset(6, 6),
-                          color: ColorName.black.withOpacity(.25),
-                        ),
-                      ],
+                  image: DecorationImage(
+                      image: CachedNetworkImageProvider(
+                        state.listAdvertisiong?[index].image ?? '',
+                      ),
+                      fit: BoxFit.cover),
+                  color: ColorName.white,
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 6,
+                      offset: const Offset(6, 6),
+                      color: ColorName.black.withOpacity(.25),
                     ),
-                  ),
+                  ],
                 ),
               );
             },
             options: CarouselOptions(
               aspectRatio: 16 / 7,
-              viewportFraction: .8,
+              viewportFraction: .75,
               enlargeCenterPage: true,
               enableInfiniteScroll: false,
-              enlargeStrategy: CenterPageEnlargeStrategy.height,
+              enlargeStrategy: CenterPageEnlargeStrategy.scale,
               initialPage: 0,
               autoPlay: false,
               scrollPhysics: const BouncingScrollPhysics(),

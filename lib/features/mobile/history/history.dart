@@ -8,6 +8,7 @@ import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/history/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -27,48 +28,48 @@ class HistoryPage extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: AppGradient.backgroundGradient,
             ),
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  title: Text(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Text(
                     "History",
                     style:
                         AppTextStyles.body20w5.copyWith(color: ColorName.white),
                   ),
-                ),
-                SliverFillRemaining(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 50),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30)),
-                        color: ColorName.white),
-                    child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: state.listHistory?.length ?? 0,
-                      padding: const EdgeInsets.all(18),
-                      itemBuilder: (_, index) => HistoryWidget(
-                        onTap: () {
-                          context.pushRoute(HistoryDatailRoute(
-                              historyList:
-                                  state.listHistory?[index].quizCollection ??
-                                      []));
-                        },
-                        name: state.listHistory?[index].categoryName ?? '',
-                        subname: state.listHistory?[index].categoryName ?? '',
-                        date: '',
-                        time: state.listHistory?[index].time ?? '',
-                        correctCount:
-                            state.listHistory?[index].correctCount ?? 0,
-                        quizCount: state.listHistory?[index].quizCount ?? 0,
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 50),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30)),
+                          color: ColorName.white),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: state.listHistory?.length ?? 0,
+                        padding: const EdgeInsets.all(18),
+                        itemBuilder: (_, index) => HistoryWidget(
+                          onTap: () {
+                            context.pushRoute(HistoryDatailRoute(
+                                historyList:
+                                    state.listHistory?[index].quizCollection ??
+                                        []));
+                          },
+                          name: state.listHistory?[index].categoryName ?? '',
+                          subname: state.listHistory?[index].categoryName ?? '',
+                          date: '',
+                          time: state.listHistory?[index].time ?? '',
+                          correctCount:
+                              state.listHistory?[index].correctCount ?? 0,
+                          quizCount: state.listHistory?[index].quizCount ?? 0,
+                        ),
+                        separatorBuilder: (_, index) => 10.h,
                       ),
-                      separatorBuilder: (_, index) => 10.h,
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           );
         },
