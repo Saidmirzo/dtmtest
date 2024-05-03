@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           width: 50,
                           height: 50,
+                          clipBehavior: Clip.hardEdge,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             border: Border.all(
