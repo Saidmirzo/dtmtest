@@ -6,7 +6,8 @@ import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
-import 'package:dtmtest/features/mobile/history/widgets/home_widget.dart';
+import 'package:dtmtest/features/mobile/history/widgets/history_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,7 @@ class HistoryPage extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "History",
+                    LocaleKeys.history.tr(),
                     style:
                         AppTextStyles.body20w5.copyWith(color: ColorName.white),
                   ),
