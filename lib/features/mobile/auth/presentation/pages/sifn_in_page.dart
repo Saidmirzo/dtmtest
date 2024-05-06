@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
@@ -9,7 +10,6 @@ import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.da
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -29,7 +29,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorName.blueAccent,
+      backgroundColor: ColorName.customColor,
       body: BlocConsumer<AuthBloc, AuthState>(
         listenWhen: (previous, current) =>
             previous.loginWithEmailState != current.loginWithEmailState ||
@@ -47,80 +47,130 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
         },
         builder: (context, state) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Form(
               key: formKey,
               child: Column(
                 children: [
-                  const SizedBox(height: 300),
-                  CustomTextField(
-                    focusNode: emailFocusNode,
-                    hintText: 'Email',
-                    controller: email,
-                    isPassword: false,
-                    radius: 10,
-                    validator: (p0) {
-                      if (!EmailValidator.validate(p0 ?? '')) {
-                        emailFocusNode.requestFocus();
-                        return "Invalide email";
-                      } else {
-                        return null;
-                      }
-                    },
-                    // isValidate: true,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: CustomTextField(
-                      focusNode: passwordFocusNode,
-                      hintText: 'Password',
-                      controller: password,
-                      isPassword: true,
-                      radius: 10,
-                      validator: (p0) {
-                        if (p0 != null) {
-                          if (p0.length < 6) {
-                            passwordFocusNode.requestFocus();
-
-                            return "Password is too short";
-                          } else {
-                            return null;
-                          }
-                        } else {
-                          return null;
-                        }
-                      },
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                              LoginWithEmailEvent(
-                                userRegisterModel: UserRegisterModel(
-                                  email: email.text,
-                                  password: password.text,
-                                  fullName: '',
-                                  userImage: '',
-                                ),
-                              ),
-                            );
-                      }
-                    },
-                    style: AppDecorations.buttonStyle(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      borderRadius: 10,
-                      size: const Size.fromWidth(double.maxFinite),
-                    ),
-                    child: state.loginWithEmailState.isProgress
-                        ? UI.spinner()
-                        : Text(
-                            'Sign in',
-                            style: AppTextStyles.body20w4,
+                  Assets.images.logo.image(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 20),
+                    decoration: BoxDecoration(
+                        color: ColorName.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            offset: const Offset(6, 6),
+                            color: ColorName.black.withOpacity(.25),
                           ),
+                        ],
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Assets.icons.email.svg(
+                                  color: ColorName.customColor,
+
+                                ),
+                                const SizedBox(
+                                    height: 20,
+                                    child: VerticalDivider(
+                                      color: ColorName.customColor,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          focusNode: emailFocusNode,
+                          borderColor: ColorName.customColor,
+                          style: AppTextStyles.body16w4
+                              .copyWith(color: ColorName.customColor),
+                          hintText: 'Email',
+                          controller: email,
+                          isPassword: false,
+                          radius: 10,
+                          validator: (p0) {
+                            if (!EmailValidator.validate(p0 ?? '')) {
+                              emailFocusNode.requestFocus();
+                              return "Invalide email";
+                            } else {
+                              return null;
+                            }
+                          },
+                          // isValidate: true,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15, bottom: 25),
+                          child: CustomTextField(
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Assets.icons.password.svg(
+                                    color: ColorName.customColor,
+                                  ),
+                                  const SizedBox(
+                                      height: 20,
+                                      child: VerticalDivider(
+                                        color: ColorName.customColor,
+                                      ))
+                                ],
+                              ),
+                            ),
+                            focusNode: passwordFocusNode,
+                            hintText: 'Password',
+                            controller: password,
+                            borderColor: ColorName.customColor,
+                            style: AppTextStyles.body16w4
+                                .copyWith(color: ColorName.customColor),
+                            isPassword: true,
+                            radius: 10,
+                            validator: (p0) {
+                              if (p0 != null) {
+                                if (p0.length < 6) {
+                                  passwordFocusNode.requestFocus();
+
+                                  return "Password is too short";
+                                } else {
+                                  return null;
+                                }
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                        ),
+                        GradientButton(
+                          radius: 10,
+                          isLoading: state.loginWithEmailState.isProgress,
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(
+                                    LoginWithEmailEvent(
+                                      userRegisterModel: UserRegisterModel(
+                                        email: email.text,
+                                        password: password.text,
+                                        fullName: '',
+                                        userImage: '',
+                                      ),
+                                    ),
+                                  );
+                            }
+                          },
+                          text: "Sign In",
+                          color: ColorName.orange,
+                        )
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    padding: const EdgeInsets.symmetric(vertical: 25),
                     child: IconButton(
                       style: AppDecorations.buttonStyle(
                           padding: const EdgeInsets.all(15)),
@@ -162,7 +212,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 11, bottom: 38),
+                    padding: const EdgeInsets.only(top: 5, bottom: 38),
                     child: Text.rich(
                       TextSpan(
                         text: 'Sign up',
@@ -171,9 +221,9 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                             context.replaceRoute(const SignUpRoute());
                           },
                         style: AppTextStyles.body18w7.copyWith(
-                          color: ColorName.blue,
-                          decoration: TextDecoration.underline,
-                        ),
+                            color: ColorName.blue,
+                            decoration: TextDecoration.underline,
+                            decorationColor: ColorName.blue),
                       ),
                     ),
                   ),

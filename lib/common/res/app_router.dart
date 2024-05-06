@@ -20,7 +20,6 @@ import 'package:dtmtest/features/mobile/home/pages/home_page.dart';
 import 'package:dtmtest/features/mobile/leaders_board/pages/leaders_board.dart';
 import 'package:dtmtest/features/mobile/mobile_main_page.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/pages/profile_page.dart';
-import 'package:dtmtest/features/mobile/quizs/presentation/pages/quizs_page.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/page/plans_page.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/page/tests_page.dart';
@@ -98,10 +97,6 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
       path: themesPage,
       page: ThemesRoute.page,
-    ),
-    AutoRoute(
-      path: quizsPage,
-      page: QuizsRoute.page,
     ),
     AutoRoute(
       path: testsPage,

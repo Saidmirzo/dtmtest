@@ -2,6 +2,7 @@ import 'package:dtmtest/common/components/circular_percent_indicator.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/app_text_style.dart';
 import 'package:dtmtest/common/res/colors.gen.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:flutter/material.dart';
 
 class HistoryWidget extends StatelessWidget {
@@ -13,10 +14,10 @@ class HistoryWidget extends StatelessWidget {
     required this.time,
     required this.correctCount,
     required this.quizCount,
-    this.onTap,
+    this.onTap, required this.index,
   });
   final String name, subname, date, time;
-  final num correctCount, quizCount;
+  final num correctCount, quizCount,index;
   final void Function()? onTap;
 
   @override
@@ -31,13 +32,16 @@ class HistoryWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(7))),
         child: Row(
           children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: ColorName.white),
-            ),
+          InnerShadowWidget(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                child: Text(
+                  "${index + 1}",
+                  style:
+                      AppTextStyles.body16w4.copyWith(color: ColorName.white),
+                ),
+              ),
             10.w,
             Column(
               mainAxisSize: MainAxisSize.min,

@@ -53,7 +53,7 @@ class _ThemesPageState extends State<ThemesPage> {
             if (state.getAllThemesStatus == BlocStatus.inProgress) {
               return UI.spinner();
             }
-            if (state.listThemes?.length == 0) {
+            if (state.listThemes?.isEmpty ?? false) {
               return const Center(
                 child: Text('List is empty'),
               );
@@ -81,11 +81,13 @@ class _ThemesPageState extends State<ThemesPage> {
                         return MaterialInkWellButton(
                           width: double.infinity,
                           function: () {
-                            AutoRouter.of(context).push(
-                              TestsRoute(
-                                themeModel: state.listThemes![index],
-                              ),
-                            );
+                            if (state.listThemes![index].quizCount != 0) {
+                              AutoRouter.of(context).push(
+                                TestsRoute(
+                                  themeModel: state.listThemes![index],
+                                ),
+                              );
+                            }
                           },
                           borderRadius: BorderRadius.circular(16),
                           color: ColorName.scienceWidgetColor,

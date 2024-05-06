@@ -31,6 +31,7 @@ class _CarouselWidgetHomeState extends State<CarouselWidgetHome> {
             itemCount: state.listAdvertisiong?.length ?? 0,
             itemBuilder: (context, index, realIndex) {
               return Container(
+                margin: const EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
@@ -50,7 +51,7 @@ class _CarouselWidgetHomeState extends State<CarouselWidgetHome> {
               );
             },
             options: CarouselOptions(
-              aspectRatio: 16 / 7,
+              aspectRatio: 15 / 7,
               viewportFraction: .75,
               enlargeCenterPage: true,
               enableInfiniteScroll: false,

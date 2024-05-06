@@ -99,101 +99,118 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: 30.h,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Yangi testlarimiz",
+                      style: AppTextStyles.body18w6
+                          .copyWith(color: ColorName.white),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        context.tabsRouter.setActiveIndex(1);
+                      },
+                      child: Text(
+                        "Barchasi",
+                        style: AppTextStyles.body18w6
+                            .copyWith(color: ColorName.white),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
             SliverToBoxAdapter(
               child: SizedBox(
                 width: double.infinity,
-                height: 110,
+                height: 120,
                 child: BlocConsumer<CategoryBloc, CategoryState>(
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
                       return UI.spinner();
                     }
-                    return ListView.builder(
+                    return ListView.separated(
                       shrinkWrap: true,
+                      padding: const EdgeInsets.only(bottom: 10, left: 20),
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: state.listCategories?.length ?? 0,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: InkWell(
-                            onTap: () {
-                              AutoRouter.of(context).push(
-                                ThemesRoute(
-                                  categoryModel:
-                                      (state.listCategories?[index])!,
+                        return InkWell(
+                          onTap: () {
+                            AutoRouter.of(context).push(
+                              ThemesRoute(
+                                categoryModel: (state.listCategories?[index])!,
+                              ),
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            // height: 110,
+                            width: 150,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: ColorName.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 6,
+                                  color: ColorName.black.withOpacity(.25),
+                                  offset: const Offset(6, 6),
                                 ),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              height: 110,
-                              width: 150,
-                              margin: const EdgeInsets.symmetric(vertical: 5),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorName.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 6,
-                                    color: ColorName.black.withOpacity(.25),
-                                    offset: const Offset(6, 6),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 45,
-                                    height: 45,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: ColorName.white,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          offset: const Offset(3, 4),
-                                          color:
-                                              ColorName.black.withOpacity(.25),
-                                          blurStyle: BlurStyle.normal,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Assets.images.bookImage.image(),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "New",
-                                      style: AppTextStyles.body12w7.copyWith(
-                                        color: ColorName.red,
+                              ],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 45,
+                                  height: 45,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: ColorName.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 4,
+                                        offset: const Offset(3, 4),
+                                        color: ColorName.black.withOpacity(.25),
+                                        blurStyle: BlurStyle.normal,
                                       ),
+                                    ],
+                                  ),
+                                  child: Assets.images.bookImage.image(),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "New",
+                                    style: AppTextStyles.body12w7.copyWith(
+                                      color: ColorName.red,
                                     ),
                                   ),
-                                  Text(
-                                    state.listCategories?[index].name ??
-                                        "Matematika",
-                                    style: AppTextStyles.body20w7.copyWith(
-                                      color: ColorName.customColor,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  state.listCategories?[index].name ??
+                                      "Matematika",
+                                  style: AppTextStyles.body20w7.copyWith(
+                                    color: ColorName.customColor,
                                   ),
-                                ],
-                              ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
                           ),
                         );
                       },
+                      separatorBuilder: (context, index) => 10.w,
                     );
                   },
                 ),
