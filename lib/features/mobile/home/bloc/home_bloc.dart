@@ -21,19 +21,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(getAllStatisticsStatus: BlocStatus.inProgress));
     final result = await repository.getAllUsers();
     result.fold(
-      (l) => emit(
-        state.copyWith(
-          getAllStatisticsStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) => emit(
+        (l) => emit(
+              state.copyWith(
+                getAllStatisticsStatus: BlocStatus.failed,
+                message: l.message,
+              ),
+            ), (r) {
+      List<UserModel>? listSort = r;
+      listSort.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
+      emit(
         state.copyWith(
           getAllStatisticsStatus: BlocStatus.completed,
           listStatistics: r,
+          listSortUsers: listSort,
         ),
-      ),
-    );
+      );
+    });
   }
 
   _getAllCaruselImagesEvent(event, emit) async {
