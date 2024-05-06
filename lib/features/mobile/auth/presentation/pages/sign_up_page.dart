@@ -33,8 +33,11 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorName.blueAccent,
-      body: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listenWhen: (previous, current) =>
+            previous.loginWithEmailState != current.loginWithEmailState ||
+            previous.loginWithGoogleStaus != current.loginWithGoogleStaus,
+        listener: (context, state) {
           if (state.registerWithEmailState.isComplated ||
               state.loginWithGoogleStaus.isComplated) {
             context.replaceRoute(const MainRoute());
@@ -46,6 +49,8 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
               text: "This user registered with google accaunt",
             );
           }
+        },
+        builder: (context, state) {
           return Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 24).copyWith(bottom: 20),

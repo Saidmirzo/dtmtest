@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
                         CustomNetworkImage(
                           width: 50,
                           height: 50,
+
                           color: ColorName.white,
                           border: Border.all(
                             color: const Color.fromARGB(255, 212, 192, 192),

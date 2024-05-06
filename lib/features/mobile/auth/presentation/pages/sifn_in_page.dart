@@ -32,7 +32,8 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
       backgroundColor: ColorName.blueAccent,
       body: BlocConsumer<AuthBloc, AuthState>(
         listenWhen: (previous, current) =>
-            previous.loginWithEmailState != current.loginWithEmailState,
+            previous.loginWithEmailState != current.loginWithEmailState ||
+            previous.loginWithGoogleStaus != current.loginWithGoogleStaus,
         listener: (context, state) {
           if (state.loginWithEmailState.isComplated ||
               state.loginWithGoogleStaus.isComplated) {
@@ -59,7 +60,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                     isPassword: false,
                     radius: 10,
                     validator: (p0) {
-                      if (!EmailValidator.validate(p0??'')) {
+                      if (!EmailValidator.validate(p0 ?? '')) {
                         emailFocusNode.requestFocus();
                         return "Invalide email";
                       } else {
