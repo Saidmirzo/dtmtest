@@ -225,7 +225,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         // 15.h,
                         HelpAboutUsWIdget(
                           nameSectionText: "About Us",
-                          function: () {},
+                          function: () {
+                            AutoRouter.of(context).push(
+                              const AboutUsRoute(),
+                            );
+                          },
                         ),
                         15.h,
                         HelpAboutUsWIdget(
