@@ -21,6 +21,7 @@ mixin _$HomeState {
       throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<UserModel>? get listStatistics => throw _privateConstructorUsedError;
+  List<UserModel>? get listSortUsers => throw _privateConstructorUsedError;
   List<AdvertisingModel>? get listAdvertisiong =>
       throw _privateConstructorUsedError;
 
@@ -39,6 +40,7 @@ abstract class $HomeStateCopyWith<$Res> {
       BlocStatus getAllCarouselImageStatus,
       String? message,
       List<UserModel>? listStatistics,
+      List<UserModel>? listSortUsers,
       List<AdvertisingModel>? listAdvertisiong});
 }
 
@@ -59,6 +61,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? getAllCarouselImageStatus = null,
     Object? message = freezed,
     Object? listStatistics = freezed,
+    Object? listSortUsers = freezed,
     Object? listAdvertisiong = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,6 +80,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
       listStatistics: freezed == listStatistics
           ? _value.listStatistics
           : listStatistics // ignore: cast_nullable_to_non_nullable
+              as List<UserModel>?,
+      listSortUsers: freezed == listSortUsers
+          ? _value.listSortUsers
+          : listSortUsers // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
       listAdvertisiong: freezed == listAdvertisiong
           ? _value.listAdvertisiong
@@ -99,6 +106,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       BlocStatus getAllCarouselImageStatus,
       String? message,
       List<UserModel>? listStatistics,
+      List<UserModel>? listSortUsers,
       List<AdvertisingModel>? listAdvertisiong});
 }
 
@@ -117,6 +125,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? getAllCarouselImageStatus = null,
     Object? message = freezed,
     Object? listStatistics = freezed,
+    Object? listSortUsers = freezed,
     Object? listAdvertisiong = freezed,
   }) {
     return _then(_$HomeStateImpl(
@@ -136,6 +145,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._listStatistics
           : listStatistics // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      listSortUsers: freezed == listSortUsers
+          ? _value._listSortUsers
+          : listSortUsers // ignore: cast_nullable_to_non_nullable
+              as List<UserModel>?,
       listAdvertisiong: freezed == listAdvertisiong
           ? _value._listAdvertisiong
           : listAdvertisiong // ignore: cast_nullable_to_non_nullable
@@ -152,8 +165,10 @@ class _$HomeStateImpl extends _HomeState {
       this.getAllCarouselImageStatus = BlocStatus.notInitialized,
       this.message,
       final List<UserModel>? listStatistics,
+      final List<UserModel>? listSortUsers,
       final List<AdvertisingModel>? listAdvertisiong})
       : _listStatistics = listStatistics,
+        _listSortUsers = listSortUsers,
         _listAdvertisiong = listAdvertisiong,
         super._();
 
@@ -175,6 +190,16 @@ class _$HomeStateImpl extends _HomeState {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<UserModel>? _listSortUsers;
+  @override
+  List<UserModel>? get listSortUsers {
+    final value = _listSortUsers;
+    if (value == null) return null;
+    if (_listSortUsers is EqualUnmodifiableListView) return _listSortUsers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   final List<AdvertisingModel>? _listAdvertisiong;
   @override
   List<AdvertisingModel>? get listAdvertisiong {
@@ -188,7 +213,7 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(getAllStatisticsStatus: $getAllStatisticsStatus, getAllCarouselImageStatus: $getAllCarouselImageStatus, message: $message, listStatistics: $listStatistics, listAdvertisiong: $listAdvertisiong)';
+    return 'HomeState(getAllStatisticsStatus: $getAllStatisticsStatus, getAllCarouselImageStatus: $getAllCarouselImageStatus, message: $message, listStatistics: $listStatistics, listSortUsers: $listSortUsers, listAdvertisiong: $listAdvertisiong)';
   }
 
   @override
@@ -205,6 +230,8 @@ class _$HomeStateImpl extends _HomeState {
             const DeepCollectionEquality()
                 .equals(other._listStatistics, _listStatistics) &&
             const DeepCollectionEquality()
+                .equals(other._listSortUsers, _listSortUsers) &&
+            const DeepCollectionEquality()
                 .equals(other._listAdvertisiong, _listAdvertisiong));
   }
 
@@ -215,6 +242,7 @@ class _$HomeStateImpl extends _HomeState {
       getAllCarouselImageStatus,
       message,
       const DeepCollectionEquality().hash(_listStatistics),
+      const DeepCollectionEquality().hash(_listSortUsers),
       const DeepCollectionEquality().hash(_listAdvertisiong));
 
   @JsonKey(ignore: true)
@@ -230,6 +258,7 @@ abstract class _HomeState extends HomeState {
       final BlocStatus getAllCarouselImageStatus,
       final String? message,
       final List<UserModel>? listStatistics,
+      final List<UserModel>? listSortUsers,
       final List<AdvertisingModel>? listAdvertisiong}) = _$HomeStateImpl;
   const _HomeState._() : super._();
 
@@ -241,6 +270,8 @@ abstract class _HomeState extends HomeState {
   String? get message;
   @override
   List<UserModel>? get listStatistics;
+  @override
+  List<UserModel>? get listSortUsers;
   @override
   List<AdvertisingModel>? get listAdvertisiong;
   @override

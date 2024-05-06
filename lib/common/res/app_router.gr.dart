@@ -43,6 +43,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomePage(),
       );
     },
+    LeaderBoardRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LeaderBoardPage(),
+      );
+    },
     MainRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -248,6 +254,20 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LeaderBoardPage]
+class LeaderBoardRoute extends PageRouteInfo<void> {
+  const LeaderBoardRoute({List<PageRouteInfo>? children})
+      : super(
+          LeaderBoardRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LeaderBoardRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

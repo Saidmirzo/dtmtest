@@ -17,6 +17,7 @@ import 'package:dtmtest/features/mobile/category/presentation/pages/category_pag
 import 'package:dtmtest/features/mobile/history/history.dart';
 import 'package:dtmtest/features/mobile/history/history_detail.dart';
 import 'package:dtmtest/features/mobile/home/pages/home_page.dart';
+import 'package:dtmtest/features/mobile/leaders_board/pages/leaders_board.dart';
 import 'package:dtmtest/features/mobile/mobile_main_page.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/pages/profile_page.dart';
 import 'package:dtmtest/features/mobile/quizs/presentation/pages/quizs_page.dart';
@@ -43,6 +44,7 @@ class AppRouter extends _$AppRouter {
   static const String testsPage = '/testsPage';
   static const String testsResultPage = '/testsResultPage';
   static const String historyDetailPage = '/historyDetailPage';
+  static const String leadersBoard = '/leadersBoard';
 
   @override
   final List<AutoRoute> routes = [
@@ -130,6 +132,10 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
       page: HistoryDatailRoute.page,
       path: signUpRoute,
+    ),
+    AutoRoute(
+      page: LeaderBoardRoute.page,
+      path: leadersBoard,
     ),
   ];
 }
