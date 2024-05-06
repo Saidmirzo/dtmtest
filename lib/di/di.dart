@@ -14,9 +14,13 @@ import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.da
 import 'package:dtmtest/features/mobile/category/data/repositories/category_repository_impl.dart';
 import 'package:dtmtest/features/mobile/category/domain/repositories/category_repository.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
-import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
-import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
+import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
+import 'package:dtmtest/features/mobile/profile/data/datasource/profile_remote_datasource.dart';
+import 'package:dtmtest/features/mobile/profile/data/repository/profile_repository_impl.dart';
+import 'package:dtmtest/features/mobile/profile/domain/repository/profile_repository.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/bloc/profile_bloc.dart';
+import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/data/datasource/tests_remote_datasource.dart';
 import 'package:dtmtest/features/mobile/tests/data/repository/tests_repository_impl.dart';
 import 'package:dtmtest/features/mobile/tests/domain/repository/tests_repository.dart';
@@ -53,6 +57,7 @@ Future<void> init() async {
   di.registerFactory(() => HistoryBloc(webRepository: di()));
   di.registerFactory(() => TestsBloc(testsRepository: di()));
   di.registerFactory(() => HomeBloc(repository: di()));
+  di.registerFactory(() => ProfileBloc(authRepository: di()));
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
@@ -84,6 +89,10 @@ Future<void> init() async {
   di.registerFactory<TestsRepository>(
     () => TestsRepositoryImpl(testsRemoteDataSource: di()),
   );
+  di.registerFactory<ProfileRepository>(
+    () => ProfileRepositoryImpl(
+        profileRemoteDataSource: di(), authLocaleDataSource: di()),
+  );
   // DataSource
   di.registerLazySingleton<AuthLocaleDataSource>(
     () => AuthLocaleDataSourceImpl(),
@@ -99,6 +108,9 @@ Future<void> init() async {
   );
   di.registerLazySingleton<ThemesDataSource>(
     () => ThemesDataSourceImpl(),
+  );
+  di.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(authLocaleDataSource: di()),
   );
 
   /// Network

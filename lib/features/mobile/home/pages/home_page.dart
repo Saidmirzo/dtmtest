@@ -51,27 +51,19 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
+                        CustomNetworkImage(
                           width: 50,
                           height: 50,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: ColorName.white,
-                              width: 1,
-                            ),
-                            shape: BoxShape.circle,
-                            color: ColorName.borderColor,
+                          color: ColorName.white,
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 212, 192, 192),
+                            width: 1,
                           ),
-                          child: CustomNetworkImage(
-                            networkImage: state.userModel?.userImage,
-                            defWidget: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Assets.icons.profileBold.svg(
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
+                          shape: BoxShape.circle,
+                          networkImage: state.userModel?.userImage,
+                          defWidget: Assets.icons.profileBold.svg(
+                            width: 40,
+                            height: 40,
                           ),
                         ),
                         13.w,

@@ -31,6 +31,8 @@ abstract class WebRemoteDataSource {
   Future<List<AdminModel>> getAdmins();
   Future<List<HistoryModel>> getAllHistory();
   Future<String> postImage(Uint8List byte, String name);
+  Future<bool> deleteImage(String publicId);
+  Future<String> updateImage(Uint8List byte, String name, String publicId);
 }
 
 class WebRemoteDataSourceImpl implements WebRemoteDataSource {
@@ -244,5 +246,33 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
       data: formData,
     );
     return response.data["secure_url"];
+  }
+
+  @override
+  Future<bool> deleteImage(String publicId) async {
+    var dio = Dio();
+    try {
+      var response = await dio.delete(
+        'https://api.cloudinary.com/v1_1/df7fvomdn/image/destroy',
+        data: {'public_id': publicId},
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+        ),
+      );
+      return response.data['result'] == 'ok';
+    } catch (e) {
+      print("Error deleting image: $e");
+      return false;
+    }
+  }
+
+  @override
+  Future<String> updateImage(
+      Uint8List byte, String name, String publicId) async {
+    bool isDeleted = await deleteImage(publicId);
+    if (!isDeleted) {
+      throw Exception("Failed to delete old image");
+    }
+    return await postImage(byte, name);
   }
 }
