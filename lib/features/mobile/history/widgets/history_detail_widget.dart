@@ -1,6 +1,7 @@
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -18,11 +19,11 @@ class HistoryDetailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 100,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: ColorName.customColor)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: ColorName.customColor),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -54,7 +55,7 @@ class HistoryDetailWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Xato: ",
+                          "${LocaleKeys.wrong.tr()}: ",
                           style: AppTextStyles.body14w7
                               .copyWith(color: ColorName.red),
                         ),
@@ -68,7 +69,7 @@ class HistoryDetailWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Togri: ",
+                    "${LocaleKeys.correct.tr()}: ",
                     style: AppTextStyles.body14w7
                         .copyWith(color: ColorName.customColor),
                   ),

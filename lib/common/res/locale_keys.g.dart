@@ -43,5 +43,21 @@ abstract class  LocaleKeys {
   static const category_error = 'category.error';
   static const category_unknown = 'category.unknown';
   static const category = 'category';
+  static const inbox = 'inbox';
+  static const menu = 'menu';
+  static const account = 'account';
+  static const space_profile = 'space_profile';
+  static const profile = 'profile';
+  static const edit = 'edit';
+  static const save = 'save';
+  static const name = 'name';
+  static const current_plan = 'current_plan';
+  static const about_us = 'about_us';
+  static const help = 'help';
+  static const quit = 'quit';
+  static const space_history = 'space_history';
+  static const history = 'history';
+  static const correct = 'correct';
+  static const wrong = 'wrong';
 
 }

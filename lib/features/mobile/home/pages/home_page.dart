@@ -3,7 +3,6 @@ import 'package:dtmtest/common/constants.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
-import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -62,10 +61,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           shape: BoxShape.circle,
                           networkImage: state.userModel?.userImage,
-                          defWidget: Assets.icons.profileBold.svg(
-                            width: 40,
-                            height: 40,
-                          ),
+                          defWidget: state.userModel?.userImage == null
+                              ? Assets.icons.profileBold.svg(
+                                  width: 40,
+                                  height: 40,
+                                )
+                              : UI.nothing,
                         ),
                         13.w,
                         Column(
@@ -142,11 +143,11 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            AutoRouter.of(context).push(
-                              ThemesRoute(
-                                categoryModel: (state.listCategories?[index])!,
-                              ),
-                            );
+                            // AutoRouter.of(context).push(
+                            //   ThemesRoute(
+                            //     categoryModel: (state.listCategories?[index])!,
+                            //   ),
+                            // );
                           },
                           borderRadius: BorderRadius.circular(15),
                           child: Container(

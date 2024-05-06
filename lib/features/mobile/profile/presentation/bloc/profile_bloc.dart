@@ -15,10 +15,12 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileRepository authRepository;
   final WebRepository webRepository;
-  ProfileBloc( {required this.webRepository,required this.authRepository}) : super(const ProfileState()) {
+  ProfileBloc({required this.webRepository, required this.authRepository})
+      : super(const ProfileState()) {
     on<GetProfileDataEvent>(_getProfileData);
     on<UpdateProfileDataEvent>(_updateProfileData);
     on<ProfileUpdateImageEvent>(_updateImageEvent);
+    on<ProfileUploadImageEvent>(_uploadImageEvent);
   }
   _getProfileData(event, emit) async {
     emit(state.copyWith(getProfileDataStatus: BlocStatus.inProgress));
@@ -58,7 +60,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       },
     );
   }
-   _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
+
+  _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
     emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
     final result =
         await webRepository.updateImage(event.byte, event.name, event.publicId);
@@ -72,6 +75,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (r) => emit(
         state.copyWith(
           updateImageStatus: BlocStatus.completed,
+          imageLink: r,
+        ),
+      ),
+    );
+  }
+
+  _uploadImageEvent(ProfileUploadImageEvent event, emit) async {
+    emit(state.copyWith(uploadImageStatus: BlocStatus.inProgress));
+    final result = await webRepository.uploadImage(event.byte, event.name);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          uploadImageStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          uploadImageStatus: BlocStatus.completed,
           imageLink: r,
         ),
       ),

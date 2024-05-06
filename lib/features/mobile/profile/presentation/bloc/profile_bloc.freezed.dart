@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProfileState {
   BlocStatus get getProfileDataStatus => throw _privateConstructorUsedError;
   BlocStatus get updateProfileDataStatus => throw _privateConstructorUsedError;
+  BlocStatus get uploadImageStatus => throw _privateConstructorUsedError;
   UserModel? get profileData => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   BlocStatus get updateImageStatus => throw _privateConstructorUsedError;
@@ -37,6 +38,7 @@ abstract class $ProfileStateCopyWith<$Res> {
   $Res call(
       {BlocStatus getProfileDataStatus,
       BlocStatus updateProfileDataStatus,
+      BlocStatus uploadImageStatus,
       UserModel? profileData,
       String? message,
       BlocStatus updateImageStatus,
@@ -58,6 +60,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   $Res call({
     Object? getProfileDataStatus = null,
     Object? updateProfileDataStatus = null,
+    Object? uploadImageStatus = null,
     Object? profileData = freezed,
     Object? message = freezed,
     Object? updateImageStatus = null,
@@ -71,6 +74,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
       updateProfileDataStatus: null == updateProfileDataStatus
           ? _value.updateProfileDataStatus
           : updateProfileDataStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      uploadImageStatus: null == uploadImageStatus
+          ? _value.uploadImageStatus
+          : uploadImageStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       profileData: freezed == profileData
           ? _value.profileData
@@ -103,6 +110,7 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus getProfileDataStatus,
       BlocStatus updateProfileDataStatus,
+      BlocStatus uploadImageStatus,
       UserModel? profileData,
       String? message,
       BlocStatus updateImageStatus,
@@ -122,6 +130,7 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
   $Res call({
     Object? getProfileDataStatus = null,
     Object? updateProfileDataStatus = null,
+    Object? uploadImageStatus = null,
     Object? profileData = freezed,
     Object? message = freezed,
     Object? updateImageStatus = null,
@@ -135,6 +144,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
       updateProfileDataStatus: null == updateProfileDataStatus
           ? _value.updateProfileDataStatus
           : updateProfileDataStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      uploadImageStatus: null == uploadImageStatus
+          ? _value.uploadImageStatus
+          : uploadImageStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       profileData: freezed == profileData
           ? _value.profileData
@@ -162,6 +175,7 @@ class _$ProfileStateImpl extends _ProfileState {
   const _$ProfileStateImpl(
       {this.getProfileDataStatus = BlocStatus.notInitialized,
       this.updateProfileDataStatus = BlocStatus.notInitialized,
+      this.uploadImageStatus = BlocStatus.notInitialized,
       this.profileData,
       this.message,
       this.updateImageStatus = BlocStatus.notInitialized,
@@ -175,6 +189,9 @@ class _$ProfileStateImpl extends _ProfileState {
   @JsonKey()
   final BlocStatus updateProfileDataStatus;
   @override
+  @JsonKey()
+  final BlocStatus uploadImageStatus;
+  @override
   final UserModel? profileData;
   @override
   final String? message;
@@ -186,7 +203,7 @@ class _$ProfileStateImpl extends _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(getProfileDataStatus: $getProfileDataStatus, updateProfileDataStatus: $updateProfileDataStatus, profileData: $profileData, message: $message, updateImageStatus: $updateImageStatus, imageLink: $imageLink)';
+    return 'ProfileState(getProfileDataStatus: $getProfileDataStatus, updateProfileDataStatus: $updateProfileDataStatus, uploadImageStatus: $uploadImageStatus, profileData: $profileData, message: $message, updateImageStatus: $updateImageStatus, imageLink: $imageLink)';
   }
 
   @override
@@ -199,6 +216,8 @@ class _$ProfileStateImpl extends _ProfileState {
             (identical(
                     other.updateProfileDataStatus, updateProfileDataStatus) ||
                 other.updateProfileDataStatus == updateProfileDataStatus) &&
+            (identical(other.uploadImageStatus, uploadImageStatus) ||
+                other.uploadImageStatus == uploadImageStatus) &&
             (identical(other.profileData, profileData) ||
                 other.profileData == profileData) &&
             (identical(other.message, message) || other.message == message) &&
@@ -213,6 +232,7 @@ class _$ProfileStateImpl extends _ProfileState {
       runtimeType,
       getProfileDataStatus,
       updateProfileDataStatus,
+      uploadImageStatus,
       profileData,
       message,
       updateImageStatus,
@@ -229,6 +249,7 @@ abstract class _ProfileState extends ProfileState {
   const factory _ProfileState(
       {final BlocStatus getProfileDataStatus,
       final BlocStatus updateProfileDataStatus,
+      final BlocStatus uploadImageStatus,
       final UserModel? profileData,
       final String? message,
       final BlocStatus updateImageStatus,
@@ -239,6 +260,8 @@ abstract class _ProfileState extends ProfileState {
   BlocStatus get getProfileDataStatus;
   @override
   BlocStatus get updateProfileDataStatus;
+  @override
+  BlocStatus get uploadImageStatus;
   @override
   UserModel? get profileData;
   @override

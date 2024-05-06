@@ -33,7 +33,7 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     on<DeletePlanEvent>(_deletePlanEvent);
     on<EditPlanEvent>(_editPlanEvent);
     on<UploadImageEvent>(_uploadIMageEvent);
-    on<UpdateImageEvent>(_updateImageEvent);
+    // on<UpdateImageEvent>(_updateImageEvent);
   }
 
   _uploadIMageEvent(UploadImageEvent event, emit) async {
@@ -55,25 +55,25 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     );
   }
 
-  _updateImageEvent(UpdateImageEvent event, emit) async {
-    emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
-    final result =
-        await webRepository.updateImage(event.byte, event.name, event.publicId);
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          updateImageStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          updateImageStatus: BlocStatus.completed,
-          imageLink: r,
-        ),
-      ),
-    );
-  }
+  // _updateImageEvent(UpdateImageEvent event, emit) async {
+  //   emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
+  //   final result =
+  //       await webRepository.updateImage(event.byte, event.name, event.publicId);
+  //   result.fold(
+  //     (l) => emit(
+  //       state.copyWith(
+  //         updateImageStatus: BlocStatus.failed,
+  //         message: l.message,
+  //       ),
+  //     ),
+  //     (r) => emit(
+  //       state.copyWith(
+  //         updateImageStatus: BlocStatus.completed,
+  //         imageLink: r,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _getALlUserEvent(event, emit) async {
     emit(state.copyWith(getAllUsersStatus: BlocStatus.inProgress));
