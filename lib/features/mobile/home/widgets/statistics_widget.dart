@@ -6,6 +6,7 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';
@@ -55,7 +56,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
       children: [
         40.h,
         Text(
-          "Statistika",
+          LocaleKeys.home_statistics.tr(),
           style: AppTextStyles.body32w5.copyWith(
             fontWeight: FontWeight.w700,
             color: ColorName.white,

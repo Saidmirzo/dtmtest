@@ -6,6 +6,7 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,7 +44,7 @@ class _CategoryPageState extends State<CategoryPage> {
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 title: Text(
-                  "Categories",
+                  LocaleKeys.category_categories.tr(),
                   style:
                       AppTextStyles.body20w5.copyWith(color: ColorName.white),
                 ),

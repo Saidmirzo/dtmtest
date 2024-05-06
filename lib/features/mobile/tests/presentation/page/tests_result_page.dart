@@ -4,6 +4,7 @@ import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/res.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/widgets/custom_text_button.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -47,12 +48,12 @@ class TestsResultPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Umumiy - ${((historyModel.correctCount ?? 0) / (historyModel.quizCount ?? 1) * 100).floor()}%',
+                    '${LocaleKeys.category_general.tr()} - ${((historyModel.correctCount ?? 0) / (historyModel.quizCount ?? 1) * 100).floor()}%',
                     style:
                         AppTextStyles.body18w5.copyWith(color: ColorName.white),
                   ),
                   Text(
-                    '${historyModel.correctCount} ball',
+                    '${historyModel.correctCount} ${LocaleKeys.category_score.tr()}',
                     style:
                         AppTextStyles.body18w5.copyWith(color: ColorName.white),
                   )
@@ -74,14 +75,14 @@ class TestsResultPage extends StatelessWidget {
                         );
                       },
                       color: ColorName.white,
-                      preficWidget: const Text('Natijalar'),
+                      preficWidget: Text(LocaleKeys.category_results.tr()),
                     ),
                     CustomTextButton(
                       onTap: () {
                         context.maybePop();
                       },
                       color: ColorName.white,
-                      preficWidget: const Text('Davom ettirish'),
+                      preficWidget: Text(LocaleKeys.category_continue.tr()),
                     ),
                   ],
                 ),

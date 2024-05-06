@@ -2,6 +2,7 @@
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/res.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 // ignore: must_be_immutable
@@ -39,7 +40,7 @@ class ThemesContainerWidget extends StatelessWidget {
                   .copyWith(color: ColorName.blackTextColor),
             ),
             Text(
-              "Savollar soni : $savollarSoni",
+             "${LocaleKeys.category_numberofquestions.tr()} : $savollarSoni",
               style: AppTextStyles.body16w4
                   .copyWith(color: ColorName.greyTextColor),
             ),

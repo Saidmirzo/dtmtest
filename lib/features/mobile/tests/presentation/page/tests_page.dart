@@ -15,6 +15,7 @@ import 'package:dtmtest/features/mobile/tests/presentation/widget/end_and_time_w
 import 'package:dtmtest/features/mobile/tests/presentation/widget/navigation_button_widget.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/test_item_widget.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/tests_app_bar_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,7 +72,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
       backgroundColor: ColorName.white,
       appBar: CustomAppBar(
         child: TestsAppBarWidget(
-          text: themeModel.name ?? "Unknown",
+          text: themeModel.name ?? LocaleKeys.category_unknown.tr(),
         ),
       ),
       body: ThemesBackgroundContainer(
@@ -79,7 +80,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
         child: BlocConsumer<TestsBloc, TestsState>(
           listener: (context, state) {
             if (state.saveToHistoryStatus == BlocStatus.failed) {
-              showSnackBar(context, text: "Error");
+              showSnackBar(context, text: LocaleKeys.category_error.tr());
             }
             if (state.saveToHistoryStatus.isComplated) {
               _genrateCollection();
@@ -104,7 +105,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                     onTap: () {
                       showAccessDialog(
                         context,
-                        text: 'Are you shure close test',
+                        text: LocaleKeys.category_areyoushureclosetest.tr(),
                         onYes: () {
                           final HistoryModel historyModel = HistoryModel(
                             quizCollection: quizColection,
@@ -128,7 +129,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Text(
-                      "Savol: ${activeIndex + 1}/${themeModel.quiz?.length}",
+                      "${LocaleKeys.category_question.tr()}: ${activeIndex + 1}/${themeModel.quiz?.length}",
                       style: AppTextStyles.body24w5.copyWith(
                         color: ColorName.white,
                         fontWeight: FontWeight.w700,

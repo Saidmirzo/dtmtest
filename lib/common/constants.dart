@@ -50,10 +50,10 @@ getPage(int index) {
 }
 
 List<String> labels = [
-  tr(LocaleKeys.home),
-  tr(LocaleKeys.inbox),
-  tr(LocaleKeys.menu),
-  tr(LocaleKeys.account)
+  tr(LocaleKeys.home_home),
+  tr(LocaleKeys.home_inbox),
+  tr(LocaleKeys.home_menu),
+  tr(LocaleKeys.home_account)
 ];
 List<SvgGenImage> listIcons = [
   Assets.icons.home,
@@ -63,17 +63,18 @@ List<SvgGenImage> listIcons = [
 ];
 String timeFunction() {
   int dateTime = DateTime.now().hour;
-  if (dateTime <= 9) {
-    return "Hayrli tong";
+  if (dateTime <= 4 || dateTime <= 24) {
+    return LocaleKeys.home_goodnight.tr();
+  } else if (dateTime <= 11) {
+    return LocaleKeys.home_goodmorning.tr();
   } else if (dateTime <= 17) {
-    return "Hayrli kun";
+    return LocaleKeys.home_goodafternoon.tr();
   } else if (dateTime <= 22) {
-    return "Hayrli kech";
-  } else if (dateTime <= 4 || dateTime <= 24) {
-    return "Hayrli tun";
+    return LocaleKeys.home_goodevening.tr();
   }
-  return "Hayrli kun";
+  return LocaleKeys.home_goodafternoon;
 }
+
 String extractImageId(String url) {
   int startIndex = url.indexOf('/public/');
   int endIndex = url.lastIndexOf('.jpg');

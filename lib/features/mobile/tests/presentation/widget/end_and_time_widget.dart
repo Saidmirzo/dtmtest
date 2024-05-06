@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:dtmtest/common/ui.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dtmtest/common/extentions.dart';
@@ -69,7 +70,7 @@ class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
                   child: widget.isLoading
                       ? UI.spinner()
                       : Text(
-                          "Yakunlash...",
+                          "${LocaleKeys.category_finish.tr()}...",
                           style: AppTextStyles.body12w7.copyWith(
                             color: ColorName.white,
                           ),
