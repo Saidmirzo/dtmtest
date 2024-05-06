@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
@@ -54,4 +56,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
     );
   }
+
 }

@@ -7,6 +7,11 @@ class ProfileState with _$ProfileState {
      @Default(BlocStatus.notInitialized) final BlocStatus updateProfileDataStatus,
      final UserModel? profileData,
      final String? message,
+    
+    @Default(BlocStatus.notInitialized) final BlocStatus updateImageStatus,
+
+
+    final String ? imageLink,
 
   }) = _ProfileState;
 

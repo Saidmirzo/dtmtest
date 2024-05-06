@@ -30,6 +30,7 @@ mixin _$WebState {
   BlocStatus get deleteCategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get editategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get uploadImageStatus => throw _privateConstructorUsedError;
+  BlocStatus get updateImageStatus => throw _privateConstructorUsedError;
   List<CategoryModel>? get listCategories => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<UserModel>? get listUsers => throw _privateConstructorUsedError;
@@ -64,6 +65,7 @@ abstract class $WebStateCopyWith<$Res> {
       BlocStatus deleteCategoryStatus,
       BlocStatus editategoryStatus,
       BlocStatus uploadImageStatus,
+      BlocStatus updateImageStatus,
       List<CategoryModel>? listCategories,
       String? message,
       List<UserModel>? listUsers,
@@ -100,6 +102,7 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
     Object? deleteCategoryStatus = null,
     Object? editategoryStatus = null,
     Object? uploadImageStatus = null,
+    Object? updateImageStatus = null,
     Object? listCategories = freezed,
     Object? message = freezed,
     Object? listUsers = freezed,
@@ -165,6 +168,10 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
           ? _value.uploadImageStatus
           : uploadImageStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      updateImageStatus: null == updateImageStatus
+          ? _value.updateImageStatus
+          : updateImageStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listCategories: freezed == listCategories
           ? _value.listCategories
           : listCategories // ignore: cast_nullable_to_non_nullable
@@ -220,6 +227,7 @@ abstract class _$$WebStateImplCopyWith<$Res>
       BlocStatus deleteCategoryStatus,
       BlocStatus editategoryStatus,
       BlocStatus uploadImageStatus,
+      BlocStatus updateImageStatus,
       List<CategoryModel>? listCategories,
       String? message,
       List<UserModel>? listUsers,
@@ -254,6 +262,7 @@ class __$$WebStateImplCopyWithImpl<$Res>
     Object? deleteCategoryStatus = null,
     Object? editategoryStatus = null,
     Object? uploadImageStatus = null,
+    Object? updateImageStatus = null,
     Object? listCategories = freezed,
     Object? message = freezed,
     Object? listUsers = freezed,
@@ -319,6 +328,10 @@ class __$$WebStateImplCopyWithImpl<$Res>
           ? _value.uploadImageStatus
           : uploadImageStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      updateImageStatus: null == updateImageStatus
+          ? _value.updateImageStatus
+          : updateImageStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listCategories: freezed == listCategories
           ? _value._listCategories
           : listCategories // ignore: cast_nullable_to_non_nullable
@@ -369,6 +382,7 @@ class _$WebStateImpl extends _WebState {
       this.deleteCategoryStatus = BlocStatus.notInitialized,
       this.editategoryStatus = BlocStatus.notInitialized,
       this.uploadImageStatus = BlocStatus.notInitialized,
+      this.updateImageStatus = BlocStatus.notInitialized,
       final List<CategoryModel>? listCategories,
       this.message,
       final List<UserModel>? listUsers,
@@ -425,6 +439,9 @@ class _$WebStateImpl extends _WebState {
   @override
   @JsonKey()
   final BlocStatus uploadImageStatus;
+  @override
+  @JsonKey()
+  final BlocStatus updateImageStatus;
   final List<CategoryModel>? _listCategories;
   @override
   List<CategoryModel>? get listCategories {
@@ -482,7 +499,7 @@ class _$WebStateImpl extends _WebState {
 
   @override
   String toString() {
-    return 'WebState(getAllUsersStatus: $getAllUsersStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, addNewadvertisingStatus: $addNewadvertisingStatus, getAllAdvertisingStatus: $getAllAdvertisingStatus, getAllPlansStatus: $getAllPlansStatus, addPlanStatus: $addPlanStatus, deletePlanStatus: $deletePlanStatus, editPlanStatus: $editPlanStatus, addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, uploadImageStatus: $uploadImageStatus, listCategories: $listCategories, message: $message, listUsers: $listUsers, listThemes: $listThemes, listAdvertising: $listAdvertising, listPlans: $listPlans, imageLink: $imageLink)';
+    return 'WebState(getAllUsersStatus: $getAllUsersStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, addNewadvertisingStatus: $addNewadvertisingStatus, getAllAdvertisingStatus: $getAllAdvertisingStatus, getAllPlansStatus: $getAllPlansStatus, addPlanStatus: $addPlanStatus, deletePlanStatus: $deletePlanStatus, editPlanStatus: $editPlanStatus, addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, uploadImageStatus: $uploadImageStatus, updateImageStatus: $updateImageStatus, listCategories: $listCategories, message: $message, listUsers: $listUsers, listThemes: $listThemes, listAdvertising: $listAdvertising, listPlans: $listPlans, imageLink: $imageLink)';
   }
 
   @override
@@ -520,6 +537,8 @@ class _$WebStateImpl extends _WebState {
                 other.editategoryStatus == editategoryStatus) &&
             (identical(other.uploadImageStatus, uploadImageStatus) ||
                 other.uploadImageStatus == uploadImageStatus) &&
+            (identical(other.updateImageStatus, updateImageStatus) ||
+                other.updateImageStatus == updateImageStatus) &&
             const DeepCollectionEquality()
                 .equals(other._listCategories, _listCategories) &&
             (identical(other.message, message) || other.message == message) &&
@@ -552,6 +571,7 @@ class _$WebStateImpl extends _WebState {
         deleteCategoryStatus,
         editategoryStatus,
         uploadImageStatus,
+        updateImageStatus,
         const DeepCollectionEquality().hash(_listCategories),
         message,
         const DeepCollectionEquality().hash(_listUsers),
@@ -584,6 +604,7 @@ abstract class _WebState extends WebState {
       final BlocStatus deleteCategoryStatus,
       final BlocStatus editategoryStatus,
       final BlocStatus uploadImageStatus,
+      final BlocStatus updateImageStatus,
       final List<CategoryModel>? listCategories,
       final String? message,
       final List<UserModel>? listUsers,
@@ -621,6 +642,8 @@ abstract class _WebState extends WebState {
   BlocStatus get editategoryStatus;
   @override
   BlocStatus get uploadImageStatus;
+  @override
+  BlocStatus get updateImageStatus;
   @override
   List<CategoryModel>? get listCategories;
   @override

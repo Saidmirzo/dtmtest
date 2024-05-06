@@ -218,4 +218,16 @@ class WebRepositoryImpl implements WebRepository {
       return const Left(ServerFailure('add history Error'));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> updateImage(
+      Uint8List byte, String name, String publicId) async {
+    try {
+      final result =
+          await webRemoteDataSource.updateImage(byte, name, publicId);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('Error'));
+    }
+  }
 }
