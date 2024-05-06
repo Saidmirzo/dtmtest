@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';

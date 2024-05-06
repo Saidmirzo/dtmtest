@@ -32,7 +32,8 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
       backgroundColor: ColorName.customColor,
       body: BlocConsumer<AuthBloc, AuthState>(
         listenWhen: (previous, current) =>
-            previous.loginWithEmailState != current.loginWithEmailState,
+            previous.loginWithEmailState != current.loginWithEmailState ||
+            previous.loginWithGoogleStaus != current.loginWithGoogleStaus,
         listener: (context, state) {
           if (state.loginWithEmailState.isComplated ||
               state.loginWithGoogleStaus.isComplated) {
@@ -75,6 +76,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                               children: [
                                 Assets.icons.email.svg(
                                   color: ColorName.customColor,
+
                                 ),
                                 const SizedBox(
                                     height: 20,

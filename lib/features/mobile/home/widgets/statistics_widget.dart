@@ -1,17 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
+import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
-import 'package:dtmtest/features/mobile/auth/domain/repository/auth_repository.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsWidget extends StatefulWidget {
@@ -100,7 +98,11 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                             context.read<AuthBloc>().state.userModel?.uid &&
                         index < 4;
                     return MaterialInkWellButton(
-                      function: () {},
+                      function: () {
+                        AutoRouter.of(context).push(
+                          const LeaderBoardRoute(),
+                        );
+                      },
                       margin: EdgeInsets.zero,
                       borderRadius: BorderRadius.circular(12),
                       color: isLocalUserTopThree
