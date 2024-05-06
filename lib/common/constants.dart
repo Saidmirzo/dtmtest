@@ -74,3 +74,11 @@ String timeFunction() {
   }
   return "Hayrli kun";
 }
+String extractImageId(String url) {
+  int startIndex = url.indexOf('/public/');
+  int endIndex = url.lastIndexOf('.jpg');
+  if (startIndex == -1 || endIndex == -1 || endIndex < startIndex) {
+    return 'Invalid URL';
+  }
+  return url.substring(startIndex, endIndex);
+}

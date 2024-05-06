@@ -1,10 +1,10 @@
+import 'package:dartz/dartz.dart';
 import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_remote_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_register_model.dart';
 import 'package:dtmtest/features/mobile/auth/domain/repository/auth_repository.dart';
-import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -108,4 +108,5 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(ServerFailure("login error"));
     }
   }
+
 }
