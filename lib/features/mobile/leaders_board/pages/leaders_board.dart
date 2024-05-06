@@ -10,6 +10,7 @@ import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:dtmtest/features/mobile/leaders_board/widgets/leader_number_one_widget.dart';
 import 'package:dtmtest/features/mobile/leaders_board/widgets/leaders_wiget.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,8 +41,8 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: const CustomAppBar(
-          text: "Peshqadamlar jadvali",
+        appBar: CustomAppBar(
+          text: LocaleKeys.home_leaderboard.tr(),
         ),
         body: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {},

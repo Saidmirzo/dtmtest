@@ -7,6 +7,7 @@ import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_register_model.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,6 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                               children: [
                                 Assets.icons.email.svg(
                                   color: ColorName.customColor,
-
                                 ),
                                 const SizedBox(
                                     height: 20,
@@ -90,14 +90,14 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                           borderColor: ColorName.customColor,
                           style: AppTextStyles.body16w4
                               .copyWith(color: ColorName.customColor),
-                          hintText: 'Email',
+                          hintText: LocaleKeys.login_email.tr(),
                           controller: email,
                           isPassword: false,
                           radius: 10,
                           validator: (p0) {
                             if (!EmailValidator.validate(p0 ?? '')) {
                               emailFocusNode.requestFocus();
-                              return "Invalide email";
+                              return LocaleKeys.login_invalideemail.tr();
                             } else {
                               return null;
                             }
@@ -124,7 +124,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                               ),
                             ),
                             focusNode: passwordFocusNode,
-                            hintText: 'Password',
+                            hintText: LocaleKeys.login_password.tr(),
                             controller: password,
                             borderColor: ColorName.customColor,
                             style: AppTextStyles.body16w4
@@ -136,7 +136,8 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                                 if (p0.length < 6) {
                                   passwordFocusNode.requestFocus();
 
-                                  return "Password is too short";
+                                  return LocaleKeys.login_passwordistooshort
+                                      .tr();
                                 } else {
                                   return null;
                                 }
@@ -163,7 +164,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                                   );
                             }
                           },
-                          text: "Sign In",
+                          text: LocaleKeys.login_signin.tr(),
                           color: ColorName.orange,
                         )
                       ],
@@ -195,7 +196,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                         ),
                       ),
                       Text(
-                        'Don’t have an account?',
+                        LocaleKeys.login_donthaveanaccount.tr(),
                         style: AppTextStyles.body16w5.copyWith(
                           color: ColorName.grey,
                         ),
@@ -215,7 +216,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                     padding: const EdgeInsets.only(top: 5, bottom: 38),
                     child: Text.rich(
                       TextSpan(
-                        text: 'Sign up',
+                        text: LocaleKeys.login_signup.tr(),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             context.replaceRoute(const SignUpRoute());
@@ -231,12 +232,12 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        'Terms of use',
+                        LocaleKeys.login_termsofuse.tr(),
                         style: AppTextStyles.body16w5
                             .copyWith(color: ColorName.blue),
                       ),
                       Text(
-                        'Privacy Policy',
+                        LocaleKeys.login_privacypolice.tr(),
                         style: AppTextStyles.body16w5
                             .copyWith(color: ColorName.blue),
                       ),

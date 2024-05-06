@@ -2,8 +2,10 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/app_text_style.dart';
 import 'package:dtmtest/common/res/colors.gen.dart';
+import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TestItemWidget extends StatefulWidget {
@@ -42,7 +44,7 @@ class _TestItemWidgetState extends State<TestItemWidget>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Text(
-            widget.quiz.question ?? "Unknown",
+            widget.quiz.question ?? LocaleKeys.category_unknown.tr(),
             style: AppTextStyles.body16w7.copyWith(
               color: ColorName.testTextColor,
             ),

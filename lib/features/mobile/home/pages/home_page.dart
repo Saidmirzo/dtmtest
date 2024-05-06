@@ -10,6 +10,7 @@ import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.da
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/home/widgets/home_carousel_widget.dart';
 import 'package:dtmtest/features/mobile/home/widgets/statistics_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +55,6 @@ class _HomePageState extends State<HomePage> {
                         CustomNetworkImage(
                           width: 50,
                           height: 50,
-
                           color: ColorName.white,
                           border: Border.all(
                             color: const Color.fromARGB(255, 212, 192, 192),
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Yangi testlarimiz",
+                      LocaleKeys.home_ournewtests.tr(),
                       style: AppTextStyles.body18w6
                           .copyWith(color: ColorName.white),
                     ),
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                         context.tabsRouter.setActiveIndex(1);
                       },
                       child: Text(
-                        "Barchasi",
+                        LocaleKeys.home_all.tr(),
                         style: AppTextStyles.body18w6
                             .copyWith(color: ColorName.white),
                       ),
@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "New",
+                                    LocaleKeys.home_new.tr(),
                                     style: AppTextStyles.body12w7.copyWith(
                                       color: ColorName.red,
                                     ),
