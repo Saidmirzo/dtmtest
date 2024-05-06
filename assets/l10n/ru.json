@@ -1,7 +1,22 @@
 {
-  "login": "Логин",
+  "login": "Login",
   "home": "Home",
-  "inbox": "Inbox",
-  "menu": "Menu",
-  "account": "Account"
+  "inbox": "Category",
+  "menu": "History",
+  "account": "Account",
+
+  "space_profile":"_____________________",
+  "profile":"Profile",
+  "edit":"Edit",
+  "save":"Save",
+  "name":"Name",
+  "current_plan":"Current plan",
+  "about_us":"Abaut us",
+  "help":"Help(Telegram)",
+  "quit":"Quit",
+  "space_history":"______________________",
+  "history":"History",
+  "correct":"Correct",
+  "wrong":"Wrong"
+
 }
