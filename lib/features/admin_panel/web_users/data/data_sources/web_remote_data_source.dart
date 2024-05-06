@@ -269,10 +269,12 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
   @override
   Future<String> updateImage(
       Uint8List byte, String name, String publicId) async {
+    //extractImageId(String url)  shu bor public id olishga
     bool isDeleted = await deleteImage(publicId);
     if (!isDeleted) {
       throw Exception("Failed to delete old image");
     }
+
     return await postImage(byte, name);
   }
 }
