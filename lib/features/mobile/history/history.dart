@@ -52,9 +52,7 @@ class HistoryPage extends StatelessWidget {
                         itemBuilder: (_, index) => HistoryWidget(
                           onTap: () {
                             context.pushRoute(HistoryDatailRoute(
-                                historyList:
-                                    state.listHistory?[index].quizCollection ??
-                                        []));
+                                historyModel: state.listHistory?[index]));
                           },
                           name: state.listHistory?[index].categoryName ?? '',
                           subname: '',

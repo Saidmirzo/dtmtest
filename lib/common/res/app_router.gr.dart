@@ -27,7 +27,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: HistoryDatailPage(
           key: args.key,
-          historyList: args.historyList,
+          historyModel: args.historyModel,
         ),
       );
     },
@@ -191,13 +191,13 @@ class CategoryRoute extends PageRouteInfo<void> {
 class HistoryDatailRoute extends PageRouteInfo<HistoryDatailRouteArgs> {
   HistoryDatailRoute({
     Key? key,
-    required List<QuizCollection> historyList,
+    required HistoryModel? historyModel,
     List<PageRouteInfo>? children,
   }) : super(
           HistoryDatailRoute.name,
           args: HistoryDatailRouteArgs(
             key: key,
-            historyList: historyList,
+            historyModel: historyModel,
           ),
           initialChildren: children,
         );
@@ -211,16 +211,16 @@ class HistoryDatailRoute extends PageRouteInfo<HistoryDatailRouteArgs> {
 class HistoryDatailRouteArgs {
   const HistoryDatailRouteArgs({
     this.key,
-    required this.historyList,
+    required this.historyModel,
   });
 
   final Key? key;
 
-  final List<QuizCollection> historyList;
+  final HistoryModel? historyModel;
 
   @override
   String toString() {
-    return 'HistoryDatailRouteArgs{key: $key, historyList: $historyList}';
+    return 'HistoryDatailRouteArgs{key: $key, historyModel: $historyModel}';
   }
 }
 
