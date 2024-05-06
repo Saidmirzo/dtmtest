@@ -51,3 +51,13 @@ class UploadImageEvent extends WebEvent {
   final String name;
   const UploadImageEvent({required this.byte, required this.name});
 }
+
+class UpdateImageEvent extends WebEvent {
+  final Uint8List byte;
+  final String name, publicId;
+  const UpdateImageEvent({
+    required this.byte,
+    required this.name,
+    required this.publicId,
+  });
+}

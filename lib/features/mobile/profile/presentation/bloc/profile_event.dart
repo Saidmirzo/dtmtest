@@ -11,3 +11,12 @@ class UpdateProfileDataEvent extends ProfileEvent {
   UpdateProfileDataEvent({required this.model});
   final UserModel model;
 }
+class ProfileUpdateImageEvent extends ProfileEvent {
+  final Uint8List byte;
+  final String name, publicId;
+   ProfileUpdateImageEvent({
+    required this.byte,
+    required this.name,
+    required this.publicId,
+  });
+}

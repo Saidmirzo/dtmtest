@@ -18,6 +18,7 @@ part of 'web_bloc.dart';
     @Default(BlocStatus.notInitialized) final BlocStatus deleteCategoryStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus editategoryStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus uploadImageStatus,
+    @Default(BlocStatus.notInitialized) final BlocStatus updateImageStatus,
     final List<CategoryModel>? listCategories,
     final String? message,
     final List<UserModel>? listUsers,
