@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/costomaizable.dart';
+import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/res.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/widgets/custom_text_button.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
@@ -67,7 +68,11 @@ class TestsResultPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomTextButton(
-                      onTap: () {},
+                      onTap: () {
+                        context.replaceRoute(
+                          HistoryDatailRoute(historyModel: historyModel),
+                        );
+                      },
                       color: ColorName.white,
                       preficWidget: const Text('Natijalar'),
                     ),

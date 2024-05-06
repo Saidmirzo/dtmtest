@@ -39,6 +39,12 @@ class TestsRemoteDataSourceImpl implements TestsRemoteDataSource {
     final UserModel? userModel = await authLocaleDataSource.getLocaleUserDtat();
     if (userModel != null) {
       final String id = userModel.uid ?? "";
+      final userDoc = userCollection.doc(id);
+      final result = await userDoc.get();
+      final UserModel user =
+          UserModel.fromJson(jsonDecode(jsonEncode(result.data())));
+      await  userDoc.update(
+          {"rating": (user.rating ?? 0) + (historyModel.correctCount ?? 0)});
       final CollectionReference historyCollection =
           userCollection.doc(id).collection('history');
       await historyCollection.add(historyModel.toJson());

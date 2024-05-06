@@ -9,19 +9,20 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class HistoryDatailPage extends StatelessWidget {
-  const HistoryDatailPage({super.key, required this.historyList});
-  final List<QuizCollection> historyList;
+  const HistoryDatailPage({super.key, required this.historyModel});
+  final HistoryModel? historyModel;
 
   @override
   Widget build(BuildContext context) {
+    final List<QuizCollection> historyList = historyModel?.quizCollection ?? [];
     return Container(
       decoration: BoxDecoration(
         gradient: AppGradient.backgroundGradient,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: const CustomAppBar(
-          text: "Tarix",
+        appBar:  CustomAppBar(
+          text: historyModel?.categoryName,
         ),
         body: SafeArea(
           bottom: false,
