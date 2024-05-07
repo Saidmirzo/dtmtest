@@ -73,6 +73,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/edit_icon.svg
   SvgGenImage get editIcon => const SvgGenImage('assets/icons/edit_icon.svg');
 
+  /// File path: assets/icons/email.svg
+  SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
+
   /// File path: assets/icons/google.svg
   SvgGenImage get google => const SvgGenImage('assets/icons/google.svg');
 
@@ -97,6 +100,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/notification.svg
   SvgGenImage get notification =>
       const SvgGenImage('assets/icons/notification.svg');
+
+  /// File path: assets/icons/password.svg
+  SvgGenImage get password => const SvgGenImage('assets/icons/password.svg');
 
   /// File path: assets/icons/person.svg
   SvgGenImage get person => const SvgGenImage('assets/icons/person.svg');
@@ -145,6 +151,7 @@ class $AssetsIconsGen {
         dots,
         edit,
         editIcon,
+        email,
         google,
         history,
         home,
@@ -153,6 +160,7 @@ class $AssetsIconsGen {
         money,
         news,
         notification,
+        password,
         person,
         profile,
         profileBold,
