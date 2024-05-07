@@ -213,7 +213,7 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
     final String id = userModel?.uid ?? "";
     final CollectionReference historyCollection =
         userCollection.doc(id).collection('history');
-    final result = await historyCollection.get();
+    final result = await historyCollection.orderBy('time').get();
     listHistory = result.docs
         .map(
           (e) => HistoryModel.fromJson(
