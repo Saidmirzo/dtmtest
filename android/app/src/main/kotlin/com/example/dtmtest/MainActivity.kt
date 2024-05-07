@@ -1,4 +1,4 @@
-package com.example.dtmtest
+package uz.simpl.dtmtest
 
 import io.flutter.embedding.android.FlutterActivity
 
