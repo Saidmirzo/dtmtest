@@ -236,10 +236,15 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                         style: AppTextStyles.body16w5
                             .copyWith(color: ColorName.blue),
                       ),
-                      Text(
-                        LocaleKeys.login_privacypolice.tr(),
-                        style: AppTextStyles.body16w5
-                            .copyWith(color: ColorName.blue),
+                      InkWell(
+                        onTap: () {
+                          AutoRouter.of(context).push(const PrivacyPolicyRoute());
+                        },
+                        child: Text(
+                          LocaleKeys.login_privacypolice.tr(),
+                          style: AppTextStyles.body16w5
+                              .copyWith(color: ColorName.blue),
+                        ),
                       ),
                     ],
                   ),

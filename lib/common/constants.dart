@@ -62,17 +62,17 @@ List<SvgGenImage> listIcons = [
   Assets.icons.profile
 ];
 String timeFunction() {
-  int dateTime = DateTime.now().hour;
-  if (dateTime <= 4 || dateTime <= 24) {
-    return LocaleKeys.home_goodnight.tr();
-  } else if (dateTime <= 11) {
-    return LocaleKeys.home_goodmorning.tr();
-  } else if (dateTime <= 17) {
-    return LocaleKeys.home_goodafternoon.tr();
-  } else if (dateTime <= 22) {
-    return LocaleKeys.home_goodevening.tr();
+  int hour = DateTime.now().hour; // Soatni olish
+
+  if (hour >= 22 || hour < 5) {
+    return LocaleKeys.home_goodnight.tr(); // "Hayrli tun"
+  } else if (hour < 11) {
+    return LocaleKeys.home_goodmorning.tr(); // "Hayrli tong"
+  } else if (hour < 18) {
+    return LocaleKeys.home_goodafternoon.tr(); // "Hayrli kun"
+  } else {
+    return LocaleKeys.home_goodevening.tr(); // "Hayrli kech"
   }
-  return LocaleKeys.home_goodafternoon;
 }
 
 String extractImageId(String url) {

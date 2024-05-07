@@ -242,6 +242,16 @@ class $AssetsL10nGen {
   List<String> get values => [en, ru, uz];
 }
 
+class $AssetsTextGen {
+  const $AssetsTextGen();
+
+  /// File path: assets/text/privacy_police.txt
+  String get privacyPolice => 'assets/text/privacy_police.txt';
+
+  /// List of all assets
+  List<String> get values => [privacyPolice];
+}
+
 class Assets {
   Assets._();
 
@@ -250,6 +260,7 @@ class Assets {
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsL10nGen l10n = $AssetsL10nGen();
+  static const $AssetsTextGen text = $AssetsTextGen();
 }
 
 class AssetGenImage {
