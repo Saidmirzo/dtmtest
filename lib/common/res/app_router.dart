@@ -9,6 +9,7 @@ import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.d
 import 'package:dtmtest/features/admin_panel/web_quizes/presentation/web_quizes.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/tarifs.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_users.dart';
+import 'package:dtmtest/features/mobile/about_us/pages/about_us.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/mobile_login_page.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/sifn_in_page.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/sign_up_page.dart';
@@ -44,6 +45,7 @@ class AppRouter extends _$AppRouter {
   static const String testsResultPage = '/testsResultPage';
   static const String historyDetailPage = '/historyDetailPage';
   static const String leadersBoard = '/leadersBoard';
+  static const String aboutUs = '/aboutUs';
 
   @override
   final List<AutoRoute> routes = [
@@ -131,6 +133,10 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
       page: LeaderBoardRoute.page,
       path: leadersBoard,
+    ),
+    AutoRoute(
+      page: AboutUsRoute.page,
+      path: aboutUs,
     ),
   ];
 }

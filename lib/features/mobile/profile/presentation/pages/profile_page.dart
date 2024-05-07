@@ -11,6 +11,7 @@ import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.da
 import 'package:dtmtest/features/mobile/profile/presentation/bloc/profile_bloc.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/widgets/help_about_us_widget.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   )
                                 : 50.w,
                             Text(
-                              "Profile",
+                              LocaleKeys.profile.tr(),
                               style: AppTextStyles.body24w7.copyWith(
                                 color: ColorName.white,
                               ),
@@ -129,7 +130,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Colors.transparent,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  isEditInfo ? "SAVE" : "EDIT",
+                                  isEditInfo
+                                      ? LocaleKeys.save.tr()
+                                      : LocaleKeys.edit.tr(),
                                   style: AppTextStyles.body16w7.copyWith(
                                     color: ColorName.white,
                                   ),
@@ -212,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         20.h,
                         UserInfoWidget(
-                          infoText: "Name",
+                          infoText: LocaleKeys.name.tr(),
                           userInfo: nameController.text,
                           isEditInfo: isEditInfo,
                           controller: nameController,
@@ -224,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               alignment: Alignment.centerLeft,
                               width: 200,
                               child: Text(
-                                "Current plan",
+                                LocaleKeys.current_plan.tr(),
                                 style: AppTextStyles.body24w7.copyWith(
                                   color: ColorName.white,
                                 ),
@@ -250,12 +253,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         // ),
                         // 15.h,
                         HelpAboutUsWIdget(
-                          nameSectionText: "About Us",
-                          function: () {},
+                          nameSectionText: LocaleKeys.about_us.tr(),
+                          function: () {
+                            AutoRouter.of(context).push(
+                              const AboutUsRoute(),
+                            );
+                          },
                         ),
                         15.h,
                         HelpAboutUsWIdget(
-                          nameSectionText: "Help(Telegram)",
+                          nameSectionText: LocaleKeys.help.tr(),
                           function: () {
                             openExternalApplication(telegramUrl);
                           },
@@ -280,7 +287,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   vertical: 5,
                                 ),
                                 child: Text(
-                                  "Quit",
+                                  LocaleKeys.quit.tr(),
                                   style: AppTextStyles.body20w6.copyWith(
                                     color: ColorName.white,
                                   ),

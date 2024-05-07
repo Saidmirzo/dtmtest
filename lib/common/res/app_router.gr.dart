@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AboutUsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AboutUsPage(),
+      );
+    },
     CategoryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -27,7 +33,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: HistoryDatailPage(
           key: args.key,
-          historyList: args.historyList,
+          historyModel: args.historyModel,
         ),
       );
     },
@@ -173,6 +179,20 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [AboutUsPage]
+class AboutUsRoute extends PageRouteInfo<void> {
+  const AboutUsRoute({List<PageRouteInfo>? children})
+      : super(
+          AboutUsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AboutUsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CategoryPage]
 class CategoryRoute extends PageRouteInfo<void> {
   const CategoryRoute({List<PageRouteInfo>? children})
@@ -191,13 +211,13 @@ class CategoryRoute extends PageRouteInfo<void> {
 class HistoryDatailRoute extends PageRouteInfo<HistoryDatailRouteArgs> {
   HistoryDatailRoute({
     Key? key,
-    required List<QuizCollection> historyList,
+    required HistoryModel? historyModel,
     List<PageRouteInfo>? children,
   }) : super(
           HistoryDatailRoute.name,
           args: HistoryDatailRouteArgs(
             key: key,
-            historyList: historyList,
+            historyModel: historyModel,
           ),
           initialChildren: children,
         );
@@ -211,16 +231,16 @@ class HistoryDatailRoute extends PageRouteInfo<HistoryDatailRouteArgs> {
 class HistoryDatailRouteArgs {
   const HistoryDatailRouteArgs({
     this.key,
-    required this.historyList,
+    required this.historyModel,
   });
 
   final Key? key;
 
-  final List<QuizCollection> historyList;
+  final HistoryModel? historyModel;
 
   @override
   String toString() {
-    return 'HistoryDatailRouteArgs{key: $key, historyList: $historyList}';
+    return 'HistoryDatailRouteArgs{key: $key, historyModel: $historyModel}';
   }
 }
 
