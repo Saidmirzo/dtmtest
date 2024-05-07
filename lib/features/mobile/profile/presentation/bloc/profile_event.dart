@@ -20,3 +20,8 @@ class ProfileUpdateImageEvent extends ProfileEvent {
     required this.publicId,
   });
 }
+class ProfileUploadImageEvent extends ProfileEvent {
+  final Uint8List byte;
+  final String name;
+   ProfileUploadImageEvent({required this.byte, required this.name});
+}

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
@@ -12,6 +14,7 @@ import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_w
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/about_user_widget.dart';
@@ -26,6 +29,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool isEditInfo = false;
+  ImagePicker picker = ImagePicker();
 
   TextEditingController nameController = TextEditingController();
   // TextEditingController firstnameController = TextEditingController();
@@ -56,15 +60,14 @@ class _ProfilePageState extends State<ProfilePage> {
       child: SingleChildScrollView(
         child: BlocConsumer<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            if (state.getProfileDataStatus == BlocStatus.inProgress) {
+            if (state.getProfileDataStatus == BlocStatus.inProgress ||
+                state.updateImageStatus == BlocStatus.inProgress) {
               return Center(
                 child: UI.spinner(),
               );
             } else if (state.getProfileDataStatus == BlocStatus.completed) {
               nameController.text = state.profileData?.fullName ?? 'Noname';
-              // firstnameController.text = state.profileData?.fullName ?? '';
             }
-
             return SafeArea(
               child: Stack(
                 alignment: Alignment.topCenter,
@@ -148,23 +151,54 @@ class _ProfilePageState extends State<ProfilePage> {
                           networkImage: state.profileData?.userImage,
                           defWidget: Stack(
                             children: [
-                              Assets.icons.profileBold.svg(
-                                width: 70,
-                                height: 70,
-                              ),
+                              state.profileData?.userImage == null
+                                  ? Assets.icons.profileBold.svg(
+                                      width: 70,
+                                      height: 70,
+                                    )
+                                  : UI.nothing,
                               Align(
                                 alignment: Alignment.bottomRight,
-                                child: Visibility(
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final ImagePicker picker = ImagePicker();
+                                    final XFile? image = await picker.pickImage(
+                                        source: ImageSource.gallery);
+                                    Uint8List? bytes =
+                                        await image?.readAsBytes();
+
+                                    if (bytes != null) {
+                                      if (state.profileData?.userImage ==
+                                          null) {
+                                        context
+                                            .read<ProfileBloc>()
+                                            .add(ProfileUploadImageEvent(
+                                              byte: bytes,
+                                              name: image?.name ?? '',
+                                            ));
+                                      } else {
+                                        // context.read<ProfileBloc>().add(
+                                        //     ProfileUpdateImageEvent(
+                                        //         byte: bytes,
+                                        //         name: image?.name ?? '',
+                                        //         publicId: extractImageId(state
+                                        //                 .profileData
+                                        //                 ?.userImage ??
+                                        //             '')));
+                                      }
+                                    }
+                                  },
                                   child: Container(
                                     width: 30,
                                     height: 30,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorName.white,
-                                        border: Border.all(
-                                            color: ColorName.customColor,
-                                            width: 2)),
+                                      shape: BoxShape.circle,
+                                      color: ColorName.white,
+                                      border: Border.all(
+                                          color: ColorName.customColor,
+                                          width: 2),
+                                    ),
                                     child: const Icon(
                                       CupertinoIcons.plus,
                                       color: ColorName.customColor,
@@ -183,14 +217,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           isEditInfo: isEditInfo,
                           controller: nameController,
                         ),
-                        // UserInfoWidget(
-                        //   infoText: "Sourname",
-                        //   userInfo: firstnameController.text.isEmpty
-                        //       ? "Shea"
-                        //       : firstnameController.text,
-                        //   isEditInfo: isEditInfo,
-                        //   controller: firstnameController,
-                        // ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -273,11 +299,12 @@ class _ProfilePageState extends State<ProfilePage> {
           listener: (BuildContext context, ProfileState state) {
             if (state.updateProfileDataStatus == BlocStatus.completed) {
               context.read<ProfileBloc>().add(GetProfileDataEvent());
+            } else if (state.uploadImageStatus == BlocStatus.completed) {
+              context.read<ProfileBloc>().add(UpdateProfileDataEvent(
+                  model:
+                      state.profileData!.copyWith(userImage: state.imageLink)));
             }
           },
-          listenWhen: (previous, current) =>
-              previous.updateProfileDataStatus !=
-              current.updateProfileDataStatus,
         ),
       ),
     );

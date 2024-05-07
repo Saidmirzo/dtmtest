@@ -27,18 +27,18 @@ class CustomNetworkImage extends StatelessWidget {
       imageUrl: networkImage ?? '',
       fit: BoxFit.cover,
       imageBuilder: (context, imageProvider) => Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: color,
-          shape: shape,
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: color,
+            shape: shape,
 
-          // boxShadow: boxShadow,
-          border: border,
-          // borderRadius: borderRadiusDef,
-          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-        ),
-      ),
+            // boxShadow: boxShadow,
+            border: border,
+            // borderRadius: borderRadiusDef,
+            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          ),
+          child: defWidget),
       errorWidget: (context, url, error) {
         return defImage != null
             ? Container(
