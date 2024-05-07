@@ -180,7 +180,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
     pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 500),
-      curve: Curves.bounceInOut,
+      curve: Curves.easeIn,
     );
   }
 

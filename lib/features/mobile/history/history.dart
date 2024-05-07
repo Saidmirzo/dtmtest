@@ -57,12 +57,16 @@ class HistoryPage extends StatelessWidget {
                                         []));
                           },
                           name: state.listHistory?[index].categoryName ?? '',
-                          subname: state.listHistory?[index].categoryName ?? '',
+                          subname: '',
                           date: '',
-                          time: state.listHistory?[index].time ?? '',
+                          time: DateTime.fromMillisecondsSinceEpoch(int.parse(
+                                  state.listHistory?[index].time ?? "0"))
+                              .toString()
+                              .formatDate(),
                           correctCount:
                               state.listHistory?[index].correctCount ?? 0,
                           quizCount: state.listHistory?[index].quizCount ?? 0,
+                          index: index,
                         ),
                         separatorBuilder: (_, index) => 10.h,
                       ),
