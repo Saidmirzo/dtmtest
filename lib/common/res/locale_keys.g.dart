@@ -43,9 +43,6 @@ abstract class  LocaleKeys {
   static const category_error = 'category.error';
   static const category_unknown = 'category.unknown';
   static const category = 'category';
-  static const inbox = 'inbox';
-  static const menu = 'menu';
-  static const account = 'account';
   static const space_profile = 'space_profile';
   static const profile = 'profile';
   static const edit = 'edit';
