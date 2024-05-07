@@ -35,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
       backgroundColor: ColorName.blueAccent,
       body: BlocConsumer<AuthBloc, AuthState>(
         listenWhen: (previous, current) =>
-            previous.loginWithEmailState != current.loginWithEmailState ||
+            previous.registerWithEmailState != current.registerWithEmailState ||
             previous.loginWithGoogleStaus != current.loginWithGoogleStaus,
         listener: (context, state) {
           if (state.registerWithEmailState.isComplated ||
@@ -54,116 +54,119 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
           return Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 24).copyWith(bottom: 20),
-            child: Column(
-              children: [
-                const SizedBox(height: 220),
-                CustomTextField(
-                  hintText: 'Full Name',
-                  controller: fullName,
-                  isPassword: false,
-                  radius: 10,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      fullNameFocusNode.requestFocus();
-                      return "Full name is too short";
-                    }
-                    if (value.length < 5) {
-                      return "Full name is too short";
-                    }
-                    return null;
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: CustomTextField(
-                    hintText: 'Email',
-                    controller: email,
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 220),
+                  CustomTextField(
+                    hintText: 'Full Name',
+                    controller: fullName,
                     isPassword: false,
                     radius: 10,
-                    validator: (p0) {
-                      if (!EmailValidator.validate(p0 ?? '')) {
-                        emailFocusNode.requestFocus();
-                        return "Invalide email";
-                      } else {
-                        return null;
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        fullNameFocusNode.requestFocus();
+                        return "Full name is too short";
                       }
+                      if (value.length < 5) {
+                        return "Full name is too short";
+                      }
+                      return null;
                     },
-                    // isValidate: true,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 28),
-                  child: CustomTextField(
-                    hintText: 'Password',
-                    controller: password,
-                    isPassword: true,
-                    radius: 10,
-                    validator: (p0) {
-                      if (p0 != null) {
-                        if (p0.length < 6) {
-                          passwordFocusNode.requestFocus();
-
-                          return "Password is too short";
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: CustomTextField(
+                      hintText: 'Email',
+                      controller: email,
+                      isPassword: false,
+                      radius: 10,
+                      validator: (p0) {
+                        if (!EmailValidator.validate(p0 ?? '')) {
+                          emailFocusNode.requestFocus();
+                          return "Invalide email";
                         } else {
                           return null;
                         }
-                      } else {
-                        return null;
-                      }
-                    },
+                      },
+                      // isValidate: true,
+                    ),
                   ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40),
-                  child: IconButton(
-                    style: AppDecorations.buttonStyle(
-                        padding: const EdgeInsets.all(15)),
-                    onPressed: () {
-                      context.read<AuthBloc>().add(LoginWithGoogleEvent());
-                    },
-                    icon: state.loginWithGoogleStaus.isProgress
-                        ? UI.spinner()
-                        : Assets.icons.google.svg(color: ColorName.blue),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 28),
+                    child: CustomTextField(
+                      hintText: 'Password',
+                      controller: password,
+                      isPassword: true,
+                      radius: 10,
+                      validator: (p0) {
+                        if (p0 != null) {
+                          if (p0.length < 6) {
+                            passwordFocusNode.requestFocus();
+              
+                            return "Password is too short";
+                          } else {
+                            return null;
+                          }
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 38),
-                  child: Text.rich(
-                    TextSpan(
-                      text: 'Sign in',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          context.replaceRoute(const SignInRoute());
-                        },
-                      style: AppTextStyles.body18w7.copyWith(
-                        color: ColorName.blue,
-                        decoration: TextDecoration.underline,
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    child: IconButton(
+                      style: AppDecorations.buttonStyle(
+                          padding: const EdgeInsets.all(15)),
+                      onPressed: () {
+                        context.read<AuthBloc>().add(LoginWithGoogleEvent());
+                      },
+                      icon: state.loginWithGoogleStaus.isProgress
+                          ? UI.spinner()
+                          : Assets.icons.google.svg(color: ColorName.blue),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 38),
+                    child: Text.rich(
+                      TextSpan(
+                        text: 'Sign in',
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.replaceRoute(const SignInRoute());
+                          },
+                        style: AppTextStyles.body18w7.copyWith(
+                          color: ColorName.blue,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                CustomTextButton(
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<AuthBloc>().add(
-                            RegisterUserEvent(
-                              userRegisterModel: UserRegisterModel(
-                                fullName: fullName.text,
-                                email: email.text,
-                                password: password.text,
-                                userImage: '',
+                  CustomTextButton(
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(
+                              RegisterUserEvent(
+                                userRegisterModel: UserRegisterModel(
+                                  fullName: fullName.text,
+                                  email: email.text,
+                                  password: password.text,
+                                  userImage: '',
+                                ),
                               ),
-                            ),
-                          );
-                    }
-                  },
-                  borderRadius: 10,
-                  preficWidget: state.registerWithEmailState.isProgress
-                      ? UI.spinner()
-                      : const Text('Next'),
-                ),
-              ],
+                            );
+                      }
+                    },
+                    borderRadius: 10,
+                    preficWidget: state.registerWithEmailState.isProgress
+                        ? UI.spinner()
+                        : const Text('Next'),
+                  ),
+                ],
+              ),
             ),
           );
         },
