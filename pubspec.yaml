@@ -105,6 +105,7 @@ flutter:
     - assets/images/
     - assets/l10n/
     - assets/files/
+    - assets/text/
 
   fonts:
     - family: CrimsonText
