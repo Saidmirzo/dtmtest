@@ -1,7 +1,7 @@
 import 'package:dtmtest/core/platform/network_info.dart';
-import 'package:dtmtest/features/admin_panel/web_admins/bloc/web_admins_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/bloc/web_categories_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_remote_data_source.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';

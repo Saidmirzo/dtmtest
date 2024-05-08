@@ -1,7 +1,7 @@
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/app_text_style.dart';
 import 'package:dtmtest/common/res/colors.gen.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:flutter/material.dart';
 

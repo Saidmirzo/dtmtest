@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dtmtest/features/admin_panel/web_admins/presentation/web_admins.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_admins.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/pages/web_advertising.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/web_categories.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/pages/web_categories.dart';
 import 'package:dtmtest/features/admin_panel/web_home/presentation/web_home.dart';
 import 'package:dtmtest/features/admin_panel/web_main_page.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/presentation/web_quizes.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/pages/web_quizes.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/tarifs.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_users.dart';
 import 'package:dtmtest/features/mobile/about_us/pages/about_us.dart';

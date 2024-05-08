@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
-import 'package:dtmtest/features/admin_panel/web_admins/models/admin_model.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

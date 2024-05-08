@@ -6,7 +6,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

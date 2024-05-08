@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dtmtest/core/error/failure.dart';
-import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_remote_data_source.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/mobile/category/domain/repositories/category_repository.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {

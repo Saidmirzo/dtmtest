@@ -7,7 +7,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/widgets/themes_container_widget.dart';
 import 'package:easy_localization/easy_localization.dart';

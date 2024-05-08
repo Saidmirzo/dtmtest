@@ -1,7 +1,7 @@
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/di/di.dart';
-import 'package:dtmtest/features/admin_panel/web_admins/bloc/web_admins_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';

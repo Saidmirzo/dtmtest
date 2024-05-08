@@ -6,7 +6,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/res/res.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/back_next_widget_on_test.dart';

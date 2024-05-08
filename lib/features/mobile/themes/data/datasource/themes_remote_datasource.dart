@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 
 abstract class ThemesDataSource {
   Future<List<ThemeModel>> getTheme(String id);
