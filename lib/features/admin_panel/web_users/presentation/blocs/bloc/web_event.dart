@@ -22,12 +22,7 @@ class AddNewThemeEvent extends WebEvent {
   });
 }
 
-class AddNewAdvertising extends WebEvent {
-  final AdvertisingModel advertisingModel;
-  const AddNewAdvertising({required this.advertisingModel});
-}
 
-class GetAllAdvertisingEvent extends WebEvent {}
 
 class GetPlansEvent extends WebEvent {}
 
@@ -46,11 +41,7 @@ class EditPlanEvent extends WebEvent {
   final PlanModel? model;
 }
 
-class UploadImageEvent extends WebEvent {
-  final Uint8List byte;
-  final String name;
-  const UploadImageEvent({required this.byte, required this.name});
-}
+
 
 // class UpdateImageEvent extends WebEvent {
 //   final Uint8List byte;

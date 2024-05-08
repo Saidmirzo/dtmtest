@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
@@ -25,35 +25,14 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     on<GetAllUsersEvent>(_getALlUserEvent);
     on<GetAllThemes>(_getAllThemesEvent);
     on<AddNewThemeEvent>(_addNewThemeEvent);
-    on<AddNewAdvertising>(_addNewAdvertisingEvent);
-    on<GetAllAdvertisingEvent>(_getALlAdvertisingEvent);
 
     on<GetPlansEvent>(_getPlanEvent);
     on<AddPlanEvent>(_addPlanEvent);
     on<DeletePlanEvent>(_deletePlanEvent);
     on<EditPlanEvent>(_editPlanEvent);
-    on<UploadImageEvent>(_uploadIMageEvent);
     // on<UpdateImageEvent>(_updateImageEvent);
   }
 
-  _uploadIMageEvent(UploadImageEvent event, emit) async {
-    emit(state.copyWith(uploadImageStatus: BlocStatus.inProgress));
-    final result = await webRepository.uploadImage(event.byte, event.name);
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          uploadImageStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          uploadImageStatus: BlocStatus.completed,
-          imageLink: r,
-        ),
-      ),
-    );
-  }
 
   // _updateImageEvent(UpdateImageEvent event, emit) async {
   //   emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
@@ -135,49 +114,6 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     );
   }
 
-  _addNewAdvertisingEvent(AddNewAdvertising event, emit) async {
-    emit(state.copyWith(addNewadvertisingStatus: BlocStatus.inProgress));
-    final result =
-        await webRepository.addNewAdvertising(event.advertisingModel);
-
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          addNewadvertisingStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) {
-        emit(
-          state.copyWith(
-            addNewadvertisingStatus: BlocStatus.completed,
-          ),
-        );
-        add(GetAllAdvertisingEvent());
-      },
-    );
-  }
-
-  _getALlAdvertisingEvent(GetAllAdvertisingEvent event, emit) async {
-    emit(state.copyWith(getAllAdvertisingStatus: BlocStatus.inProgress));
-    final result = await webRepository.getAllAdvertising();
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          getAllAdvertisingStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) {
-        emit(
-          state.copyWith(
-            getAllAdvertisingStatus: BlocStatus.completed,
-            listAdvertising: r,
-          ),
-        );
-      },
-    );
-  }
 
   _addPlanEvent(AddPlanEvent event, emit) async {
     emit(state.copyWith(addPlanStatus: BlocStatus.inProgress));

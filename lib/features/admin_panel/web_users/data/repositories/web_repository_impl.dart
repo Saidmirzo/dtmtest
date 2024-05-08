@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
@@ -96,27 +95,6 @@ class WebRepositoryImpl implements WebRepository {
     return quizs;
   }
 
-  @override
-  Future<Either<Failure, String>> addNewAdvertising(
-      AdvertisingModel advertisingModel) async {
-    try {
-      final result =
-          await webRemoteDataSource.addNewAdvertising(advertisingModel);
-      return Right(result);
-    } catch (e) {
-      return const Left(ServerFailure('get themes Error'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<AdvertisingModel>>> getAllAdvertising() async {
-    try {
-      final result = await webRemoteDataSource.getAdvertising();
-      return Right(result);
-    } catch (e) {
-      return const Left(ServerFailure('get themes Error'));
-    }
-  }
 
   @override
   Future<Either<Failure, String>> addCategory(CategoryModel model) async {
@@ -208,26 +186,4 @@ class WebRepositoryImpl implements WebRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, String>> uploadImage(
-      Uint8List byte, String name) async {
-    try {
-      final result = await webRemoteDataSource.postImage(byte, name);
-      return Right(result);
-    } catch (e) {
-      return const Left(ServerFailure('add history Error'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> updateImage(
-      Uint8List byte, String name, String publicId) async {
-    try {
-      final result =
-          await webRemoteDataSource.updateImage(byte, name, publicId);
-      return Right(result);
-    } catch (e) {
-      return const Left(ServerFailure('Error'));
-    }
-  }
 }
