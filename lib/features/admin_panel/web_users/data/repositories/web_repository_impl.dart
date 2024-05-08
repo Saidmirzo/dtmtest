@@ -4,7 +4,7 @@ import 'package:dtmtest/features/admin_panel/web_admins/models/admin_model.dart'
 import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_quizes/data/model/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
+import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
