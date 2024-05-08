@@ -154,12 +154,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           networkImage: state.profileData?.userImage,
                           defWidget: Stack(
                             children: [
-                              state.profileData?.userImage == null
-                                  ? Assets.icons.profileBold.svg(
-                                      width: 70,
-                                      height: 70,
-                                    )
-                                  : UI.nothing,
+                              // state.profileData?.userImage == null
+                              //     ? Assets.icons.profileBold.svg(
+                              //         width: 70,
+                              //         height: 70,
+                              //       )
+                              //     : UI.nothing,
+                              // Assets.images.defimage.image(),
+
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: GestureDetector(

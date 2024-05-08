@@ -61,12 +61,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           shape: BoxShape.circle,
                           networkImage: state.userModel?.userImage,
-                          defWidget: state.userModel?.userImage == null
-                              ? Assets.icons.profileBold.svg(
-                                  width: 40,
-                                  height: 40,
-                                )
-                              : UI.nothing,
+                          defImage: Assets.images.defimage.path,
                         ),
                         13.w,
                         Column(

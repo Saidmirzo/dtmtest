@@ -33,13 +33,7 @@ class LeadersWidget extends StatelessWidget {
                   color: ColorName.customColor,
                 ),
                 networkImage: networkImage,
-                defWidget: ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
-                  child: Assets.icons.profileBold.svg(
-                    width: 50,
-                    height: 50,
-                  ),
-                ),
+                defImage: Assets.images.defimage.path,
               ),
               Positioned(
                 bottom: 0,

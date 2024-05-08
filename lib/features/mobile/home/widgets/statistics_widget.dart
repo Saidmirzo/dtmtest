@@ -1,16 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
+import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/extentions.dart';
+import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:dtmtest/common/costomaizable.dart';
-import 'package:dtmtest/common/extentions.dart';
-import 'package:dtmtest/common/material_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsWidget extends StatefulWidget {
@@ -116,6 +117,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
                         index: index,
                         name: currentUser?.fullName ?? '',
                         raiting: currentUser?.rating ?? 0,
+                        networkImage: currentUser?.userImage ?? '',
                       ),
                     );
                   },
@@ -135,14 +137,15 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
 
 // ignore: must_be_immutable
 class StatisticsFavoriteWidget extends StatelessWidget {
-  int index;
-  String name;
-  int? raiting;
-  StatisticsFavoriteWidget({
+  final int index;
+  final String name, networkImage;
+  final int? raiting;
+  const StatisticsFavoriteWidget({
     super.key,
     required this.index,
     required this.name,
     required this.raiting,
+    required this.networkImage,
   });
 
   @override
@@ -163,20 +166,16 @@ class StatisticsFavoriteWidget extends StatelessWidget {
           ),
         ),
         15.w,
-        Container(
+        CustomNetworkImage(
           width: 40,
           height: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: ColorName.customColor,
+            width: 1,
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Assets.images.statisticsProfileImage.image(
-              width: 40,
-              height: 40,
-              fit: BoxFit.cover,
-            ),
-          ),
+          shape: BoxShape.circle,
+          networkImage: networkImage,
+          defImage: Assets.images.defimage.path,
         ),
         10.w,
         SizedBox(

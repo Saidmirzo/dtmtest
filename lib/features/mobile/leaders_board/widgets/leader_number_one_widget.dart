@@ -38,13 +38,7 @@ class NumberOneLeaderWidget extends StatelessWidget {
                     ),
                     width: 50,
                     height: 50,
-                    defWidget: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: Assets.icons.profileBold.svg(
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
+                    defImage: Assets.images.defimage.path,
                   ),
                 ],
               ),

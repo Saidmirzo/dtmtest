@@ -110,10 +110,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
 
-  /// File path: assets/icons/profile_bold.svg
-  SvgGenImage get profileBold =>
-      const SvgGenImage('assets/icons/profile_bold.svg');
-
   /// File path: assets/icons/quizes.svg
   SvgGenImage get quizes => const SvgGenImage('assets/icons/quizes.svg');
 
@@ -163,7 +159,6 @@ class $AssetsIconsGen {
         password,
         person,
         profile,
-        profileBold,
         quizes,
         search,
         searchIcon,
@@ -188,6 +183,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/business_plan_image.png
   AssetGenImage get businessPlanImage =>
       const AssetGenImage('assets/images/business_plan_image.png');
+
+  /// File path: assets/images/defimage.png
+  AssetGenImage get defimage =>
+      const AssetGenImage('assets/images/defimage.png');
 
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
@@ -217,6 +216,7 @@ class $AssetsImagesGen {
         accountImage,
         bookImage,
         businessPlanImage,
+        defimage,
         logo,
         numberOneKing,
         premiumPlansImage,

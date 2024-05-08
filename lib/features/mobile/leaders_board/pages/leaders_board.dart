@@ -122,13 +122,7 @@ class _LeaderBoardPageState extends State<LeaderBoardPage> {
                                 height: 30,
                                 networkImage:
                                     state.listSortUsers?[index + 3].userImage,
-                                defWidget: ClipRRect(
-                                  borderRadius: BorderRadius.circular(25),
-                                  child: Assets.icons.profileBold.svg(
-                                    width: 30,
-                                    height: 30,
-                                  ),
-                                ),
+                                defImage: Assets.images.defimage.path,
                               ),
                               20.w,
                               Expanded(

@@ -32,10 +32,7 @@ class CustomNetworkImage extends StatelessWidget {
           decoration: BoxDecoration(
             color: color,
             shape: shape,
-
-            // boxShadow: boxShadow,
             border: border,
-            // borderRadius: borderRadiusDef,
             image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
           ),
           child: defWidget),
@@ -47,10 +44,8 @@ class CustomNetworkImage extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: shape,
-                  // boxShadow: boxShadow,
                   border: border,
                   color: color,
-                  // borderRadius: borderRadiusDef,
                   image: DecorationImage(
                       image: AssetImage(defImage ?? ''), fit: BoxFit.cover),
                 ),
@@ -61,10 +56,8 @@ class CustomNetworkImage extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: shape,
-                  // boxShadow: boxShadow,
                   border: border,
                   color: color,
-                  // borderRadius: borderRadiusDef,
                 ),
                 child: defWidget,
               );
