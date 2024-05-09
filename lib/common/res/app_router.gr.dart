@@ -145,6 +145,14 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const WebAdvrtisingPage(),
       );
     },
+    WebAuthRoute.name: (routeData) {
+      final args = routeData.argsAs<WebAuthRouteArgs>(
+          orElse: () => const WebAuthRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WebAuthPage(key: args.key),
+      );
+    },
     WebCategoriesRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -542,6 +550,35 @@ class WebAdvrtisingRoute extends PageRouteInfo<void> {
   static const String name = 'WebAdvrtisingRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WebAuthPage]
+class WebAuthRoute extends PageRouteInfo<WebAuthRouteArgs> {
+  WebAuthRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          WebAuthRoute.name,
+          args: WebAuthRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'WebAuthRoute';
+
+  static const PageInfo<WebAuthRouteArgs> page =
+      PageInfo<WebAuthRouteArgs>(name);
+}
+
+class WebAuthRouteArgs {
+  const WebAuthRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'WebAuthRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

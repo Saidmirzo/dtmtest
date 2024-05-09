@@ -62,7 +62,7 @@ class _SplashPageState extends State<SplashPage>
       builder: (context, state) {
         if (state.getLocaleUserStatus.isComplated) {
           if (kIsWeb || Platform.isMacOS) {
-            context.replaceRoute(const WebMainRoute());
+            context.replaceRoute( WebAuthRoute());
           } else if (state.userModel != null) {
             context.replaceRoute(const MainRoute());
           } else {

@@ -1,10 +1,11 @@
-
 // import 'package:dio/dio.dart';
 // import 'package:socialmedia/core/error/failure.dart';
 
-// class ServerException implements Exception {}
+class ServerException implements Exception {}
 
-// class CacheException implements Exception {}
+class AuthException implements Exception {}
+
+class CacheException implements Exception {}
 
 // class DioExceptions implements Exception {
 //   DioExceptions();
