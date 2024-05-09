@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_users_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,7 +12,7 @@ part 'web_categories_state.dart';
 class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
   final WebRepository webRepository;
   WebCategoriesBloc({required this.webRepository})
-      : super(WebCategoriesState()) {
+      : super(const WebCategoriesState()) {
     on<GetAllCategoriesEvent>(_getAllCategoryEvent);
     on<AddCategoryEvent>(_addCategoryEvent);
     on<DeleteCategoryEvent>(_deleteCategoryEvent);

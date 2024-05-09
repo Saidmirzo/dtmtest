@@ -11,6 +11,7 @@ class WebUsersState with _$WebUsersState {
    @Default(BlocStatus.notInitialized) final BlocStatus deleteUserStatus,
     final List<AdminModel>? listAdmins,
     final List<UserModel>? listUsers,
+    final List<UserModel>? searchedUserList,
     final String? message,}
   ) = _WebUsersState;
 

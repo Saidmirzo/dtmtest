@@ -9,15 +9,29 @@ sealed class WebUsersEvent extends Equatable {
 
 class GetAdminsEvent extends WebUsersEvent {}
 
-class DeleteAdminEvent extends WebUsersEvent {}
+class DeleteAdminEvent extends WebUsersEvent {
+  const DeleteAdminEvent({required this.id});
+  final String id;
+}
 
-class AddAdminEvent extends WebUsersEvent {}
+class AddAdminEvent extends WebUsersEvent {
+  const AddAdminEvent({required this.model});
+  final AdminModel? model;
+}
 
-class EditAdminEvent extends WebUsersEvent {}
+class EditAdminEvent extends WebUsersEvent {
+  const EditAdminEvent({required this.model});
+  final AdminModel? model;
+}
 
 class GetUsersEvent extends WebUsersEvent {}
 
 class DeleteUserEvent extends WebUsersEvent {
-  const DeleteUserEvent({required this.model});
-  final UserModel? model;
+  const DeleteUserEvent({required this.id});
+  final String id;
+}
+
+class SearchChangedEvent extends WebUsersEvent {
+  const SearchChangedEvent({required this.query});
+  final String query;
 }

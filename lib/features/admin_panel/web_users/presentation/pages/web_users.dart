@@ -5,7 +5,7 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +21,17 @@ class _WebUsersPageState extends State<WebUsersPage> {
   @override
   void initState() {
     super.initState();
-    context.read<WebBloc>().add(GetAllUsersEvent());
+    context.read<WebUsersBloc>().add(GetUsersEvent());
+  }
+
+  String searchQuery = "";
+  List<UserModel> searchResults = [];
+
+  List<UserModel> searchByName(String query, List<UserModel> users) {
+    return users
+        .where((user) =>
+            user.fullName!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 
   @override
@@ -43,16 +53,19 @@ class _WebUsersPageState extends State<WebUsersPage> {
               children: [
                 SizedBox(
                   width: size.width * .25,
-                  child: const CustomTextField(
+                  child: CustomTextField(
                     backgroundColor: ColorName.backgroundColor,
                     hintText: "Search",
-                    leading: Padding(
+                    onChanged: (value) => context
+                        .read<WebUsersBloc>()
+                        .add(SearchChangedEvent(query: value)),
+                    leading: const Padding(
                       padding: EdgeInsets.only(left: 25, right: 10),
                       child: Icon(Icons.search),
                     ),
                     borderColor: Colors.transparent,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 17),
                   ),
                 ),
                 const Spacer(),
@@ -80,17 +93,20 @@ class _WebUsersPageState extends State<WebUsersPage> {
                       DataColumn(label: Text('')),
                     ],
                     rows: List<DataRow>.generate(
-                      state.listUsers?.length ?? 0,
+                      state.searchedUserList?.length ?? 0,
                       (index) => DataRow(
                         cells: [
                           DataCell(Text('${index + 1}')),
+                          DataCell(Text(
+                              state.searchedUserList?[index].fullName ?? '')),
+                          DataCell(Text(
+                              state.searchedUserList?[index].email.toString() ??
+                                  '')),
                           DataCell(
-                              Text(state.listUsers?[index].fullName ?? '')),
-                          DataCell(Text(
-                              state.listUsers?[index].email.toString() ?? '')),
-                          DataCell(Text(state.listUsers?[index].plan ?? '')),
-                          DataCell(Text(
-                              state.listUsers?[index].rating.toString() ?? '')),
+                              Text(state.searchedUserList?[index].plan ?? '')),
+                          DataCell(Text(state.searchedUserList?[index].rating
+                                  .toString() ??
+                              '')),
                           DataCell(
                             PopupMenuButton(
                               iconColor: ColorName.blue,
@@ -105,7 +121,9 @@ class _WebUsersPageState extends State<WebUsersPage> {
                                     onTap: () {
                                       context.read<WebUsersBloc>().add(
                                             DeleteUserEvent(
-                                              model: state.listUsers?[index],
+                                              id: state.searchedUserList?[index]
+                                                      .uid ??
+                                                  '',
                                             ),
                                           );
                                     },

@@ -24,6 +24,7 @@ mixin _$WebUsersState {
   BlocStatus get deleteUserStatus => throw _privateConstructorUsedError;
   List<AdminModel>? get listAdmins => throw _privateConstructorUsedError;
   List<UserModel>? get listUsers => throw _privateConstructorUsedError;
+  List<UserModel>? get searchedUserList => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -46,6 +47,7 @@ abstract class $WebUsersStateCopyWith<$Res> {
       BlocStatus deleteUserStatus,
       List<AdminModel>? listAdmins,
       List<UserModel>? listUsers,
+      List<UserModel>? searchedUserList,
       String? message});
 }
 
@@ -70,6 +72,7 @@ class _$WebUsersStateCopyWithImpl<$Res, $Val extends WebUsersState>
     Object? deleteUserStatus = null,
     Object? listAdmins = freezed,
     Object? listUsers = freezed,
+    Object? searchedUserList = freezed,
     Object? message = freezed,
   }) {
     return _then(_value.copyWith(
@@ -105,6 +108,10 @@ class _$WebUsersStateCopyWithImpl<$Res, $Val extends WebUsersState>
           ? _value.listUsers
           : listUsers // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      searchedUserList: freezed == searchedUserList
+          ? _value.searchedUserList
+          : searchedUserList // ignore: cast_nullable_to_non_nullable
+              as List<UserModel>?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -130,6 +137,7 @@ abstract class _$$WebUsersStateImplCopyWith<$Res>
       BlocStatus deleteUserStatus,
       List<AdminModel>? listAdmins,
       List<UserModel>? listUsers,
+      List<UserModel>? searchedUserList,
       String? message});
 }
 
@@ -152,6 +160,7 @@ class __$$WebUsersStateImplCopyWithImpl<$Res>
     Object? deleteUserStatus = null,
     Object? listAdmins = freezed,
     Object? listUsers = freezed,
+    Object? searchedUserList = freezed,
     Object? message = freezed,
   }) {
     return _then(_$WebUsersStateImpl(
@@ -187,6 +196,10 @@ class __$$WebUsersStateImplCopyWithImpl<$Res>
           ? _value._listUsers
           : listUsers // ignore: cast_nullable_to_non_nullable
               as List<UserModel>?,
+      searchedUserList: freezed == searchedUserList
+          ? _value._searchedUserList
+          : searchedUserList // ignore: cast_nullable_to_non_nullable
+              as List<UserModel>?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -207,9 +220,11 @@ class _$WebUsersStateImpl extends _WebUsersState {
       this.deleteUserStatus = BlocStatus.notInitialized,
       final List<AdminModel>? listAdmins,
       final List<UserModel>? listUsers,
+      final List<UserModel>? searchedUserList,
       this.message})
       : _listAdmins = listAdmins,
         _listUsers = listUsers,
+        _searchedUserList = searchedUserList,
         super._();
 
   @override
@@ -250,12 +265,23 @@ class _$WebUsersStateImpl extends _WebUsersState {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<UserModel>? _searchedUserList;
+  @override
+  List<UserModel>? get searchedUserList {
+    final value = _searchedUserList;
+    if (value == null) return null;
+    if (_searchedUserList is EqualUnmodifiableListView)
+      return _searchedUserList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? message;
 
   @override
   String toString() {
-    return 'WebUsersState(getAllAdminsStatus: $getAllAdminsStatus, getAllUsersStatus: $getAllUsersStatus, addAdminStatus: $addAdminStatus, editAdminStatus: $editAdminStatus, deleteAdminStatus: $deleteAdminStatus, deleteUserStatus: $deleteUserStatus, listAdmins: $listAdmins, listUsers: $listUsers, message: $message)';
+    return 'WebUsersState(getAllAdminsStatus: $getAllAdminsStatus, getAllUsersStatus: $getAllUsersStatus, addAdminStatus: $addAdminStatus, editAdminStatus: $editAdminStatus, deleteAdminStatus: $deleteAdminStatus, deleteUserStatus: $deleteUserStatus, listAdmins: $listAdmins, listUsers: $listUsers, searchedUserList: $searchedUserList, message: $message)';
   }
 
   @override
@@ -279,6 +305,8 @@ class _$WebUsersStateImpl extends _WebUsersState {
                 .equals(other._listAdmins, _listAdmins) &&
             const DeepCollectionEquality()
                 .equals(other._listUsers, _listUsers) &&
+            const DeepCollectionEquality()
+                .equals(other._searchedUserList, _searchedUserList) &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -293,6 +321,7 @@ class _$WebUsersStateImpl extends _WebUsersState {
       deleteUserStatus,
       const DeepCollectionEquality().hash(_listAdmins),
       const DeepCollectionEquality().hash(_listUsers),
+      const DeepCollectionEquality().hash(_searchedUserList),
       message);
 
   @JsonKey(ignore: true)
@@ -312,6 +341,7 @@ abstract class _WebUsersState extends WebUsersState {
       final BlocStatus deleteUserStatus,
       final List<AdminModel>? listAdmins,
       final List<UserModel>? listUsers,
+      final List<UserModel>? searchedUserList,
       final String? message}) = _$WebUsersStateImpl;
   const _WebUsersState._() : super._();
 
@@ -331,6 +361,8 @@ abstract class _WebUsersState extends WebUsersState {
   List<AdminModel>? get listAdmins;
   @override
   List<UserModel>? get listUsers;
+  @override
+  List<UserModel>? get searchedUserList;
   @override
   String? get message;
   @override
