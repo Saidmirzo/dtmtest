@@ -23,6 +23,7 @@ class AddNewThemeEvent extends WebEvent {
 }
 
 
+class GetAllAdvertisingEvent extends WebEvent {}
 
 class GetPlansEvent extends WebEvent {}
 

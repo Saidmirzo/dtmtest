@@ -4,6 +4,10 @@ import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/adv
 import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_tarifs/data/data_sources/tarifs_remote_data_source.dart';
+import 'package:dtmtest/features/admin_panel/web_tarifs/data/repositories/tarifs_repository_impl.dart';
+import 'package:dtmtest/features/admin_panel/web_tarifs/domain/repositories/tarifs_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_repository_impl.dart';
@@ -77,6 +81,7 @@ Future<void> init() async {
       advertisingRepository: di(),
     ),
   );
+  di.registerFactory(() => TarifsBloc(tarifRepository: di()));
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
@@ -115,6 +120,9 @@ Future<void> init() async {
   di.registerFactory<AdvertisingRepository>(
     () => AdvertisingRepositoryImpl(advertisingRemoteDataSource: di()),
   );
+  di.registerFactory<TarifsRepository>(
+    () => TarifsRepositoryImpl(tarifRemoteDataSource: di()),
+  );
   // DataSource
   di.registerLazySingleton<AuthLocaleDataSource>(
     () => AuthLocaleDataSourceImpl(),
@@ -136,6 +144,9 @@ Future<void> init() async {
   );
   di.registerLazySingleton<AdvertisingRemoteDataSource>(
     () => AdvertisingRemoteDataSourceImpl(),
+  );
+  di.registerLazySingleton<TarifsRemoteDataSource>(
+    () => TarifsRemoteDataSourceImpl(),
   );
 
   /// Network

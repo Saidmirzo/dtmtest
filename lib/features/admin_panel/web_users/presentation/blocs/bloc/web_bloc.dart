@@ -2,10 +2,8 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:equatable/equatable.dart';
@@ -26,10 +24,6 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     on<GetAllThemes>(_getAllThemesEvent);
     on<AddNewThemeEvent>(_addNewThemeEvent);
 
-    on<GetPlansEvent>(_getPlanEvent);
-    on<AddPlanEvent>(_addPlanEvent);
-    on<DeletePlanEvent>(_deletePlanEvent);
-    on<EditPlanEvent>(_editPlanEvent);
     // on<UpdateImageEvent>(_updateImageEvent);
   }
 
@@ -132,73 +126,5 @@ class WebBloc extends Bloc<WebEvent, WebState> {
       );
       add(GetPlansEvent());
     });
-  }
-
-  _editPlanEvent(EditPlanEvent event, emit) async {
-    emit(state.copyWith(editPlanStatus: BlocStatus.inProgress));
-    final result = await webRepository.editPlan(event.model);
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          editPlanStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) {
-        List<PlanModel> plansList = [];
-        plansList.addAll(state.listPlans ?? []);
-        int index =
-            plansList.indexWhere((element) => element.id == event.model?.id);
-        plansList.removeAt(index);
-        plansList.insert(index, event.model!);
-        emit(
-          state.copyWith(
-              editPlanStatus: BlocStatus.completed, listPlans: plansList),
-        );
-      },
-    );
-  }
-
-  _deletePlanEvent(DeletePlanEvent event, emit) async {
-    emit(state.copyWith(deletePlanStatus: BlocStatus.inProgress));
-    final result = await webRepository.deletePlan(event.model);
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          deletePlanStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) {
-        List<PlanModel> planList = [];
-        planList.addAll(state.listPlans ?? []);
-        int index =
-            planList.indexWhere((element) => element.id == event.model?.id);
-        planList.removeAt(index);
-        emit(
-          state.copyWith(
-              deletePlanStatus: BlocStatus.completed, listPlans: planList),
-        );
-      },
-    );
-  }
-
-  _getPlanEvent(event, emit) async {
-    emit(state.copyWith(getAllPlansStatus: BlocStatus.inProgress));
-    final result = await webRepository.getPlan();
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          getAllPlansStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          getAllPlansStatus: BlocStatus.completed,
-          listPlans: r,
-        ),
-      ),
-    );
   }
 }
