@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/advertising_repository_impl.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:equatable/equatable.dart';
@@ -14,7 +16,11 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   WebRepository repository;
-  HomeBloc({required this.repository}) : super(const HomeState()) {
+  AdvertisingRepository advertisingRepository;
+  HomeBloc({
+    required this.repository,
+    required this.advertisingRepository,
+  }) : super(const HomeState()) {
     on<GetAllStatisticsEvent>(_getAllStatisticsEvent);
     on<GetAllCarouselImageEvent>(_getAllCaruselImagesEvent);
   }
@@ -43,7 +49,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   _getAllCaruselImagesEvent(event, emit) async {
     emit(state.copyWith(getAllCarouselImageStatus: BlocStatus.inProgress));
-    final result = await repository.getAllAdvertising();
+    final result = await advertisingRepository.getAllAdvertising();
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -59,5 +65,4 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
     );
   }
-
 }

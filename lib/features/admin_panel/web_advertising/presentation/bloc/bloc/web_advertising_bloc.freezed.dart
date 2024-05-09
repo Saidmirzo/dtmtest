@@ -19,6 +19,8 @@ mixin _$WebAdvertisingState {
   BlocStatus get addNewadvertisingStatus => throw _privateConstructorUsedError;
   BlocStatus get getAllAdvertisingStatus => throw _privateConstructorUsedError;
   BlocStatus get uploadImageStatus => throw _privateConstructorUsedError;
+  BlocStatus get editAdvertisingStatus => throw _privateConstructorUsedError;
+  BlocStatus get deleteAdvertisingStatus => throw _privateConstructorUsedError;
   List<AdvertisingModel>? get listAdvertising =>
       throw _privateConstructorUsedError;
   String? get imageLink => throw _privateConstructorUsedError;
@@ -39,6 +41,8 @@ abstract class $WebAdvertisingStateCopyWith<$Res> {
       {BlocStatus addNewadvertisingStatus,
       BlocStatus getAllAdvertisingStatus,
       BlocStatus uploadImageStatus,
+      BlocStatus editAdvertisingStatus,
+      BlocStatus deleteAdvertisingStatus,
       List<AdvertisingModel>? listAdvertising,
       String? imageLink,
       String? message});
@@ -60,6 +64,8 @@ class _$WebAdvertisingStateCopyWithImpl<$Res, $Val extends WebAdvertisingState>
     Object? addNewadvertisingStatus = null,
     Object? getAllAdvertisingStatus = null,
     Object? uploadImageStatus = null,
+    Object? editAdvertisingStatus = null,
+    Object? deleteAdvertisingStatus = null,
     Object? listAdvertising = freezed,
     Object? imageLink = freezed,
     Object? message = freezed,
@@ -76,6 +82,14 @@ class _$WebAdvertisingStateCopyWithImpl<$Res, $Val extends WebAdvertisingState>
       uploadImageStatus: null == uploadImageStatus
           ? _value.uploadImageStatus
           : uploadImageStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      editAdvertisingStatus: null == editAdvertisingStatus
+          ? _value.editAdvertisingStatus
+          : editAdvertisingStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      deleteAdvertisingStatus: null == deleteAdvertisingStatus
+          ? _value.deleteAdvertisingStatus
+          : deleteAdvertisingStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       listAdvertising: freezed == listAdvertising
           ? _value.listAdvertising
@@ -105,6 +119,8 @@ abstract class _$$WebAdvertisingStateImplCopyWith<$Res>
       {BlocStatus addNewadvertisingStatus,
       BlocStatus getAllAdvertisingStatus,
       BlocStatus uploadImageStatus,
+      BlocStatus editAdvertisingStatus,
+      BlocStatus deleteAdvertisingStatus,
       List<AdvertisingModel>? listAdvertising,
       String? imageLink,
       String? message});
@@ -124,6 +140,8 @@ class __$$WebAdvertisingStateImplCopyWithImpl<$Res>
     Object? addNewadvertisingStatus = null,
     Object? getAllAdvertisingStatus = null,
     Object? uploadImageStatus = null,
+    Object? editAdvertisingStatus = null,
+    Object? deleteAdvertisingStatus = null,
     Object? listAdvertising = freezed,
     Object? imageLink = freezed,
     Object? message = freezed,
@@ -140,6 +158,14 @@ class __$$WebAdvertisingStateImplCopyWithImpl<$Res>
       uploadImageStatus: null == uploadImageStatus
           ? _value.uploadImageStatus
           : uploadImageStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      editAdvertisingStatus: null == editAdvertisingStatus
+          ? _value.editAdvertisingStatus
+          : editAdvertisingStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      deleteAdvertisingStatus: null == deleteAdvertisingStatus
+          ? _value.deleteAdvertisingStatus
+          : deleteAdvertisingStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       listAdvertising: freezed == listAdvertising
           ? _value._listAdvertising
@@ -164,6 +190,8 @@ class _$WebAdvertisingStateImpl extends _WebAdvertisingState {
       {this.addNewadvertisingStatus = BlocStatus.notInitialized,
       this.getAllAdvertisingStatus = BlocStatus.notInitialized,
       this.uploadImageStatus = BlocStatus.notInitialized,
+      this.editAdvertisingStatus = BlocStatus.notInitialized,
+      this.deleteAdvertisingStatus = BlocStatus.notInitialized,
       final List<AdvertisingModel>? listAdvertising,
       this.imageLink,
       this.message})
@@ -179,6 +207,12 @@ class _$WebAdvertisingStateImpl extends _WebAdvertisingState {
   @override
   @JsonKey()
   final BlocStatus uploadImageStatus;
+  @override
+  @JsonKey()
+  final BlocStatus editAdvertisingStatus;
+  @override
+  @JsonKey()
+  final BlocStatus deleteAdvertisingStatus;
   final List<AdvertisingModel>? _listAdvertising;
   @override
   List<AdvertisingModel>? get listAdvertising {
@@ -196,7 +230,7 @@ class _$WebAdvertisingStateImpl extends _WebAdvertisingState {
 
   @override
   String toString() {
-    return 'WebAdvertisingState(addNewadvertisingStatus: $addNewadvertisingStatus, getAllAdvertisingStatus: $getAllAdvertisingStatus, uploadImageStatus: $uploadImageStatus, listAdvertising: $listAdvertising, imageLink: $imageLink, message: $message)';
+    return 'WebAdvertisingState(addNewadvertisingStatus: $addNewadvertisingStatus, getAllAdvertisingStatus: $getAllAdvertisingStatus, uploadImageStatus: $uploadImageStatus, editAdvertisingStatus: $editAdvertisingStatus, deleteAdvertisingStatus: $deleteAdvertisingStatus, listAdvertising: $listAdvertising, imageLink: $imageLink, message: $message)';
   }
 
   @override
@@ -212,6 +246,11 @@ class _$WebAdvertisingStateImpl extends _WebAdvertisingState {
                 other.getAllAdvertisingStatus == getAllAdvertisingStatus) &&
             (identical(other.uploadImageStatus, uploadImageStatus) ||
                 other.uploadImageStatus == uploadImageStatus) &&
+            (identical(other.editAdvertisingStatus, editAdvertisingStatus) ||
+                other.editAdvertisingStatus == editAdvertisingStatus) &&
+            (identical(
+                    other.deleteAdvertisingStatus, deleteAdvertisingStatus) ||
+                other.deleteAdvertisingStatus == deleteAdvertisingStatus) &&
             const DeepCollectionEquality()
                 .equals(other._listAdvertising, _listAdvertising) &&
             (identical(other.imageLink, imageLink) ||
@@ -225,6 +264,8 @@ class _$WebAdvertisingStateImpl extends _WebAdvertisingState {
       addNewadvertisingStatus,
       getAllAdvertisingStatus,
       uploadImageStatus,
+      editAdvertisingStatus,
+      deleteAdvertisingStatus,
       const DeepCollectionEquality().hash(_listAdvertising),
       imageLink,
       message);
@@ -242,6 +283,8 @@ abstract class _WebAdvertisingState extends WebAdvertisingState {
       {final BlocStatus addNewadvertisingStatus,
       final BlocStatus getAllAdvertisingStatus,
       final BlocStatus uploadImageStatus,
+      final BlocStatus editAdvertisingStatus,
+      final BlocStatus deleteAdvertisingStatus,
       final List<AdvertisingModel>? listAdvertising,
       final String? imageLink,
       final String? message}) = _$WebAdvertisingStateImpl;
@@ -253,6 +296,10 @@ abstract class _WebAdvertisingState extends WebAdvertisingState {
   BlocStatus get getAllAdvertisingStatus;
   @override
   BlocStatus get uploadImageStatus;
+  @override
+  BlocStatus get editAdvertisingStatus;
+  @override
+  BlocStatus get deleteAdvertisingStatus;
   @override
   List<AdvertisingModel>? get listAdvertising;
   @override

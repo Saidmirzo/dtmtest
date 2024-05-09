@@ -7,6 +7,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dropdown.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widgets/add_advertising_dialog.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
@@ -411,13 +412,15 @@ mixin DialogMixin {
     );
   }
 
-  Future<dynamic> addAdvertisingDialog(BuildContext context, EditAdd editAdd) {
+  Future<dynamic> addAdvertisingDialog(BuildContext context, EditAdd editAdd,
+      {AdvertisingModel? advertisingModel}) {
     return showAdaptiveDialog(
       barrierDismissible: true,
       context: context,
       builder: (_) {
         return AddAdvertisingDialog(
           editAdd: editAdd,
+          advertisingModel: advertisingModel,
         );
       },
     );

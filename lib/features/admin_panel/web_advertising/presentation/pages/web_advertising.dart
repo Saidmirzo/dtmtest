@@ -160,14 +160,24 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
                             return [
                               PopupMenuItem(
                                 value: '/Delete',
-                                child: const Text("Delete"),
-                                onTap: () {},
+                                child: state.deleteAdvertisingStatus.isProgress
+                                    ? UI.spinner()
+                                    : const Text("Delete"),
+                                onTap: () {
+                                  context.read<WebAdvertisingBloc>().add(
+                                      DeleteAdvertisingEvent(
+                                          id: listAdvertising[index].id ?? ''));
+                                },
                               ),
                               PopupMenuItem(
                                 value: '/Edit',
                                 child: const Text("Edit"),
                                 onTap: () {
-                                  addAdvertisingDialog(context, EditAdd.edit);
+                                  addAdvertisingDialog(
+                                    context,
+                                    EditAdd.edit,
+                                    advertisingModel: listAdvertising[index],
+                                  );
                                 },
                               ),
                             ];

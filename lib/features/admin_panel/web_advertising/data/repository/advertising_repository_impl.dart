@@ -54,4 +54,26 @@ class AdvertisingRepositoryImpl implements AdvertisingRepository {
       return const Left(ServerFailure('Error'));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> editAdvertising(
+      AdvertisingModel advertisingModel) async {
+    try {
+      final result =
+          await advertisingRemoteDataSource.editAdvertising(advertisingModel);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('Error'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteAdvertising(String id) async {
+    try {
+      final result = await advertisingRemoteDataSource.deteteAdvertising(id);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('Error'));
+    }
+  }
 }
