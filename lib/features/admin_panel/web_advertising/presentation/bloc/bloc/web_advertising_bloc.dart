@@ -47,6 +47,24 @@ class WebAdvertisingBloc
 
   _editAdvertisingEvent(EditAdvertisingEvent event, emit) async {
     emit(state.copyWith(editAdvertisingStatus: BlocStatus.inProgress));
+    final AdvertisingModel advertisingModel = event.advertisingModel;
+    if (event.byte != null && event.fileName != null) {
+      final result =
+          await advertisingRepository.uploadImage(event.byte!, event.fileName!);
+      String? link;
+      result.fold(
+        (l) => emit(
+          state.copyWith(
+            addNewadvertisingStatus: BlocStatus.failed,
+            message: l.message,
+          ),
+        ),
+        (r) async {
+          link = r;
+        },
+      );
+      advertisingModel.image = link ?? "";
+    }
     final result =
         await advertisingRepository.editAdvertising(event.advertisingModel);
     result.fold(
@@ -90,8 +108,8 @@ class WebAdvertisingBloc
   _addNewAdvertisingEvent(AddNewAdvertising event, emit) async {
     emit(state.copyWith(addNewadvertisingStatus: BlocStatus.inProgress));
     final result =
-        await advertisingRepository.addNewAdvertising(event.advertisingModel);
-
+        await advertisingRepository.uploadImage(event.byte, event.fileName);
+    String? link;
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -99,15 +117,32 @@ class WebAdvertisingBloc
           message: l.message,
         ),
       ),
-      (r) {
-        emit(
-          state.copyWith(
-            addNewadvertisingStatus: BlocStatus.completed,
-          ),
-        );
-        add(GetAllAdvertisingEvent());
+      (r) async {
+        link = r;
       },
     );
+    if (link != null) {
+      final AdvertisingModel advertisingModel = event.advertisingModel;
+      advertisingModel.image = link;
+      final response =
+          await advertisingRepository.addNewAdvertising(advertisingModel);
+      response.fold(
+        (l) => emit(
+          state.copyWith(
+            addNewadvertisingStatus: BlocStatus.failed,
+            message: l.message,
+          ),
+        ),
+        (r) {
+          emit(
+            state.copyWith(
+              addNewadvertisingStatus: BlocStatus.completed,
+            ),
+          );
+          add(GetAllAdvertisingEvent());
+        },
+      );
+    }
   }
 
   _getALlAdvertisingEvent(GetAllAdvertisingEvent event, emit) async {

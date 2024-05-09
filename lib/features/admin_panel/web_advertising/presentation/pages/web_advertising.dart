@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
@@ -10,6 +9,7 @@ import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
+import 'package:dtmtest/features/admin_panel/widgets/custom_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,41 +57,6 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
               )
             ],
           ),
-          20.h,
-          SizedBox(
-            height: 30,
-            child: Row(
-              children: [
-                const AdminRowWidget(
-                  width: 50,
-                  text: '№',
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                  child: const Text("Image"),
-                ),
-                const VerticalDivider(),
-                const AdminRowWidget(
-                  width: 200,
-                  text: 'Title',
-                ),
-                const AdminRowWidget(
-                  width: 200,
-                  text: 'Description',
-                  disableDivider: true,
-                ),
-                const VerticalDivider(),
-                const AdminRowWidget(
-                  width: 100,
-                  text: 'Link',
-                  disableDivider: true,
-                ),
-              ],
-            ),
-          ),
           10.h,
           Expanded(
             child: BlocConsumer<WebAdvertisingBloc, WebAdvertisingState>(
@@ -106,87 +71,65 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
                 }
                 final List<AdvertisingModel> listAdvertising =
                     state.listAdvertising ?? [];
-                return ListView.separated(
-                  itemCount: listAdvertising.length,
-                  itemBuilder: (_, index) => SizedBox(
-                    height: 50,
-                    child: Row(
-                      children: [
-                        AdminRowWidget(
-                          width: 50,
-                          text: (index + 1).toString(),
-                        ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: ColorName.backgroundColor,
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(
-                                state.listAdvertising?[index].image ?? '',
-                              ),
-                              fit: BoxFit.cover,
+                final TextStyle tableTextStyle = AppTextStyles.body14w4;
+                return CustomTable(
+                  columnNames: const [
+                    '№',
+                    'Image',
+                    'Title',
+                    'Description',
+                    'Link',
+                    ''
+                  ],
+                  columnList: List.generate(
+                    listAdvertising.length,
+                    (index) => [
+                      Text((index + 1).toString(), style: tableTextStyle),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: ColorName.backgroundColor,
+                          borderRadius: BorderRadius.circular(5),
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                              state.listAdvertising?[index].image ?? '',
                             ),
-                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: listAdvertising[index].image ?? "",
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        const VerticalDivider(),
-                        AdminRowWidget(
-                          width: 200,
-                          text: listAdvertising[index].title ?? "Unknown",
+                        child: CachedNetworkImage(
+                          imageUrl: listAdvertising[index].image ?? "",
                         ),
-                        AdminRowWidget(
-                          width: 200,
-                          text: listAdvertising[index].description ?? 'Unknown',
-                          disableDivider: true,
-                        ),
-                        const VerticalDivider(),
-                        AdminRowWidget(
-                          width: 100,
-                          text: listAdvertising[index].link ?? 'Unknown',
-                          disableDivider: true,
-                        ),
-                        PopupMenuButton(
-                          iconColor: ColorName.blue,
-                          surfaceTintColor: ColorName.white,
-                          position: PopupMenuPosition.under,
-                          onSelected: (value) {
-                            // your logic
-                          },
-                          itemBuilder: (BuildContext bc) {
-                            return [
-                              PopupMenuItem(
-                                value: '/Delete',
-                                child: state.deleteAdvertisingStatus.isProgress
-                                    ? UI.spinner()
-                                    : const Text("Delete"),
-                                onTap: () {
-                                  context.read<WebAdvertisingBloc>().add(
-                                      DeleteAdvertisingEvent(
-                                          id: listAdvertising[index].id ?? ''));
-                                },
-                              ),
-                              PopupMenuItem(
-                                value: '/Edit',
-                                child: const Text("Edit"),
-                                onTap: () {
-                                  addAdvertisingDialog(
-                                    context,
-                                    EditAdd.edit,
-                                    advertisingModel: listAdvertising[index],
-                                  );
-                                },
-                              ),
-                            ];
-                          },
-                        ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        listAdvertising[index].title ?? 'Unk',
+                        style: tableTextStyle,
+                      ),
+                      Text(
+                        listAdvertising[index].description ?? 'Unk',
+                        style: tableTextStyle,
+                      ),
+                      Text(
+                        listAdvertising[index].link ?? 'Unk',
+                        style: tableTextStyle,
+                      ),
+                    ],
                   ),
-                  separatorBuilder: (_, index) => 10.h,
+                  onDelete: (index) {
+                    context.read<WebAdvertisingBloc>().add(
+                          DeleteAdvertisingEvent(
+                            id: listAdvertising[index].id ?? '',
+                          ),
+                        );
+                  },
+                  onEdit: (index) {
+                    addAdvertisingDialog(
+                      context,
+                      EditAdd.edit,
+                      advertisingModel: listAdvertising[index],
+                    );
+                  },
                 );
               },
             ),

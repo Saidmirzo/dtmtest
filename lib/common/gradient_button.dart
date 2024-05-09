@@ -1,5 +1,6 @@
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/res/app_text_style.dart';
+import 'package:dtmtest/common/ui.dart';
 import 'package:flutter/material.dart';
 
 class GradientButton extends StatelessWidget {
@@ -54,7 +55,7 @@ class GradientButton extends StatelessWidget {
           height: height ?? 46,
           alignment: Alignment.center,
           child: isLoading
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? UI.spinner()
               : replaceTextVSIcon == false
                   ? Row(
                       mainAxisSize: MainAxisSize.min,

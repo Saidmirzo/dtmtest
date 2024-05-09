@@ -37,6 +37,8 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
 
   final desciptionController = TextEditingController();
   Widget? image;
+  Uint8List? byte;
+  String? fileName;
 
   @override
   void initState() {
@@ -54,8 +56,17 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
     var size = MediaQuery.of(context).size;
 
     return AlertDialog(
-      title: Text(widget.editAdd == EditAdd.add ? "Add advertising" : "Edit"),
-      backgroundColor: ColorName.backgroundColor,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(widget.editAdd == EditAdd.add ? "Add advertising" : "Edit"),
+          IconButton(
+            onPressed: () => context.maybePop(),
+            icon: const Icon(Icons.close),
+          ),
+        ],
+      ),
+      backgroundColor: ColorName.white,
       content: SizedBox(
         width: size.width * .25,
         child: Column(
@@ -70,14 +81,9 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                     await FilePicker.platform.pickFiles();
 
                 if (result?.files.single.bytes != null) {
-                  final Uint8List byte = result!.files.single.bytes!;
-                  image = Image.memory(byte);
-                  context.read<WebAdvertisingBloc>().add(
-                        UploadImageEvent(
-                          byte: byte,
-                          name: result.files.single.name,
-                        ),
-                      );
+                  byte = result!.files.single.bytes;
+                  image = Image.memory(byte!);
+                  fileName = result.files.single.name;
                   setState(() {});
                 }
               },
@@ -142,44 +148,23 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
               listenWhen: (previous, current) {
                 if (widget.editAdd == EditAdd.add) {
                   return previous.addNewadvertisingStatus !=
-                          current.addNewadvertisingStatus ||
-                      previous.uploadImageStatus != current.uploadImageStatus;
+                      current.addNewadvertisingStatus;
                 } else {
                   return previous.editAdvertisingStatus !=
-                          current.editAdvertisingStatus ||
-                      previous.uploadImageStatus != current.uploadImageStatus;
+                      current.editAdvertisingStatus;
                 }
               },
               listener: (context, state) {
-                if (state.uploadImageStatus.isProgress) {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (context) => Container(
-                      color: ColorName.white,
-                      height: 50,
-                      width: 50,
-                      child: UI.spinner(),
-                    ),
-                  );
-                }
-                if (state.uploadImageStatus.isComplated) {
-                  context.maybePop();
-                }
                 if (state.addNewadvertisingStatus.isComplated ||
                     state.editAdvertisingStatus.isComplated) {
                   context.maybePop();
                   showSnackBar(context, text: "Success");
-                } else if (state.addNewadvertisingStatus == BlocStatus.failed) {
+                } else if (state.addNewadvertisingStatus == BlocStatus.failed ||
+                    state.editAdvertisingStatus == BlocStatus.failed) {
                   showSnackBar(context, text: "Error");
                 }
               },
               builder: (context, state) {
-                String imageLink = state.imageLink ?? '';
-                if (state.addNewadvertisingStatus.isProgress) {
-                  return UI.spinner();
-                }
-
                 return GradientButton(
                   radius: 20,
                   isLoading: state.addNewadvertisingStatus.isProgress ||
@@ -188,29 +173,30 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                     if (desciptionController.text.isNotEmpty &&
                         linkController.text.isNotEmpty &&
                         titleController.text.isNotEmpty &&
-                        widget.editAdd == EditAdd.add) {
+                        widget.editAdd == EditAdd.add &&
+                        byte != null) {
                       context.read<WebAdvertisingBloc>().add(
                             AddNewAdvertising(
+                              fileName: fileName ?? "",
+                              byte: byte!,
                               advertisingModel: AdvertisingModel(
                                 description: desciptionController.text,
                                 link: linkController.text,
                                 title: titleController.text,
-                                image: imageLink.isEmpty
-                                    ? widget.advertisingModel?.image
-                                    : imageLink,
                               ),
                             ),
                           );
-                    }
-                    if (widget.editAdd == EditAdd.edit) {
+                    } else if (widget.editAdd == EditAdd.edit) {
                       context.read<WebAdvertisingBloc>().add(
                             EditAdvertisingEvent(
+                              byte: byte,
+                              fileName: fileName,
                               advertisingModel: AdvertisingModel(
                                 id: widget.advertisingModel?.id,
                                 description: desciptionController.text,
                                 link: linkController.text,
                                 title: titleController.text,
-                                image: imageLink,
+                                image: widget.advertisingModel?.image,
                               ),
                             ),
                           );
@@ -218,7 +204,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                       showSnackBar(context, text: "Some fields are empty");
                     }
                   },
-                  text: "Add",
+                  text: widget.editAdd == EditAdd.add ? "Add" : "Update",
                 );
               },
             )
