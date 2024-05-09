@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/profile/domain/repository/profile_repository.dart';
@@ -15,8 +16,12 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfileRepository authRepository;
   final WebRepository webRepository;
-  ProfileBloc({required this.webRepository, required this.authRepository})
-      : super(const ProfileState()) {
+  final AdvertisingRepository advertisingRepository;
+  ProfileBloc({
+    required this.webRepository,
+    required this.authRepository,
+    required this.advertisingRepository,
+  }) : super(const ProfileState()) {
     on<GetProfileDataEvent>(_getProfileData);
     on<UpdateProfileDataEvent>(_updateProfileData);
     on<ProfileUpdateImageEvent>(_updateImageEvent);
@@ -63,8 +68,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
     emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
-    final result =
-        await webRepository.updateImage(event.byte, event.name, event.publicId);
+    final result = await advertisingRepository.updateImage(
+        event.byte, event.name, event.publicId);
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -83,7 +88,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   _uploadImageEvent(ProfileUploadImageEvent event, emit) async {
     emit(state.copyWith(uploadImageStatus: BlocStatus.inProgress));
-    final result = await webRepository.uploadImage(event.byte, event.name);
+    final result =
+        await advertisingRepository.uploadImage(event.byte, event.name);
     result.fold(
       (l) => emit(
         state.copyWith(

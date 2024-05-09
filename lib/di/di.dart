@@ -1,4 +1,8 @@
 import 'package:dtmtest/core/platform/network_info.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/datasource/advertising_datasource.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/advertising_repository_impl.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
@@ -37,7 +41,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 final di = GetIt.instance;
-// Alice alice = Alice(navigatorKey: AppRoutes.rootNavigatorKey);
 
 Future<void> init() async {
   await EasyLocalization.ensureInitialized();
@@ -56,9 +59,24 @@ Future<void> init() async {
   di.registerFactory(() => PlansBloc(webRepository: di()));
   di.registerFactory(() => HistoryBloc(webRepository: di()));
   di.registerFactory(() => TestsBloc(testsRepository: di()));
-  di.registerFactory(() => HomeBloc(repository: di()));
   di.registerFactory(
-      () => ProfileBloc(authRepository: di(), webRepository: di()));
+    () => HomeBloc(
+      repository: di(),
+      advertisingRepository: di(),
+    ),
+  );
+  di.registerFactory(
+    () => ProfileBloc(
+      authRepository: di(),
+      webRepository: di(),
+      advertisingRepository: di(),
+    ),
+  );
+  di.registerFactory(
+    () => WebAdvertisingBloc(
+      advertisingRepository: di(),
+    ),
+  );
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
@@ -94,6 +112,9 @@ Future<void> init() async {
     () => ProfileRepositoryImpl(
         profileRemoteDataSource: di(), authLocaleDataSource: di()),
   );
+  di.registerFactory<AdvertisingRepository>(
+    () => AdvertisingRepositoryImpl(advertisingRemoteDataSource: di()),
+  );
   // DataSource
   di.registerLazySingleton<AuthLocaleDataSource>(
     () => AuthLocaleDataSourceImpl(),
@@ -112,6 +133,9 @@ Future<void> init() async {
   );
   di.registerLazySingleton<ProfileRemoteDataSource>(
     () => ProfileRemoteDataSourceImpl(authLocaleDataSource: di()),
+  );
+  di.registerLazySingleton<AdvertisingRemoteDataSource>(
+    () => AdvertisingRemoteDataSourceImpl(),
   );
 
   /// Network

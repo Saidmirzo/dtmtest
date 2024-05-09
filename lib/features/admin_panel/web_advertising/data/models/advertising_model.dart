@@ -1,13 +1,16 @@
 class AdvertisingModel {
+  String? id;
   String? image;
   String? link;
   String? title;
   String? description;
 
-  AdvertisingModel({this.image, this.link, this.title, this.description});
+  AdvertisingModel(
+      {this.image, this.link, this.title, this.description, this.id});
 
   AdvertisingModel.fromJson(Map<String, dynamic> json) {
     image = json['image'];
+    id = json['id'];
     link = json['link'];
     title = json['title'];
     description = json['description'];

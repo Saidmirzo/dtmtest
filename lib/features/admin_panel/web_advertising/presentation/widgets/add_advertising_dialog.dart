@@ -8,9 +8,9 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,9 +19,11 @@ class AddAdvertisingDialog extends StatefulWidget {
   const AddAdvertisingDialog({
     super.key,
     required this.editAdd,
+    this.advertisingModel,
   });
 
   final EditAdd editAdd;
+  final AdvertisingModel? advertisingModel;
 
   @override
   State<AddAdvertisingDialog> createState() => _AddAdvertisingDialogState();
@@ -34,8 +36,19 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
   final linkController = TextEditingController();
 
   final desciptionController = TextEditingController();
+  Widget? image;
 
-  Image? image;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.advertisingModel != null) {
+      titleController.text = widget.advertisingModel?.title ?? '';
+      linkController.text = widget.advertisingModel?.link ?? '';
+      desciptionController.text = widget.advertisingModel?.description ?? '';
+      image = CustomNetworkImage(networkImage: widget.advertisingModel?.image);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -126,6 +139,17 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
             ),
             20.h,
             BlocConsumer<WebAdvertisingBloc, WebAdvertisingState>(
+              listenWhen: (previous, current) {
+                if (widget.editAdd == EditAdd.add) {
+                  return previous.addNewadvertisingStatus !=
+                          current.addNewadvertisingStatus ||
+                      previous.uploadImageStatus != current.uploadImageStatus;
+                } else {
+                  return previous.editAdvertisingStatus !=
+                          current.editAdvertisingStatus ||
+                      previous.uploadImageStatus != current.uploadImageStatus;
+                }
+              },
               listener: (context, state) {
                 if (state.uploadImageStatus.isProgress) {
                   showDialog(
@@ -142,7 +166,8 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                 if (state.uploadImageStatus.isComplated) {
                   context.maybePop();
                 }
-                if (state.addNewadvertisingStatus.isComplated) {
+                if (state.addNewadvertisingStatus.isComplated ||
+                    state.editAdvertisingStatus.isComplated) {
                   context.maybePop();
                   showSnackBar(context, text: "Success");
                 } else if (state.addNewadvertisingStatus == BlocStatus.failed) {
@@ -157,13 +182,31 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
 
                 return GradientButton(
                   radius: 20,
+                  isLoading: state.addNewadvertisingStatus.isProgress ||
+                      state.editAdvertisingStatus.isProgress,
                   onPressed: () {
                     if (desciptionController.text.isNotEmpty &&
                         linkController.text.isNotEmpty &&
-                        titleController.text.isNotEmpty) {
+                        titleController.text.isNotEmpty &&
+                        widget.editAdd == EditAdd.add) {
                       context.read<WebAdvertisingBloc>().add(
                             AddNewAdvertising(
                               advertisingModel: AdvertisingModel(
+                                description: desciptionController.text,
+                                link: linkController.text,
+                                title: titleController.text,
+                                image: imageLink.isEmpty
+                                    ? widget.advertisingModel?.image
+                                    : imageLink,
+                              ),
+                            ),
+                          );
+                    }
+                    if (widget.editAdd == EditAdd.edit) {
+                      context.read<WebAdvertisingBloc>().add(
+                            EditAdvertisingEvent(
+                              advertisingModel: AdvertisingModel(
+                                id: widget.advertisingModel?.id,
                                 description: desciptionController.text,
                                 link: linkController.text,
                                 title: titleController.text,

@@ -19,3 +19,13 @@ class UploadImageEvent extends WebAdvertisingEvent {
   final String name;
   const UploadImageEvent({required this.byte, required this.name});
 }
+
+class EditAdvertisingEvent extends WebAdvertisingEvent {
+  final AdvertisingModel advertisingModel;
+  const EditAdvertisingEvent({required this.advertisingModel});
+}
+
+class DeleteAdvertisingEvent extends WebAdvertisingEvent {
+  final String id;
+  const DeleteAdvertisingEvent({required this.id});
+}

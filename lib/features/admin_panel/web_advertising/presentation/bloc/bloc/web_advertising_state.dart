@@ -8,6 +8,8 @@ part of 'web_advertising_bloc.dart';
     @Default(BlocStatus.notInitialized) final BlocStatus addNewadvertisingStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus getAllAdvertisingStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus uploadImageStatus,
+    @Default(BlocStatus.notInitialized) final BlocStatus editAdvertisingStatus,
+    @Default(BlocStatus.notInitialized) final BlocStatus deleteAdvertisingStatus,
 
     final List<AdvertisingModel>? listAdvertising,
     final String? imageLink,
