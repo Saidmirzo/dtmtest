@@ -124,8 +124,19 @@ class WebAuthPage extends StatelessWidget with DialogMixin {
                 ),
                 BlocConsumer<WebAuthBloc, WebAuthState>(
                   listener: (context, state) {
-                    if (state.loginStatus.isComplated) {
-                      context.replaceRoute(const WebMainRoute());
+                    if (state.getFromLocaleStatus.isComplated &&
+                        state.adminModel != null) {
+                      context.replaceRoute(WebMainRoute(
+                        adminModel: state.adminModel,
+                      ));
+                    }
+                    if (state.loginStatus.isComplated &&
+                        state.getFromLocaleStatus.isComplated) {
+                      context.replaceRoute(
+                        WebMainRoute(
+                          adminModel: state.adminModel,
+                        ),
+                      );
                     } else if (state.loginStatus == BlocStatus.incorrect) {
                       password.clear();
                       passwordFocuseNode.requestFocus();

@@ -17,7 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$WebAuthState {
   BlocStatus get loginStatus => throw _privateConstructorUsedError;
+  BlocStatus get getFromLocaleStatus => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
+  AdminModel? get adminModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WebAuthStateCopyWith<WebAuthState> get copyWith =>
@@ -30,7 +32,11 @@ abstract class $WebAuthStateCopyWith<$Res> {
           WebAuthState value, $Res Function(WebAuthState) then) =
       _$WebAuthStateCopyWithImpl<$Res, WebAuthState>;
   @useResult
-  $Res call({BlocStatus loginStatus, String? message});
+  $Res call(
+      {BlocStatus loginStatus,
+      BlocStatus getFromLocaleStatus,
+      String? message,
+      AdminModel? adminModel});
 }
 
 /// @nodoc
@@ -47,17 +53,27 @@ class _$WebAuthStateCopyWithImpl<$Res, $Val extends WebAuthState>
   @override
   $Res call({
     Object? loginStatus = null,
+    Object? getFromLocaleStatus = null,
     Object? message = freezed,
+    Object? adminModel = freezed,
   }) {
     return _then(_value.copyWith(
       loginStatus: null == loginStatus
           ? _value.loginStatus
           : loginStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      getFromLocaleStatus: null == getFromLocaleStatus
+          ? _value.getFromLocaleStatus
+          : getFromLocaleStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
+      adminModel: freezed == adminModel
+          ? _value.adminModel
+          : adminModel // ignore: cast_nullable_to_non_nullable
+              as AdminModel?,
     ) as $Val);
   }
 }
@@ -70,7 +86,11 @@ abstract class _$$WebAuthStateImplCopyWith<$Res>
       __$$WebAuthStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BlocStatus loginStatus, String? message});
+  $Res call(
+      {BlocStatus loginStatus,
+      BlocStatus getFromLocaleStatus,
+      String? message,
+      AdminModel? adminModel});
 }
 
 /// @nodoc
@@ -85,17 +105,27 @@ class __$$WebAuthStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loginStatus = null,
+    Object? getFromLocaleStatus = null,
     Object? message = freezed,
+    Object? adminModel = freezed,
   }) {
     return _then(_$WebAuthStateImpl(
       loginStatus: null == loginStatus
           ? _value.loginStatus
           : loginStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      getFromLocaleStatus: null == getFromLocaleStatus
+          ? _value.getFromLocaleStatus
+          : getFromLocaleStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
+      adminModel: freezed == adminModel
+          ? _value.adminModel
+          : adminModel // ignore: cast_nullable_to_non_nullable
+              as AdminModel?,
     ));
   }
 }
@@ -104,18 +134,26 @@ class __$$WebAuthStateImplCopyWithImpl<$Res>
 
 class _$WebAuthStateImpl extends _WebAuthState {
   const _$WebAuthStateImpl(
-      {this.loginStatus = BlocStatus.notInitialized, this.message})
+      {this.loginStatus = BlocStatus.notInitialized,
+      this.getFromLocaleStatus = BlocStatus.notInitialized,
+      this.message,
+      this.adminModel})
       : super._();
 
   @override
   @JsonKey()
   final BlocStatus loginStatus;
   @override
+  @JsonKey()
+  final BlocStatus getFromLocaleStatus;
+  @override
   final String? message;
+  @override
+  final AdminModel? adminModel;
 
   @override
   String toString() {
-    return 'WebAuthState(loginStatus: $loginStatus, message: $message)';
+    return 'WebAuthState(loginStatus: $loginStatus, getFromLocaleStatus: $getFromLocaleStatus, message: $message, adminModel: $adminModel)';
   }
 
   @override
@@ -125,11 +163,16 @@ class _$WebAuthStateImpl extends _WebAuthState {
             other is _$WebAuthStateImpl &&
             (identical(other.loginStatus, loginStatus) ||
                 other.loginStatus == loginStatus) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.getFromLocaleStatus, getFromLocaleStatus) ||
+                other.getFromLocaleStatus == getFromLocaleStatus) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.adminModel, adminModel) ||
+                other.adminModel == adminModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loginStatus, message);
+  int get hashCode => Object.hash(
+      runtimeType, loginStatus, getFromLocaleStatus, message, adminModel);
 
   @JsonKey(ignore: true)
   @override
@@ -141,13 +184,19 @@ class _$WebAuthStateImpl extends _WebAuthState {
 abstract class _WebAuthState extends WebAuthState {
   const factory _WebAuthState(
       {final BlocStatus loginStatus,
-      final String? message}) = _$WebAuthStateImpl;
+      final BlocStatus getFromLocaleStatus,
+      final String? message,
+      final AdminModel? adminModel}) = _$WebAuthStateImpl;
   const _WebAuthState._() : super._();
 
   @override
   BlocStatus get loginStatus;
   @override
+  BlocStatus get getFromLocaleStatus;
+  @override
   String? get message;
+  @override
+  AdminModel? get adminModel;
   @override
   @JsonKey(ignore: true)
   _$$WebAuthStateImplCopyWith<_$WebAuthStateImpl> get copyWith =>

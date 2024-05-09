@@ -11,3 +11,8 @@ class LoginEvent extends WebAuthEvent {
   AdminModel adminModel;
   LoginEvent({required this.adminModel});
 }
+
+
+class GetFromLocaleEvent extends WebAuthEvent{
+  
+}
