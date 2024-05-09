@@ -4,26 +4,41 @@ import 'package:dtmtest/features/admin_panel/web_auth/data/datasource/web_remote
 import 'package:dtmtest/features/admin_panel/web_auth/data/model/response_enum.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/domain/repository/web_auth_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
+import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 
 class WebAuthRepositoryImpl implements WebAuthRepository {
   WebAuthRemoteDataSource webAuthRemoteDataSource;
-  WebAuthRepositoryImpl({required this.webAuthRemoteDataSource});
+  AuthLocaleDataSource authLocaleDataSource;
+  WebAuthRepositoryImpl({
+    required this.webAuthRemoteDataSource,
+    required this.authLocaleDataSource,
+  });
 
   @override
-  Future<Either<Failure, String>> loginAdmin(AdminModel adminModel) async {
+  Future<Either<Failure, AdminModel>> loginAdmin(AdminModel adminModel) async {
     try {
       final result = await webAuthRemoteDataSource.loginAdmin(adminModel);
-      if (result == ResponseEnum.success) {
-        return const Right("Success");
-      } else if (result == ResponseEnum.incorrectPassword) {
+      if (result.responseEnum == ResponseEnum.success) {
+        return Right(result.adminModel ?? AdminModel());
+      } else if (result.responseEnum == ResponseEnum.incorrectPassword) {
         return const Left(PasswordIncorrectFailure(''));
-      } else if (result == ResponseEnum.notFound) {
+      } else if (result.responseEnum == ResponseEnum.notFound) {
         return const Left(UnautorizedFailure(''));
       } else {
         return const Left(ServerFailure(''));
       }
     } catch (e) {
       return const Left(ServerFailure(''));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AdminModel?>> getFromLocale() async {
+    try {
+      final AdminModel? adminModel = await authLocaleDataSource.getAdmin();
+      return Right(adminModel);
+    } catch (e) {
+      return const Left(CacheFailure('message'));
     }
   }
 }

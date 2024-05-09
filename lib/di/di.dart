@@ -9,7 +9,6 @@ import 'package:dtmtest/features/admin_panel/web_categories/data/repository/web_
 import 'package:dtmtest/features/admin_panel/web_categories/domain/repository/web_category_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/data/datasource/web_remote_datasorce.dart';
-import 'package:dtmtest/features/admin_panel/web_auth/data/model/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/data/repository/web_auth_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/domain/repository/web_auth_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
@@ -19,6 +18,7 @@ import 'package:dtmtest/features/admin_panel/web_tarifs/domain/repositories/tari
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_users_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_users_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
@@ -127,7 +127,10 @@ Future<void> init() async {
     () => TarifsRepositoryImpl(tarifRemoteDataSource: di()),
   );
   di.registerFactory<WebAuthRepository>(
-    () => WebAuthRepositoryImpl(webAuthRemoteDataSource: di()),
+    () => WebAuthRepositoryImpl(
+      webAuthRemoteDataSource: di(),
+      authLocaleDataSource: di(),
+    ),
   );
   di.registerFactory<WebUsersRepository>(
     () => WebUsersRepositoryImpl(webRemoteDataSource: di()),
@@ -163,7 +166,8 @@ Future<void> init() async {
     () => TarifsRemoteDataSourceImpl(),
   );
   di.registerLazySingleton<WebAuthRemoteDataSource>(
-    () => WebAuthRemoteDataSourceImpl(),);
+    () => WebAuthRemoteDataSourceImpl(authLocaleDataSource: di()),
+  );
   di.registerLazySingleton<WebUsersRemoteDataSource>(
     () => WebUsersRemoteDataSourceImpl(authLocaleDataSource: di()),
   );

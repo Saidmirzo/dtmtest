@@ -5,11 +5,13 @@ import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/custom_image_changer.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/res.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 class WebMainPage extends StatefulWidget {
-  const WebMainPage({super.key});
+  const WebMainPage({super.key, this.adminModel});
+  final AdminModel? adminModel;
 
   @override
   State<WebMainPage> createState() => _WebMainPageState();
@@ -112,11 +114,11 @@ class _WebMainPageState extends State<WebMainPage> {
                           height: 50,
                           errorImage: Assets.images.logo.path),
                       15.w,
-                      const Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("Baxtiyor"),
-                          Icon(Icons.keyboard_arrow_down_rounded)
+                          Text(widget.adminModel?.name ?? 'Unk'),
+                          const Icon(Icons.keyboard_arrow_down_rounded)
                         ],
                       ),
                     ],
