@@ -1,24 +1,33 @@
+import 'package:hive/hive.dart';
+
+part 'admin_model.g.dart';
+
+@HiveType(typeId: 1)
 class AdminModel {
+  @HiveField(0)
   String? login;
-  String? password;
+  @HiveField(1)
   String? name;
+  @HiveField(2)
+  String? password;
+  @HiveField(3)
   String? id;
 
-  AdminModel({this.login, this.password, this.name, this.id});
+  AdminModel({this.login, this.name, this.password, this.id});
 
   AdminModel.fromJson(Map<String, dynamic> json) {
     login = json['login'];
-    password = json['password'];
     name = json['name'];
+    password = json['password'];
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['login'] = login;
-    data['password'] = password;
-    data['name'] = name;
-    data['id'] = id;
+    final Map<String, dynamic> data = {};
+    data['login'] = this.login;
+    data['name'] = this.name;
+    data['password'] = this.password;
+    data['id'] = this.id;
     return data;
   }
 }

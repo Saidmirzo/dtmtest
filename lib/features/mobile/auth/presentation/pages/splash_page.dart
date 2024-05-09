@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,9 @@ class _SplashPageState extends State<SplashPage>
     _controller.forward();
 
     Timer(const Duration(seconds: 2), () {
+      if (kIsWeb) {
+        context.read<WebAuthBloc>().add(GetFromLocaleEvent());
+      }
       context.read<AuthBloc>().add(GetLocaleUserEvent());
     });
   }
@@ -62,7 +66,7 @@ class _SplashPageState extends State<SplashPage>
       builder: (context, state) {
         if (state.getLocaleUserStatus.isComplated) {
           if (kIsWeb || Platform.isMacOS) {
-            context.replaceRoute( WebAuthRoute());
+            context.replaceRoute(WebAuthRoute());
           } else if (state.userModel != null) {
             context.replaceRoute(const MainRoute());
           } else {

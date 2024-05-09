@@ -1,13 +1,15 @@
 class ThemeModel {
+  String ? id;
   String? createdTime;
   String? name;
   List<Quiz>? quiz;
   int? quizCount;
   int? duration;
 
-  ThemeModel({this.createdTime, this.name, this.quiz, this.quizCount});
+  ThemeModel({this.createdTime, this.name, this.quiz, this.quizCount,this.id});
 
   ThemeModel.fromJson(Map<String, dynamic> json) {
+    id=json["id"];
     createdTime = json['created_time'];
     name = json['name'];
     if (json['quiz'] != null) {
@@ -29,17 +31,20 @@ class ThemeModel {
     }
     data['quiz_count'] = quizCount;
     data['duration'] = duration;
+    data['id']=id;
     return data;
   }
 }
 
 class Quiz {
+  String? id;
   String? question;
   List<String>? options;
 
-  Quiz({this.question, this.options});
+  Quiz({this.question, this.options,this.id});
 
   Quiz.fromJson(Map<String, dynamic> json) {
+    id=json['id'];
     question = json['question'];
     options = json['options'].cast<String>();
   }
@@ -48,6 +53,7 @@ class Quiz {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['question'] = question;
     data['options'] = options;
+    data['id']=id;
     return data;
   }
 }

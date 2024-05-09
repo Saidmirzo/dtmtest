@@ -15,6 +15,7 @@ class WebAuthBloc extends Bloc<WebAuthEvent, WebAuthState> {
   WebAuthBloc({required this.webAuthRepository}) : super(const WebAuthState()) {
     on<WebAuthEvent>((event, emit) {});
     on<LoginEvent>(_loginEvent);
+    on<GetFromLocaleEvent>(_getFromlocaleEvent);
   }
 
   _loginEvent(LoginEvent event, emit) async {
@@ -31,7 +32,26 @@ class WebAuthBloc extends Bloc<WebAuthEvent, WebAuthState> {
         }
       },
       (r) => emit(
-        state.copyWith(loginStatus: BlocStatus.completed),
+        state.copyWith(
+          loginStatus: BlocStatus.completed,
+          adminModel: r,
+        ),
+      ),
+    );
+  }
+
+  _getFromlocaleEvent(event, emit) async {
+    emit(state.copyWith(getFromLocaleStatus: BlocStatus.inProgress));
+    final result = await webAuthRepository.getFromLocale();
+    result.fold(
+      (l) => emit(
+        state.copyWith(getFromLocaleStatus: BlocStatus.failed),
+      ),
+      (r) => emit(
+        state.copyWith(
+          getFromLocaleStatus: BlocStatus.completed,
+          adminModel: r,
+        ),
       ),
     );
   }

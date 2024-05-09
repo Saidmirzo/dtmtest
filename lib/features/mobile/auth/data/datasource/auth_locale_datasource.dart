@@ -75,7 +75,7 @@ class AuthLocaleDataSourceImpl implements AuthLocaleDataSource {
     } else {
       box = await Hive.openBox(adminBoxName);
     }
-    box = Hive.box(boxName);
+    box = Hive.box(adminBoxName);
     await box.put(adminBoxKey, adminModel);
     return true;
   }
@@ -88,7 +88,7 @@ class AuthLocaleDataSourceImpl implements AuthLocaleDataSource {
     } else {
       box = await Hive.openBox(adminBoxName);
     }
-    box = Hive.box(boxName);
+    box = Hive.box(adminBoxName);
     await box.clear();
     return true;
   }

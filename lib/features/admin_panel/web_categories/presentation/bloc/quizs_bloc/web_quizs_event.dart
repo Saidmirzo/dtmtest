@@ -31,8 +31,8 @@ class AddNewQuizThemeEvent extends WebQuizsEvent {
 }
 
 class DeleteQuizsEvent extends WebQuizsEvent {
-  const DeleteQuizsEvent({required this.model});
-  final CategoryModel? model;
+  const DeleteQuizsEvent({required this.id});
+  final String id;
 }
 
 class EditQuizsEvent extends WebQuizsEvent {

@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dartz/dartz.dart';
 import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/datasource/web_category_remote_data_source.dart';
@@ -54,7 +52,7 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-  Future<Either<Failure, String>> deleteCategory(CategoryModel? model) async {
+  Future<Either<Failure, String>> deleteCategory(String model) async {
     try {
       final result = await webRemoteCategoryDataSource.deleteCategory(model);
       return Right(result);
@@ -84,7 +82,7 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-  Future<Either<Failure, String>> addNewTheme(
+  Future<Either<Failure, String>> addTheme(
       Uint8List filePath, String name, String categoryId) async {
     try {
       final List<Quiz> quizs = await _parseFromFile(filePath);
@@ -95,7 +93,7 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
         quizCount: quizs.length,
       );
       final result =
-          await webRemoteCategoryDataSource.addNewTheme(themeModel, categoryId);
+          await webRemoteCategoryDataSource.addTheme(themeModel, categoryId);
       return Right(result);
     } catch (e) {
       return const Left(ServerFailure('Add new theme Error'));
@@ -103,9 +101,33 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<ThemeModel>>> getAllThemes(String? id) async {
+
+  Future<Either<Failure, List<ThemeModel>>> getAllThemes(String categoryId) async {
     try {
-      final result = await webRemoteCategoryDataSource.getAllThemes(id);
+      final result = await webRemoteCategoryDataSource.getAllThemes(categoryId);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('get themes Error'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteTheme(
+      String themeId, String categoryId) async {
+    try {
+      final result =
+          await webRemoteCategoryDataSource.deleteTheme(themeId, categoryId);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('get themes Error'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> editTheme( String categoryId, ThemeModel model) async {
+    try {
+      final result =
+          await webRemoteCategoryDataSource.editTheme(categoryId, model);
       return Right(result);
     } catch (e) {
       return const Left(ServerFailure('get themes Error'));

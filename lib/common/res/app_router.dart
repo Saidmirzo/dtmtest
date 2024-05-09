@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/presentation/pages/web_auth_page.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_admins.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/pages/web_advertising.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';

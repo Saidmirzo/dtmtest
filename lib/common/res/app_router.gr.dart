@@ -166,9 +166,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     WebMainRoute.name: (routeData) {
+      final args = routeData.argsAs<WebMainRouteArgs>(
+          orElse: () => const WebMainRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const WebMainPage(),
+        child: WebMainPage(
+          key: args.key,
+          adminModel: args.adminModel,
+        ),
       );
     },
     WebQuizesRoute.name: (routeData) {
@@ -611,16 +616,40 @@ class WebHomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [WebMainPage]
-class WebMainRoute extends PageRouteInfo<void> {
-  const WebMainRoute({List<PageRouteInfo>? children})
-      : super(
+class WebMainRoute extends PageRouteInfo<WebMainRouteArgs> {
+  WebMainRoute({
+    Key? key,
+    AdminModel? adminModel,
+    List<PageRouteInfo>? children,
+  }) : super(
           WebMainRoute.name,
+          args: WebMainRouteArgs(
+            key: key,
+            adminModel: adminModel,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'WebMainRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<WebMainRouteArgs> page =
+      PageInfo<WebMainRouteArgs>(name);
+}
+
+class WebMainRouteArgs {
+  const WebMainRouteArgs({
+    this.key,
+    this.adminModel,
+  });
+
+  final Key? key;
+
+  final AdminModel? adminModel;
+
+  @override
+  String toString() {
+    return 'WebMainRouteArgs{key: $key, adminModel: $adminModel}';
+  }
 }
 
 /// generated route for
