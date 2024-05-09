@@ -20,11 +20,7 @@ class WebBloc extends Bloc<WebEvent, WebState> {
   }) : super(const WebState()) {
     on<WebEvent>((event, emit) {});
     on<GetAllUsersEvent>(_getALlUserEvent);
-    on<GetAllThemes>(_getAllThemesEvent);
-    on<AddNewThemeEvent>(_addNewThemeEvent);
-
   }
-
 
   _getALlUserEvent(event, emit) async {
     emit(state.copyWith(getAllUsersStatus: BlocStatus.inProgress));
@@ -44,46 +40,4 @@ class WebBloc extends Bloc<WebEvent, WebState> {
       ),
     );
   }
-
-  _getAllThemesEvent(event, emit) async {
-    emit(state.copyWith(getAllThemesStatus: BlocStatus.inProgress));
-    final result = await webRepository.getAllThemes();
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          getAllThemesStatus: BlocStatus.failed,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          getAllThemesStatus: BlocStatus.completed,
-          listThemes: r,
-        ),
-      ),
-    );
-  }
-
-  _addNewThemeEvent(AddNewThemeEvent event, emit) async {
-    emit(state.copyWith(addNewThemeStatus: BlocStatus.inProgress));
-    final result = await webRepository.addNewTheme(
-        event.filePath, event.name, event.categoryId);
-
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          addNewThemeStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) {
-        emit(
-          state.copyWith(
-            addNewThemeStatus: BlocStatus.completed,
-          ),
-        );
-        add(GetAllThemes());
-      },
-    );
-  }
-
 }

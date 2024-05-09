@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/ipilot7/flutter
-FLUTTER_APPLICATION_PATH=/Users/ipilot7/Documents/dtmtest
+FLUTTER_ROOT=C:\src\flutter
+FLUTTER_APPLICATION_PATH=D:\Fluteter_real_projects\dtm_test_test\dtmtest
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0

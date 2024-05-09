@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
@@ -7,7 +9,7 @@ import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +25,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
   @override
   void initState() {
     super.initState();
-    context.read<WebBloc>().add(GetAllThemes());
+    context.read<WebQuizsBloc>().add(GetAllQuizThemesEvent());
   }
 
   @override
@@ -76,13 +78,13 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
           ),
           10.h,
           Expanded(
-            child: BlocConsumer<WebBloc, WebState>(
+            child: BlocConsumer<WebQuizsBloc, WebQuizsState>(
               listener: (context, state) {},
               builder: (context, state) {
                 if (state.getAllThemesStatus.isProgress) {
                   return UI.spinner();
                 }
-                final List<ThemeModel> listTheme = state.listThemes ?? [];
+                final List<ThemeModel> listTheme = state.listThemes ?? [];                
                 return ListView.separated(
                   itemCount: listTheme.length,
                   itemBuilder: (_, index) => SizedBox(

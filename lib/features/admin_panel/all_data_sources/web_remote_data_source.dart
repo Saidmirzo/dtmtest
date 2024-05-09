@@ -11,12 +11,6 @@ import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 
 abstract class WebRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
-  Future<List<ThemeModel>> getAllThemes();
-  Future<String> addNewTheme(ThemeModel themeModel, String categoryId);
-  Future<List<CategoryModel>> getAllCategories();
-  Future<String> addCategory(CategoryModel model);
-  Future<String> deleteCategory(CategoryModel? model);
-  Future<String> editCategory(CategoryModel? model);
   Future<String> editPlan(PlanModel? model);
   Future<String> addPlan(PlanModel? model);
   Future<String> deletePlan(PlanModel? model);
@@ -49,85 +43,6 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
         .map((e) => UserModel.fromJson(jsonDecode(jsonEncode(e.data()))))
         .toList();
     return users;
-  }
-
-  @override
-  Future<List<ThemeModel>> getAllThemes() async {
-    List<ThemeModel> themes = [];
-    final result = await categoryCollection.get();
-    for (var element in result.docs) {
-      final themesDocs =
-          await categoryCollection.doc(element.id).collection('theme').get();
-      themes.addAll(
-        themesDocs.docs.map(
-          (e) => ThemeModel.fromJson(
-            jsonDecode(
-              jsonEncode(e.data()),
-            ),
-          ),
-        ),
-      );
-    }
-    return themes;
-  }
-
-  @override
-  Future<String> addNewTheme(ThemeModel themeModel, String categoryId) async {
-    final CollectionReference category =
-        categoryCollection.doc(categoryId).collection('theme');
-    await category.add(themeModel.toJson());
-    return "Success";
-  }
-
-
-  @override
-  Future<List<CategoryModel>> getAllCategories() async {
-    final result = await categoryCollection.get();
-    List<CategoryModel> categories = result.docs.map((e) {
-      Map<String, dynamic> data = e.data() as Map<String, dynamic>;
-      data['id'] = e.id;
-      return CategoryModel.fromJson(data);
-    }).toList();
-    categories.sort((a, b) {
-      if ((a.isActive ?? false) && !(b.isActive ?? false)) {
-        return -1;
-      } else if (!(a.isActive ?? false) && (b.isActive ?? false)) {
-        return 1;
-      }
-      return 0;
-    });
-    return categories;
-  }
-
-  @override
-  Future<String> addCategory(CategoryModel model) async {
-    categoryCollection.add(model.toJson());
-    return "success";
-  }
-
-  @override
-  Future<String> deleteCategory(CategoryModel? model) async {
-    try {
-      await categoryCollection.doc(model?.id).delete();
-
-      log("Элемент успешно удален");
-    } catch (e) {
-      log("Ошибка при удалении элемента: $e");
-    }
-    return "success";
-  }
-
-  @override
-  Future<String> editCategory(
-    CategoryModel? model,
-  ) async {
-    try {
-      await categoryCollection.doc(model?.id).update(model!.toJson());
-      log("Данные успешно обновлены");
-    } catch (e) {
-      log("Ошибка при обновлении данных: $e");
-    }
-    return "success";
   }
 
   @override
@@ -200,6 +115,4 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
         .toList();
     return listHistory;
   }
-
-
 }

@@ -20,7 +20,10 @@ mixin _$WebCategoriesState {
   BlocStatus get getAllCategoriesStatus => throw _privateConstructorUsedError;
   BlocStatus get deleteCategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get editategoryStatus => throw _privateConstructorUsedError;
+  BlocStatus get getAllThemesStatus => throw _privateConstructorUsedError;
+  BlocStatus get addNewThemeStatus => throw _privateConstructorUsedError;
   List<CategoryModel>? get listCategories => throw _privateConstructorUsedError;
+  List<ThemeModel>? get listThemes => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -39,7 +42,10 @@ abstract class $WebCategoriesStateCopyWith<$Res> {
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
       BlocStatus editategoryStatus,
+      BlocStatus getAllThemesStatus,
+      BlocStatus addNewThemeStatus,
       List<CategoryModel>? listCategories,
+      List<ThemeModel>? listThemes,
       String? message});
 }
 
@@ -60,7 +66,10 @@ class _$WebCategoriesStateCopyWithImpl<$Res, $Val extends WebCategoriesState>
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
     Object? editategoryStatus = null,
+    Object? getAllThemesStatus = null,
+    Object? addNewThemeStatus = null,
     Object? listCategories = freezed,
+    Object? listThemes = freezed,
     Object? message = freezed,
   }) {
     return _then(_value.copyWith(
@@ -80,10 +89,22 @@ class _$WebCategoriesStateCopyWithImpl<$Res, $Val extends WebCategoriesState>
           ? _value.editategoryStatus
           : editategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      getAllThemesStatus: null == getAllThemesStatus
+          ? _value.getAllThemesStatus
+          : getAllThemesStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      addNewThemeStatus: null == addNewThemeStatus
+          ? _value.addNewThemeStatus
+          : addNewThemeStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listCategories: freezed == listCategories
           ? _value.listCategories
           : listCategories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>?,
+      listThemes: freezed == listThemes
+          ? _value.listThemes
+          : listThemes // ignore: cast_nullable_to_non_nullable
+              as List<ThemeModel>?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -105,7 +126,10 @@ abstract class _$$WebCategoriesStateImplCopyWith<$Res>
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
       BlocStatus editategoryStatus,
+      BlocStatus getAllThemesStatus,
+      BlocStatus addNewThemeStatus,
       List<CategoryModel>? listCategories,
+      List<ThemeModel>? listThemes,
       String? message});
 }
 
@@ -124,7 +148,10 @@ class __$$WebCategoriesStateImplCopyWithImpl<$Res>
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
     Object? editategoryStatus = null,
+    Object? getAllThemesStatus = null,
+    Object? addNewThemeStatus = null,
     Object? listCategories = freezed,
+    Object? listThemes = freezed,
     Object? message = freezed,
   }) {
     return _then(_$WebCategoriesStateImpl(
@@ -144,10 +171,22 @@ class __$$WebCategoriesStateImplCopyWithImpl<$Res>
           ? _value.editategoryStatus
           : editategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      getAllThemesStatus: null == getAllThemesStatus
+          ? _value.getAllThemesStatus
+          : getAllThemesStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      addNewThemeStatus: null == addNewThemeStatus
+          ? _value.addNewThemeStatus
+          : addNewThemeStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listCategories: freezed == listCategories
           ? _value._listCategories
           : listCategories // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>?,
+      listThemes: freezed == listThemes
+          ? _value._listThemes
+          : listThemes // ignore: cast_nullable_to_non_nullable
+              as List<ThemeModel>?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -164,9 +203,13 @@ class _$WebCategoriesStateImpl extends _WebCategoriesState {
       this.getAllCategoriesStatus = BlocStatus.notInitialized,
       this.deleteCategoryStatus = BlocStatus.notInitialized,
       this.editategoryStatus = BlocStatus.notInitialized,
+      this.getAllThemesStatus = BlocStatus.notInitialized,
+      this.addNewThemeStatus = BlocStatus.notInitialized,
       final List<CategoryModel>? listCategories,
+      final List<ThemeModel>? listThemes,
       this.message})
       : _listCategories = listCategories,
+        _listThemes = listThemes,
         super._();
 
   @override
@@ -181,6 +224,12 @@ class _$WebCategoriesStateImpl extends _WebCategoriesState {
   @override
   @JsonKey()
   final BlocStatus editategoryStatus;
+  @override
+  @JsonKey()
+  final BlocStatus getAllThemesStatus;
+  @override
+  @JsonKey()
+  final BlocStatus addNewThemeStatus;
   final List<CategoryModel>? _listCategories;
   @override
   List<CategoryModel>? get listCategories {
@@ -191,12 +240,22 @@ class _$WebCategoriesStateImpl extends _WebCategoriesState {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<ThemeModel>? _listThemes;
+  @override
+  List<ThemeModel>? get listThemes {
+    final value = _listThemes;
+    if (value == null) return null;
+    if (_listThemes is EqualUnmodifiableListView) return _listThemes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? message;
 
   @override
   String toString() {
-    return 'WebCategoriesState(addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, listCategories: $listCategories, message: $message)';
+    return 'WebCategoriesState(addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, listCategories: $listCategories, listThemes: $listThemes, message: $message)';
   }
 
   @override
@@ -212,8 +271,14 @@ class _$WebCategoriesStateImpl extends _WebCategoriesState {
                 other.deleteCategoryStatus == deleteCategoryStatus) &&
             (identical(other.editategoryStatus, editategoryStatus) ||
                 other.editategoryStatus == editategoryStatus) &&
+            (identical(other.getAllThemesStatus, getAllThemesStatus) ||
+                other.getAllThemesStatus == getAllThemesStatus) &&
+            (identical(other.addNewThemeStatus, addNewThemeStatus) ||
+                other.addNewThemeStatus == addNewThemeStatus) &&
             const DeepCollectionEquality()
                 .equals(other._listCategories, _listCategories) &&
+            const DeepCollectionEquality()
+                .equals(other._listThemes, _listThemes) &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -224,7 +289,10 @@ class _$WebCategoriesStateImpl extends _WebCategoriesState {
       getAllCategoriesStatus,
       deleteCategoryStatus,
       editategoryStatus,
+      getAllThemesStatus,
+      addNewThemeStatus,
       const DeepCollectionEquality().hash(_listCategories),
+      const DeepCollectionEquality().hash(_listThemes),
       message);
 
   @JsonKey(ignore: true)
@@ -241,7 +309,10 @@ abstract class _WebCategoriesState extends WebCategoriesState {
       final BlocStatus getAllCategoriesStatus,
       final BlocStatus deleteCategoryStatus,
       final BlocStatus editategoryStatus,
+      final BlocStatus getAllThemesStatus,
+      final BlocStatus addNewThemeStatus,
       final List<CategoryModel>? listCategories,
+      final List<ThemeModel>? listThemes,
       final String? message}) = _$WebCategoriesStateImpl;
   const _WebCategoriesState._() : super._();
 
@@ -254,7 +325,13 @@ abstract class _WebCategoriesState extends WebCategoriesState {
   @override
   BlocStatus get editategoryStatus;
   @override
+  BlocStatus get getAllThemesStatus;
+  @override
+  BlocStatus get addNewThemeStatus;
+  @override
   List<CategoryModel>? get listCategories;
+  @override
+  List<ThemeModel>? get listThemes;
   @override
   String? get message;
   @override

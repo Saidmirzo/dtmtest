@@ -10,14 +10,15 @@ import 'package:dtmtest/common/res/dropdown.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widgets/add_advertising_dialog.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 
 mixin DialogMixin {
   void showAccessDialog(
@@ -160,7 +161,7 @@ mixin DialogMixin {
       context: context,
       builder: (_) {
         var size = MediaQuery.of(context).size;
-        return BlocConsumer<WebBloc, WebState>(
+        return BlocConsumer<WebQuizsBloc, WebQuizsState>(
           listener: (context, state) {
             if (state.addNewThemeStatus.isComplated) {
               context.maybePop();
@@ -223,8 +224,8 @@ mixin DialogMixin {
                             onPressed: () {
                               if (nameControlle.text.isNotEmpty &&
                                   categoryControlle.text.isNotEmpty) {
-                                context.read<WebBloc>().add(
-                                      AddNewThemeEvent(
+                                context.read<WebQuizsBloc>().add(
+                                      AddNewQuizThemeEvent(
                                         filePath: filePath!,
                                         name: nameControlle.text,
                                         categoryId: categoryControlle.text,
