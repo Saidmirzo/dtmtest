@@ -18,7 +18,9 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
       menuHeight: 300,
-      initialSelection: (widget.selectedItem?.toString()) ?? list.first,
+      initialSelection: widget.selectedItem == null
+          ? list.first
+          : widget.selectedItem.toString(),
       onSelected: (String? value) {
         widget.onSelected!(value);
         setState(() {

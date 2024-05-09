@@ -9,8 +9,8 @@ import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/bloc/profile_bloc.dart';
-import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,6 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => di<HomeBloc>()),
           BlocProvider(create: (context) => di<ProfileBloc>()),
           BlocProvider(create: (context) => di<TarifsBloc>()),
-
         ],
         child: MaterialApp.router(
           routerConfig: _appRouter.config(),
@@ -75,7 +74,7 @@ class MyApp extends StatelessWidget {
           locale: context.locale,
           title: "DTM Test AdminDashboard",
           debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.light,
+          theme: ThemeData.light(useMaterial3: false),
         ),
       ),
     );

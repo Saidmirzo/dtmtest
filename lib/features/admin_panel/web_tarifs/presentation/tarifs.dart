@@ -56,7 +56,7 @@ class _WebTarifsPageState extends State<WebTarifsPage> with DialogMixin {
           20.h,
           Expanded(
               child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             child: BlocConsumer<TarifsBloc, TarifsState>(
               builder: (context, state) {
                 if (state.getAllPlansStatus == BlocStatus.inProgress) {

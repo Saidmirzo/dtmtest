@@ -337,7 +337,7 @@ mixin DialogMixin {
                   icon: const Icon(Icons.close)),
             ],
           ),
-          backgroundColor: ColorName.backgroundColor,
+          backgroundColor: ColorName.white,
           content: SizedBox(
             width: size.width * .25,
             child: Column(
@@ -345,6 +345,7 @@ mixin DialogMixin {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text("Tarif Name"),
+                5.h,
                 CustomTextField(
                   backgroundColor: ColorName.backgroundColor,
                   controller: tarifName,
@@ -355,6 +356,7 @@ mixin DialogMixin {
                 ),
                 10.h,
                 const Text("Tarif price"),
+                5.h,
                 CustomTextField(
                   backgroundColor: ColorName.backgroundColor,
                   controller: tarifPrice,
@@ -365,6 +367,7 @@ mixin DialogMixin {
                 ),
                 10.h,
                 const Text("Choose month"),
+                5.h,
                 CustomDropdownMenu(
                   selectedItem: model?.days,
                   onSelected: (value) {
@@ -373,6 +376,7 @@ mixin DialogMixin {
                 ),
                 10.h,
                 const Text("Description"),
+                5.h,
                 CustomTextField(
                   backgroundColor: ColorName.backgroundColor,
                   hintText: "Description",
@@ -396,6 +400,7 @@ mixin DialogMixin {
                     } else {
                       context.read<TarifsBloc>().add(EditPlanEvent(
                           model: PlanModel(
+                              id: model?.id,
                               days: int.parse(value1 ?? "0"),
                               desciption: tarifDescription.text,
                               price: tarifPrice.text,
@@ -403,7 +408,7 @@ mixin DialogMixin {
                     }
                     context.maybePop();
                   },
-                  text: "Add",
+                  text: editAdd == EditAdd.add ? "Add" : "Edit",
                 )
               ],
             ),
