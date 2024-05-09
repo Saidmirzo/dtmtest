@@ -12,9 +12,7 @@ abstract class TarifsRemoteDataSource {
 }
 
 class TarifsRemoteDataSourceImpl implements TarifsRemoteDataSource {
-  TarifsRemoteDataSourceImpl({required this.authLocaleDataSource});
-
-  final AuthLocaleDataSource authLocaleDataSource;
+  TarifsRemoteDataSourceImpl();
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');

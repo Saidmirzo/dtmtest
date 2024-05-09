@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
@@ -11,6 +12,7 @@ import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widget
 import 'package:dtmtest/features/admin_panel/web_categories/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
+import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -385,14 +387,14 @@ mixin DialogMixin {
                   radius: 20,
                   onPressed: () {
                     if (editAdd == EditAdd.add) {
-                      context.read<WebBloc>().add(AddPlanEvent(
+                      context.read<TarifsBloc>().add(AddPlanEvent(
                           model: PlanModel(
                               days: int.parse(value1 ?? "0"),
                               desciption: tarifDescription.text,
                               price: tarifPrice.text,
                               name: tarifName.text)));
                     } else {
-                      context.read<WebBloc>().add(EditPlanEvent(
+                      context.read<TarifsBloc>().add(EditPlanEvent(
                           model: PlanModel(
                               days: int.parse(value1 ?? "0"),
                               desciption: tarifDescription.text,

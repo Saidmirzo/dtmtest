@@ -5,14 +5,14 @@ import 'package:dtmtest/features/admin_panel/web_tarifs/domain/repositories/tari
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'tarifs_bloc.freezed.dart';
 part 'tarifs_event.dart';
 part 'tarifs_state.dart';
-part 'tarifs_bloc.freezed.dart';
 
 class TarifsBloc extends Bloc<TarifsEvent, TarifsState> {
-    final TarifsRepository tarifRepository;
+  final TarifsRepository tarifRepository;
   TarifsBloc({required this.tarifRepository}) : super(const TarifsState()) {
-       on<GetPlansEvent>(_getPlanEvent);
+    on<GetPlansEvent>(_getPlanEvent);
     on<AddPlanEvent>(_addPlanEvent);
     on<DeletePlanEvent>(_deletePlanEvent);
     on<EditPlanEvent>(_editPlanEvent);
@@ -33,7 +33,6 @@ class TarifsBloc extends Bloc<TarifsEvent, TarifsState> {
           addPlanStatus: BlocStatus.completed,
         ),
       );
-      add(GetPlansEvent());
     });
   }
 
@@ -48,15 +47,8 @@ class TarifsBloc extends Bloc<TarifsEvent, TarifsState> {
         ),
       ),
       (r) {
-        List<PlanModel> plansList = [];
-        plansList.addAll(state.listPlans ?? []);
-        int index =
-            plansList.indexWhere((element) => element.id == event.model?.id);
-        plansList.removeAt(index);
-        plansList.insert(index, event.model!);
         emit(
-          state.copyWith(
-              editPlanStatus: BlocStatus.completed, listPlans: plansList),
+          state.copyWith(editPlanStatus: BlocStatus.completed),
         );
       },
     );
@@ -73,14 +65,8 @@ class TarifsBloc extends Bloc<TarifsEvent, TarifsState> {
         ),
       ),
       (r) {
-        List<PlanModel> planList = [];
-        planList.addAll(state.listPlans ?? []);
-        int index =
-            planList.indexWhere((element) => element.id == event.model?.id);
-        planList.removeAt(index);
         emit(
-          state.copyWith(
-              deletePlanStatus: BlocStatus.completed, listPlans: planList),
+          state.copyWith(deletePlanStatus: BlocStatus.completed),
         );
       },
     );

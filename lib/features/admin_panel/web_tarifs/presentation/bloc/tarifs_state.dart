@@ -8,7 +8,6 @@ class TarifsState with _$TarifsState {
     @Default(BlocStatus.notInitialized) final BlocStatus addPlanStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus deletePlanStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus editPlanStatus,
-
     final List<PlanModel>? listPlans,
     final String? message,
   }) = _TarifsState;
