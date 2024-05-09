@@ -1,12 +1,11 @@
-import 'package:dtmtest/common/components/admin_row_widget.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
+import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/widgets/admin_users_row_widget.dart';
-import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -61,57 +60,78 @@ class _WebUsersPageState extends State<WebUsersPage> {
               ],
             ),
             20.h,
-            const SizedBox(
-              height: 30,
-              child: Row(
-                children: [
-                  AdminRowWidget(
-                    width: 50,
-                    text: '№',
-                  ),
-                  AdminRowWidget(
-                    width: 200,
-                    text: 'Name',
-                  ),
-                  AdminRowWidget(
-                    width: 250,
-                    text: 'Email',
-                  ),
-                  AdminRowWidget(
-                    width: 100,
-                    text: 'Plan',
-                  ),
-                  AdminRowWidget(
-                    width: 100,
-                    text: 'Rating',
-                    disableDivider: true,
-                  ),
-                ],
-              ),
-            ),
-            10.h,
-            BlocConsumer<WebBloc, WebState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                final List<UserModel> listUsers = state.listUsers ?? [];
-                if (state.getAllUsersStatus.isProgress) {
-                  return UI.spinner();
-                }
-                return Expanded(
-                  child: ListView.separated(
-                    itemCount: listUsers.length,
-                    itemBuilder: (_, index) => SizedBox(
-                      height: 30,
-                      child: AdminUsersRowWidget(
-                        userModel: listUsers[index],
-                        number: index,
+            Expanded(
+                child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: BlocConsumer<WebUsersBloc, WebUsersState>(
+                builder: (context, state) {
+                  if (state.getAllUsersStatus == BlocStatus.inProgress) {
+                    return Center(
+                      child: UI.spinner(),
+                    );
+                  }
+                  return DataTable(
+                    columns: const [
+                      DataColumn(label: Text('№')),
+                      DataColumn(label: Text('Name')),
+                      DataColumn(label: Text('Email')),
+                      DataColumn(label: Text('Plan')),
+                      DataColumn(label: Text('Rating')),
+                      DataColumn(label: Text('')),
+                    ],
+                    rows: List<DataRow>.generate(
+                      state.listUsers?.length ?? 0,
+                      (index) => DataRow(
+                        cells: [
+                          DataCell(Text('${index + 1}')),
+                          DataCell(
+                              Text(state.listUsers?[index].fullName ?? '')),
+                          DataCell(Text(
+                              state.listUsers?[index].email.toString() ?? '')),
+                          DataCell(Text(state.listUsers?[index].plan ?? '')),
+                          DataCell(Text(
+                              state.listUsers?[index].rating.toString() ?? '')),
+                          DataCell(
+                            PopupMenuButton(
+                              iconColor: ColorName.blue,
+                              surfaceTintColor: ColorName.white,
+                              position: PopupMenuPosition.under,
+                              onSelected: (value) {
+                                // your logic
+                              },
+                              itemBuilder: (BuildContext bc) {
+                                return [
+                                  PopupMenuItem(
+                                    onTap: () {
+                                      context.read<WebUsersBloc>().add(
+                                            DeleteUserEvent(
+                                              model: state.listUsers?[index],
+                                            ),
+                                          );
+                                    },
+                                    value: '/Delete',
+                                    child: const Text("Delete"),
+                                  ),
+                                ];
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    separatorBuilder: (_, index) => 10.h,
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+                listener: (context, state) {
+                  if (state.deleteUserStatus == BlocStatus.completed) {
+                    context.read<WebUsersBloc>().add(GetUsersEvent());
+                  }
+                },
+                listenWhen: (previous, current) {
+                  return previous.getAllUsersStatus ==
+                      current.getAllUsersStatus;
+                },
+              ),
+            ))
           ],
         ),
       ),

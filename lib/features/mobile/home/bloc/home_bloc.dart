@@ -5,7 +5,7 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/advertising_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
-import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_users_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

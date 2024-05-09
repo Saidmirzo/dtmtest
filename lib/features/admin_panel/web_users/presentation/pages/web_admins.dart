@@ -6,7 +6,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +17,7 @@ class WebAdminsPage extends StatelessWidget with DialogMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => context.read<WebAdminsBloc>()..add(GetAdminsEvent()),
+      create: (context) => context.read<WebUsersBloc>()..add(GetAdminsEvent()),
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(30),
@@ -71,7 +71,7 @@ class WebAdminsPage extends StatelessWidget with DialogMixin {
             ),
             10.h,
             Expanded(
-              child: BlocBuilder<WebAdminsBloc, WebAdminsState>(
+              child: BlocBuilder<WebUsersBloc, WebUsersState>(
                 builder: (context, state) {
                   if (state.getAllAdminsStatus.isProgress) {
                     Center(

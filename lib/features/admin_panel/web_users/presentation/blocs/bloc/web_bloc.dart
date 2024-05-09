@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_users_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

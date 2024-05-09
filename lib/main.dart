@@ -1,7 +1,7 @@
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => di<AuthBloc>()),
           BlocProvider(create: (context) => di<WebBloc>()),
           BlocProvider(create: (context) => di<CategoryBloc>()),
-          BlocProvider(create: (context) => di<WebAdminsBloc>()),
+          BlocProvider(create: (context) => di<WebUsersBloc>()),
           BlocProvider(create: (context) => di<WebCategoriesBloc>()),
           BlocProvider(create: (context) => di<ThemesBloc>()),
           BlocProvider(create: (context) => di<PlansBloc>()),
