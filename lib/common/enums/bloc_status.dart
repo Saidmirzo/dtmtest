@@ -2,6 +2,7 @@ enum BlocStatus {
   notInitialized,
   inProgress,
   completed,
+  incorrect,
   failed,
   connectionFailed,
   unAutorized;

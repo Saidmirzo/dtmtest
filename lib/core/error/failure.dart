@@ -28,6 +28,9 @@ class UnautorizedFailure extends Failure {
 class ForbiddenFailure extends Failure {
   const ForbiddenFailure(super.message);
 }
+class PasswordIncorrectFailure extends Failure {
+  const PasswordIncorrectFailure(super.message);
+}
 
 class CacheFailure extends Failure {
   const CacheFailure(super.message);

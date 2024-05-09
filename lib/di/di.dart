@@ -3,6 +3,11 @@ import 'package:dtmtest/features/admin_panel/web_advertising/data/datasource/adv
 import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/advertising_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/data/datasource/web_remote_datasorce.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/data/model/admin_model.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/data/repository/web_auth_repository_impl.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/domain/repository/web_auth_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/data_sources/tarifs_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/repositories/tarifs_repository_impl.dart';
@@ -50,6 +55,7 @@ Future<void> init() async {
   await EasyLocalization.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(AdminModelAdapter());
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -82,6 +88,7 @@ Future<void> init() async {
     ),
   );
   di.registerFactory(() => TarifsBloc(tarifRepository: di()));
+  di.registerFactory(() => WebAuthBloc(webAuthRepository: di()));
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
@@ -123,6 +130,9 @@ Future<void> init() async {
   di.registerFactory<TarifsRepository>(
     () => TarifsRepositoryImpl(tarifRemoteDataSource: di()),
   );
+  di.registerFactory<WebAuthRepository>(
+    () => WebAuthRepositoryImpl(webAuthRemoteDataSource: di()),
+  );
   // DataSource
   di.registerLazySingleton<AuthLocaleDataSource>(
     () => AuthLocaleDataSourceImpl(),
@@ -147,6 +157,9 @@ Future<void> init() async {
   );
   di.registerLazySingleton<TarifsRemoteDataSource>(
     () => TarifsRemoteDataSourceImpl(),
+  );
+  di.registerLazySingleton<WebAuthRemoteDataSource>(
+    () => WebAuthRemoteDataSourceImpl(),
   );
 
   /// Network

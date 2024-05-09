@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/presentation/pages/web_auth_page.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_admins.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/pages/web_advertising.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
@@ -48,6 +49,7 @@ class AppRouter extends _$AppRouter {
   static const String leadersBoard = '/leadersBoard';
   static const String aboutUs = '/aboutUs';
   static const String privacyPolicy = '/privacyPolicy';
+  static const String webAuthRoute = '/webAuthRoute';
 
   @override
   final List<AutoRoute> routes = [
@@ -97,6 +99,10 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
       path: plansPage,
       page: PlansRoute.page,
+    ),
+    AutoRoute(
+      path: webAuthRoute,
+      page: WebAuthRoute.page,
     ),
     AutoRoute(
       path: themesPage,

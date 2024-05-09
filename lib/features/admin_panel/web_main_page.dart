@@ -49,19 +49,19 @@ class _WebMainPageState extends State<WebMainPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          
                           Assets.images.logo.image(width: 40, height: 40),
                           Visibility(
                               visible: !hideMenu, child: const Text("DTMTest")),
                           Visibility(
                             visible: !hideMenu,
                             child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    hideMenu = !hideMenu;
-                                  });
-                                },
-                                icon: Assets.icons.menu.svg()),
+                              onPressed: () {
+                                setState(() {
+                                  hideMenu = !hideMenu;
+                                });
+                              },
+                              icon: Assets.icons.menu.svg(),
+                            ),
                           )
                         ],
                       ),
