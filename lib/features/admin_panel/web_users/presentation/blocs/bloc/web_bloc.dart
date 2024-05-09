@@ -7,7 +7,6 @@ import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_mo
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:equatable/equatable.dart';
-// ignore: depend_on_referenced_packages
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'web_bloc.freezed.dart';
@@ -24,29 +23,8 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     on<GetAllThemes>(_getAllThemesEvent);
     on<AddNewThemeEvent>(_addNewThemeEvent);
 
-    // on<UpdateImageEvent>(_updateImageEvent);
   }
 
-
-  // _updateImageEvent(UpdateImageEvent event, emit) async {
-  //   emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
-  //   final result =
-  //       await webRepository.updateImage(event.byte, event.name, event.publicId);
-  //   result.fold(
-  //     (l) => emit(
-  //       state.copyWith(
-  //         updateImageStatus: BlocStatus.failed,
-  //         message: l.message,
-  //       ),
-  //     ),
-  //     (r) => emit(
-  //       state.copyWith(
-  //         updateImageStatus: BlocStatus.completed,
-  //         imageLink: r,
-  //       ),
-  //     ),
-  //   );
-  // }
 
   _getALlUserEvent(event, emit) async {
     emit(state.copyWith(getAllUsersStatus: BlocStatus.inProgress));
@@ -108,23 +86,4 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     );
   }
 
-
-  _addPlanEvent(AddPlanEvent event, emit) async {
-    emit(state.copyWith(addPlanStatus: BlocStatus.inProgress));
-    final result = await webRepository.addPlan(event.model);
-    result.fold(
-        (l) => emit(
-              state.copyWith(
-                addPlanStatus: BlocStatus.failed,
-                message: l.message,
-              ),
-            ), (r) {
-      emit(
-        state.copyWith(
-          addPlanStatus: BlocStatus.completed,
-        ),
-      );
-      add(GetPlansEvent());
-    });
-  }
 }

@@ -19,10 +19,6 @@ mixin _$WebState {
   BlocStatus get getAllUsersStatus => throw _privateConstructorUsedError;
   BlocStatus get getAllThemesStatus => throw _privateConstructorUsedError;
   BlocStatus get addNewThemeStatus => throw _privateConstructorUsedError;
-  BlocStatus get getAllPlansStatus => throw _privateConstructorUsedError;
-  BlocStatus get addPlanStatus => throw _privateConstructorUsedError;
-  BlocStatus get deletePlanStatus => throw _privateConstructorUsedError;
-  BlocStatus get editPlanStatus => throw _privateConstructorUsedError;
   BlocStatus get addCategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get getAllCategoriesStatus => throw _privateConstructorUsedError;
   BlocStatus get deleteCategoryStatus => throw _privateConstructorUsedError;
@@ -32,7 +28,6 @@ mixin _$WebState {
   String? get message => throw _privateConstructorUsedError;
   List<UserModel>? get listUsers => throw _privateConstructorUsedError;
   List<ThemeModel>? get listThemes => throw _privateConstructorUsedError;
-  List<PlanModel>? get listPlans => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WebStateCopyWith<WebState> get copyWith =>
@@ -48,10 +43,6 @@ abstract class $WebStateCopyWith<$Res> {
       {BlocStatus getAllUsersStatus,
       BlocStatus getAllThemesStatus,
       BlocStatus addNewThemeStatus,
-      BlocStatus getAllPlansStatus,
-      BlocStatus addPlanStatus,
-      BlocStatus deletePlanStatus,
-      BlocStatus editPlanStatus,
       BlocStatus addCategoryStatus,
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
@@ -60,8 +51,7 @@ abstract class $WebStateCopyWith<$Res> {
       List<CategoryModel>? listCategories,
       String? message,
       List<UserModel>? listUsers,
-      List<ThemeModel>? listThemes,
-      List<PlanModel>? listPlans});
+      List<ThemeModel>? listThemes});
 }
 
 /// @nodoc
@@ -80,10 +70,6 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
     Object? getAllUsersStatus = null,
     Object? getAllThemesStatus = null,
     Object? addNewThemeStatus = null,
-    Object? getAllPlansStatus = null,
-    Object? addPlanStatus = null,
-    Object? deletePlanStatus = null,
-    Object? editPlanStatus = null,
     Object? addCategoryStatus = null,
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
@@ -93,7 +79,6 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
     Object? message = freezed,
     Object? listUsers = freezed,
     Object? listThemes = freezed,
-    Object? listPlans = freezed,
   }) {
     return _then(_value.copyWith(
       getAllUsersStatus: null == getAllUsersStatus
@@ -107,22 +92,6 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
       addNewThemeStatus: null == addNewThemeStatus
           ? _value.addNewThemeStatus
           : addNewThemeStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      getAllPlansStatus: null == getAllPlansStatus
-          ? _value.getAllPlansStatus
-          : getAllPlansStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      addPlanStatus: null == addPlanStatus
-          ? _value.addPlanStatus
-          : addPlanStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      deletePlanStatus: null == deletePlanStatus
-          ? _value.deletePlanStatus
-          : deletePlanStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      editPlanStatus: null == editPlanStatus
-          ? _value.editPlanStatus
-          : editPlanStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       addCategoryStatus: null == addCategoryStatus
           ? _value.addCategoryStatus
@@ -160,10 +129,6 @@ class _$WebStateCopyWithImpl<$Res, $Val extends WebState>
           ? _value.listThemes
           : listThemes // ignore: cast_nullable_to_non_nullable
               as List<ThemeModel>?,
-      listPlans: freezed == listPlans
-          ? _value.listPlans
-          : listPlans // ignore: cast_nullable_to_non_nullable
-              as List<PlanModel>?,
     ) as $Val);
   }
 }
@@ -180,10 +145,6 @@ abstract class _$$WebStateImplCopyWith<$Res>
       {BlocStatus getAllUsersStatus,
       BlocStatus getAllThemesStatus,
       BlocStatus addNewThemeStatus,
-      BlocStatus getAllPlansStatus,
-      BlocStatus addPlanStatus,
-      BlocStatus deletePlanStatus,
-      BlocStatus editPlanStatus,
       BlocStatus addCategoryStatus,
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
@@ -192,8 +153,7 @@ abstract class _$$WebStateImplCopyWith<$Res>
       List<CategoryModel>? listCategories,
       String? message,
       List<UserModel>? listUsers,
-      List<ThemeModel>? listThemes,
-      List<PlanModel>? listPlans});
+      List<ThemeModel>? listThemes});
 }
 
 /// @nodoc
@@ -210,10 +170,6 @@ class __$$WebStateImplCopyWithImpl<$Res>
     Object? getAllUsersStatus = null,
     Object? getAllThemesStatus = null,
     Object? addNewThemeStatus = null,
-    Object? getAllPlansStatus = null,
-    Object? addPlanStatus = null,
-    Object? deletePlanStatus = null,
-    Object? editPlanStatus = null,
     Object? addCategoryStatus = null,
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
@@ -223,7 +179,6 @@ class __$$WebStateImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? listUsers = freezed,
     Object? listThemes = freezed,
-    Object? listPlans = freezed,
   }) {
     return _then(_$WebStateImpl(
       getAllUsersStatus: null == getAllUsersStatus
@@ -237,22 +192,6 @@ class __$$WebStateImplCopyWithImpl<$Res>
       addNewThemeStatus: null == addNewThemeStatus
           ? _value.addNewThemeStatus
           : addNewThemeStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      getAllPlansStatus: null == getAllPlansStatus
-          ? _value.getAllPlansStatus
-          : getAllPlansStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      addPlanStatus: null == addPlanStatus
-          ? _value.addPlanStatus
-          : addPlanStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      deletePlanStatus: null == deletePlanStatus
-          ? _value.deletePlanStatus
-          : deletePlanStatus // ignore: cast_nullable_to_non_nullable
-              as BlocStatus,
-      editPlanStatus: null == editPlanStatus
-          ? _value.editPlanStatus
-          : editPlanStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       addCategoryStatus: null == addCategoryStatus
           ? _value.addCategoryStatus
@@ -290,10 +229,6 @@ class __$$WebStateImplCopyWithImpl<$Res>
           ? _value._listThemes
           : listThemes // ignore: cast_nullable_to_non_nullable
               as List<ThemeModel>?,
-      listPlans: freezed == listPlans
-          ? _value._listPlans
-          : listPlans // ignore: cast_nullable_to_non_nullable
-              as List<PlanModel>?,
     ));
   }
 }
@@ -305,10 +240,6 @@ class _$WebStateImpl extends _WebState {
       {this.getAllUsersStatus = BlocStatus.notInitialized,
       this.getAllThemesStatus = BlocStatus.notInitialized,
       this.addNewThemeStatus = BlocStatus.notInitialized,
-      this.getAllPlansStatus = BlocStatus.notInitialized,
-      this.addPlanStatus = BlocStatus.notInitialized,
-      this.deletePlanStatus = BlocStatus.notInitialized,
-      this.editPlanStatus = BlocStatus.notInitialized,
       this.addCategoryStatus = BlocStatus.notInitialized,
       this.getAllCategoriesStatus = BlocStatus.notInitialized,
       this.deleteCategoryStatus = BlocStatus.notInitialized,
@@ -317,12 +248,10 @@ class _$WebStateImpl extends _WebState {
       final List<CategoryModel>? listCategories,
       this.message,
       final List<UserModel>? listUsers,
-      final List<ThemeModel>? listThemes,
-      final List<PlanModel>? listPlans})
+      final List<ThemeModel>? listThemes})
       : _listCategories = listCategories,
         _listUsers = listUsers,
         _listThemes = listThemes,
-        _listPlans = listPlans,
         super._();
 
   @override
@@ -334,18 +263,6 @@ class _$WebStateImpl extends _WebState {
   @override
   @JsonKey()
   final BlocStatus addNewThemeStatus;
-  @override
-  @JsonKey()
-  final BlocStatus getAllPlansStatus;
-  @override
-  @JsonKey()
-  final BlocStatus addPlanStatus;
-  @override
-  @JsonKey()
-  final BlocStatus deletePlanStatus;
-  @override
-  @JsonKey()
-  final BlocStatus editPlanStatus;
   @override
   @JsonKey()
   final BlocStatus addCategoryStatus;
@@ -393,19 +310,9 @@ class _$WebStateImpl extends _WebState {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<PlanModel>? _listPlans;
-  @override
-  List<PlanModel>? get listPlans {
-    final value = _listPlans;
-    if (value == null) return null;
-    if (_listPlans is EqualUnmodifiableListView) return _listPlans;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
   @override
   String toString() {
-    return 'WebState(getAllUsersStatus: $getAllUsersStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, getAllPlansStatus: $getAllPlansStatus, addPlanStatus: $addPlanStatus, deletePlanStatus: $deletePlanStatus, editPlanStatus: $editPlanStatus, addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, updateImageStatus: $updateImageStatus, listCategories: $listCategories, message: $message, listUsers: $listUsers, listThemes: $listThemes, listPlans: $listPlans)';
+    return 'WebState(getAllUsersStatus: $getAllUsersStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, updateImageStatus: $updateImageStatus, listCategories: $listCategories, message: $message, listUsers: $listUsers, listThemes: $listThemes)';
   }
 
   @override
@@ -419,14 +326,6 @@ class _$WebStateImpl extends _WebState {
                 other.getAllThemesStatus == getAllThemesStatus) &&
             (identical(other.addNewThemeStatus, addNewThemeStatus) ||
                 other.addNewThemeStatus == addNewThemeStatus) &&
-            (identical(other.getAllPlansStatus, getAllPlansStatus) ||
-                other.getAllPlansStatus == getAllPlansStatus) &&
-            (identical(other.addPlanStatus, addPlanStatus) ||
-                other.addPlanStatus == addPlanStatus) &&
-            (identical(other.deletePlanStatus, deletePlanStatus) ||
-                other.deletePlanStatus == deletePlanStatus) &&
-            (identical(other.editPlanStatus, editPlanStatus) ||
-                other.editPlanStatus == editPlanStatus) &&
             (identical(other.addCategoryStatus, addCategoryStatus) ||
                 other.addCategoryStatus == addCategoryStatus) &&
             (identical(other.getAllCategoriesStatus, getAllCategoriesStatus) ||
@@ -443,9 +342,7 @@ class _$WebStateImpl extends _WebState {
             const DeepCollectionEquality()
                 .equals(other._listUsers, _listUsers) &&
             const DeepCollectionEquality()
-                .equals(other._listThemes, _listThemes) &&
-            const DeepCollectionEquality()
-                .equals(other._listPlans, _listPlans));
+                .equals(other._listThemes, _listThemes));
   }
 
   @override
@@ -454,10 +351,6 @@ class _$WebStateImpl extends _WebState {
       getAllUsersStatus,
       getAllThemesStatus,
       addNewThemeStatus,
-      getAllPlansStatus,
-      addPlanStatus,
-      deletePlanStatus,
-      editPlanStatus,
       addCategoryStatus,
       getAllCategoriesStatus,
       deleteCategoryStatus,
@@ -466,8 +359,7 @@ class _$WebStateImpl extends _WebState {
       const DeepCollectionEquality().hash(_listCategories),
       message,
       const DeepCollectionEquality().hash(_listUsers),
-      const DeepCollectionEquality().hash(_listThemes),
-      const DeepCollectionEquality().hash(_listPlans));
+      const DeepCollectionEquality().hash(_listThemes));
 
   @JsonKey(ignore: true)
   @override
@@ -481,10 +373,6 @@ abstract class _WebState extends WebState {
       {final BlocStatus getAllUsersStatus,
       final BlocStatus getAllThemesStatus,
       final BlocStatus addNewThemeStatus,
-      final BlocStatus getAllPlansStatus,
-      final BlocStatus addPlanStatus,
-      final BlocStatus deletePlanStatus,
-      final BlocStatus editPlanStatus,
       final BlocStatus addCategoryStatus,
       final BlocStatus getAllCategoriesStatus,
       final BlocStatus deleteCategoryStatus,
@@ -493,8 +381,7 @@ abstract class _WebState extends WebState {
       final List<CategoryModel>? listCategories,
       final String? message,
       final List<UserModel>? listUsers,
-      final List<ThemeModel>? listThemes,
-      final List<PlanModel>? listPlans}) = _$WebStateImpl;
+      final List<ThemeModel>? listThemes}) = _$WebStateImpl;
   const _WebState._() : super._();
 
   @override
@@ -503,14 +390,6 @@ abstract class _WebState extends WebState {
   BlocStatus get getAllThemesStatus;
   @override
   BlocStatus get addNewThemeStatus;
-  @override
-  BlocStatus get getAllPlansStatus;
-  @override
-  BlocStatus get addPlanStatus;
-  @override
-  BlocStatus get deletePlanStatus;
-  @override
-  BlocStatus get editPlanStatus;
   @override
   BlocStatus get addCategoryStatus;
   @override
@@ -529,8 +408,6 @@ abstract class _WebState extends WebState {
   List<UserModel>? get listUsers;
   @override
   List<ThemeModel>? get listThemes;
-  @override
-  List<PlanModel>? get listPlans;
   @override
   @JsonKey(ignore: true)
   _$$WebStateImplCopyWith<_$WebStateImpl> get copyWith =>
