@@ -7,8 +7,6 @@ part of 'web_bloc.dart';
     @Default(BlocStatus.notInitialized) final BlocStatus getAllUsersStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus getAllThemesStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus addNewThemeStatus,
-    @Default(BlocStatus.notInitialized) final BlocStatus addNewadvertisingStatus,
-    @Default(BlocStatus.notInitialized) final BlocStatus getAllAdvertisingStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus getAllPlansStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus addPlanStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus deletePlanStatus,
@@ -17,15 +15,12 @@ part of 'web_bloc.dart';
     @Default(BlocStatus.notInitialized) final BlocStatus getAllCategoriesStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus deleteCategoryStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus editategoryStatus,
-    @Default(BlocStatus.notInitialized) final BlocStatus uploadImageStatus,
     @Default(BlocStatus.notInitialized) final BlocStatus updateImageStatus,
     final List<CategoryModel>? listCategories,
     final String? message,
     final List<UserModel>? listUsers,
     final List<ThemeModel>? listThemes,
-    final List<AdvertisingModel>? listAdvertising,
     final List<PlanModel>? listPlans,
-    final String? imageLink,
 
   })=_WebState;
 

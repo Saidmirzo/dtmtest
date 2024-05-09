@@ -1,25 +1,18 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/models/plan_model.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
-import 'package:flutter/services.dart';
-import 'package:http_parser/http_parser.dart';
 
 abstract class WebRemoteDataSource {
   Future<List<UserModel>> getAllUsers();
   Future<List<ThemeModel>> getAllThemes();
   Future<String> addNewTheme(ThemeModel themeModel, String categoryId);
-  Future<String> addNewAdvertising(AdvertisingModel advertisingModel);
-  Future<List<AdvertisingModel>> getAdvertising();
   Future<List<CategoryModel>> getAllCategories();
   Future<String> addCategory(CategoryModel model);
   Future<String> deleteCategory(CategoryModel? model);
@@ -30,9 +23,6 @@ abstract class WebRemoteDataSource {
   Future<List<PlanModel>> getPlan();
   Future<List<AdminModel>> getAdmins();
   Future<List<HistoryModel>> getAllHistory();
-  Future<String> postImage(Uint8List byte, String name);
-  Future<bool> deleteImage(String publicId);
-  Future<String> updateImage(Uint8List byte, String name, String publicId);
 }
 
 class WebRemoteDataSourceImpl implements WebRemoteDataSource {
@@ -89,21 +79,6 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
     return "Success";
   }
 
-  @override
-  Future<String> addNewAdvertising(AdvertisingModel advertisingModel) async {
-    await advertisingCollection.add(advertisingModel.toJson());
-    return "Success";
-  }
-
-  @override
-  Future<List<AdvertisingModel>> getAdvertising() async {
-    final List<AdvertisingModel> listAdvertising;
-    final result = await advertisingCollection.get();
-    listAdvertising = result.docs
-        .map((e) => AdvertisingModel.fromJson(jsonDecode(jsonEncode(e.data()))))
-        .toList();
-    return listAdvertising;
-  }
 
   @override
   Future<List<CategoryModel>> getAllCategories() async {
@@ -226,55 +201,5 @@ class WebRemoteDataSourceImpl implements WebRemoteDataSource {
     return listHistory;
   }
 
-  @override
-  Future<String> postImage(Uint8List byte, String name) async {
-    var dio = Dio();
-    var multiPartFile = MultipartFile.fromBytes(
-      byte,
-      filename: name,
-      contentType: MediaType('image', 'jpeg'),
-    );
-    var formData = FormData.fromMap(
-      {
-        'file': multiPartFile,
-        'upload_preset': 'kxjpuwhs',
-      },
-    );
 
-    var response = await dio.post(
-      'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
-      data: formData,
-    );
-    return response.data["secure_url"];
-  }
-
-  @override
-  Future<bool> deleteImage(String publicId) async {
-    var dio = Dio();
-    try {
-      var response = await dio.delete(
-        'https://api.cloudinary.com/v1_1/df7fvomdn/image/destroy',
-        data: {'public_id': publicId},
-        options: Options(
-          contentType: Headers.formUrlEncodedContentType,
-        ),
-      );
-      return response.data['result'] == 'ok';
-    } catch (e) {
-      print("Error deleting image: $e");
-      return false;
-    }
-  }
-
-  @override
-  Future<String> updateImage(
-      Uint8List byte, String name, String publicId) async {
-    //extractImageId(String url)  shu bor public id olishga
-    bool isDeleted = await deleteImage(publicId);
-    if (!isDeleted) {
-      throw Exception("Failed to delete old image");
-    }
-
-    return await postImage(byte, name);
-  }
 }

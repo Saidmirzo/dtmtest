@@ -8,8 +8,8 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +26,7 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
   @override
   void initState() {
     super.initState();
-    context.read<WebBloc>().add(GetAllAdvertisingEvent());
+    context.read<WebAdvertisingBloc>().add(GetAllAdvertisingEvent());
   }
 
   @override
@@ -94,7 +94,7 @@ class _WebAdvrtisingPageState extends State<WebAdvrtisingPage>
           ),
           10.h,
           Expanded(
-            child: BlocConsumer<WebBloc, WebState>(
+            child: BlocConsumer<WebAdvertisingBloc, WebAdvertisingState>(
               listener: (context, state) {
                 if (state.getAllAdvertisingStatus == BlocStatus.failed) {
                   showSnackBar(context, text: "Error");

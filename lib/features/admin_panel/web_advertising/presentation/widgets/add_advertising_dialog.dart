@@ -8,7 +8,8 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_advertising/model/advertising_model.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
+import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                 if (result?.files.single.bytes != null) {
                   final Uint8List byte = result!.files.single.bytes!;
                   image = Image.memory(byte);
-                  context.read<WebBloc>().add(
+                  context.read<WebAdvertisingBloc>().add(
                         UploadImageEvent(
                           byte: byte,
                           name: result.files.single.name,
@@ -124,7 +125,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                   const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
             ),
             20.h,
-            BlocConsumer<WebBloc, WebState>(
+            BlocConsumer<WebAdvertisingBloc, WebAdvertisingState>(
               listener: (context, state) {
                 if (state.uploadImageStatus.isProgress) {
                   showDialog(
@@ -160,7 +161,7 @@ class _AddAdvertisingDialogState extends State<AddAdvertisingDialog>
                     if (desciptionController.text.isNotEmpty &&
                         linkController.text.isNotEmpty &&
                         titleController.text.isNotEmpty) {
-                      context.read<WebBloc>().add(
+                      context.read<WebAdvertisingBloc>().add(
                             AddNewAdvertising(
                               advertisingModel: AdvertisingModel(
                                 description: desciptionController.text,
