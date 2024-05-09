@@ -75,28 +75,6 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   }
 
   @override
-  Future<List<ThemeModel>> getAllThemes(String? id) async {
-    List<ThemeModel> themes = [];
-    QuerySnapshot result;
-    if (id != null) {
-      result = await categoryCollection.where('', isEqualTo: id).get();
-    } else {
-      result = await categoryCollection.get();
-    }
-    for (var element in result.docs) {
-      final themesDocs =
-          await categoryCollection.doc(element.id).collection('theme').get();
-      themes.addAll(
-        themesDocs.docs.map(
-          (e) => ThemeModel.fromJson(
-            jsonDecode(
-              jsonEncode(e.data()),
-            ),
-          ),
-        ),
-      );
-    }
-    return themes;
   Future<List<ThemeModel>> getAllThemes(String categoryId) async {
     final result =
         await categoryCollection.doc(categoryId).collection('theme').get();
