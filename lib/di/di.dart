@@ -4,6 +4,10 @@ import 'package:dtmtest/features/admin_panel/web_advertising/data/datasource/adv
 import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/advertising_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/datasource/web_category_remote_data_source.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/repository/web_category_repository_impl.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/domain/repository/web_category_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/data/datasource/web_remote_datasorce.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/data/model/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/data/repository/web_auth_repository_impl.dart';
@@ -15,6 +19,8 @@ import 'package:dtmtest/features/admin_panel/web_tarifs/data/repositories/tarifs
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/repositories/tarifs_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_users_remote_data_source.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_users_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
@@ -67,7 +73,8 @@ Future<void> init() async {
   di.registerFactory(() => WebBloc(webRepository: di()));
   di.registerFactory(() => WebUsersBloc(webUsersRepository: di()));
   di.registerFactory(() => CategoryBloc(categoryRepository: di()));
-  di.registerFactory(() => WebCategoriesBloc(webRepository: di()));
+  di.registerFactory(() => WebCategoriesBloc(webCategoryRepository: di()));
+  di.registerFactory(() => WebQuizsBloc(webCategoryRepository: di()));
   di.registerFactory(() => ThemesBloc(themesRepository: di()));
   di.registerFactory(() => PlansBloc(webRepository: di()));
   di.registerFactory(() => HistoryBloc(webRepository: di()));
@@ -99,7 +106,7 @@ Future<void> init() async {
 
   di.registerFactory<CategoryRepository>(
     () => CategoryRepositoryImpl(
-      webRemoteDataSource: di(),
+      webRemoteCategoryDataSource: di(),
     ),
   );
   di.registerFactory<ThemesRepository>(
@@ -128,6 +135,9 @@ Future<void> init() async {
     () => WebUsersRepositoryImpl(webRemoteDataSource: di()),
   );
 
+  di.registerFactory<WebCategoryRepository>(
+    () => WebCategoryRepositoryImpl(webRemoteCategoryDataSource: di()),
+  );
   // DataSource
 
   di.registerLazySingleton<AuthLocaleDataSource>(
@@ -158,6 +168,9 @@ Future<void> init() async {
     () => WebAuthRemoteDataSourceImpl(),);
   di.registerLazySingleton<WebUsersRemoteDataSource>(
     () => WebUsersRemoteDataSourceImpl(authLocaleDataSource: di()),
+  );
+  di.registerLazySingleton<WebRemoteCategoryDataSource>(
+    () => WebRemoteCategoryDataSourceImpl(),
   );
 
   /// Network

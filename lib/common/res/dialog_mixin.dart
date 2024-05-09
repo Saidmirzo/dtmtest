@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
@@ -11,15 +12,16 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widgets/add_advertising_dialog.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 
 mixin DialogMixin {
   void showAccessDialog(
@@ -153,16 +155,27 @@ mixin DialogMixin {
 
   Future<dynamic> addThemeDialog(BuildContext context, EditAdd editAdd) {
     final nameControlle = TextEditingController();
-    final categoryControlle =
+    final categoryController =
         TextEditingController(text: 'ezywxeyEuGNRwc9dKFGF');
     Uint8List? filePath;
+
+    String func() {
+      for (var element in context.read<WebQuizsBloc>().state.listCategories!) {
+        if (element.name == categoryController.text) {
+          // log(element.id.toString());
+          // log(element.name.toString());
+          return element.id ?? '';
+        }
+      }
+      return '';
+    }
 
     // final category
     return showAdaptiveDialog(
       context: context,
       builder: (_) {
         var size = MediaQuery.of(context).size;
-        return BlocConsumer<WebBloc, WebState>(
+        return BlocConsumer<WebQuizsBloc, WebQuizsState>(
           listener: (context, state) {
             if (state.addNewThemeStatus.isComplated) {
               context.maybePop();
@@ -171,8 +184,21 @@ mixin DialogMixin {
             }
           },
           builder: (context, state) {
+            if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
+              return UI.spinner();
+            }
             return AlertDialog(
-              title: Text(editAdd == EditAdd.add ? "Add admin" : "Edit admin"),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(editAdd == EditAdd.add ? "Add admin" : "Edit admin"),
+                  IconButton(
+                      onPressed: () {
+                        context.maybePop();
+                      },
+                      icon: const Icon(Icons.close)),
+                ],
+              ),
               backgroundColor: ColorName.backgroundColor,
               content: SizedBox(
                 width: size.width * .25,
@@ -193,18 +219,52 @@ mixin DialogMixin {
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 25, vertical: 17),
                     ),
-                    CustomTextField(
-                      controller: categoryControlle,
-                      backgroundColor: ColorName.backgroundColor,
-                      hintText: "Category",
-                      leading: const Padding(
-                        padding: EdgeInsets.only(left: 25, right: 10),
-                        child: Icon(Icons.search),
-                      ),
-                      borderColor: Colors.transparent,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 17),
-                    ),
+                    (state.listCategories!.isEmpty ||
+                            state.listCategories == null)
+                        ? Text(
+                            "Your Category List is Empty!!",
+                            style: AppTextStyles.body16w5,
+                          )
+                        : DropdownMenu(
+                            controller: categoryController,
+                            initialSelection: state.listCategories?[0].name,
+                            inputDecorationTheme: InputDecorationTheme(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: const BorderSide(
+                                  width: 3,
+                                  color: ColorName.blue,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.only(left: 20),
+                              isDense: true,
+                            ),
+                            onSelected: (value) {
+                              // dropValue = value;
+                              categoryController.text = value;
+
+                              log(categoryController.text);
+                            },
+                            textStyle: AppTextStyles.body16w4,
+                            dropdownMenuEntries: state.listCategories!
+                                .map<DropdownMenuEntry>((e) {
+                              return DropdownMenuEntry(
+                                  value: e.name ?? '', label: e.name ?? '');
+                            }).toList(),
+                            menuHeight: 300,
+                          ),
+                    // CustomTextField(
+                    //   controller: categoryControlle,
+                    //   backgroundColor: ColorName.backgroundColor,
+                    //   hintText: "Category",
+                    //   leading: const Padding(
+                    //     padding: EdgeInsets.only(left: 25, right: 10),
+                    //     child: Icon(Icons.search),
+                    //   ),
+                    //   borderColor: Colors.transparent,
+                    //   contentPadding: const EdgeInsets.symmetric(
+                    //       horizontal: 25, vertical: 17),
+                    // ),
                     IconButton(
                       onPressed: () {
                         FilePicker.platform.pickFiles().then(
@@ -223,13 +283,14 @@ mixin DialogMixin {
                         : GradientButton(
                             radius: 20,
                             onPressed: () {
+                              // func();
                               if (nameControlle.text.isNotEmpty &&
-                                  categoryControlle.text.isNotEmpty) {
-                                context.read<WebBloc>().add(
-                                      AddNewThemeEvent(
+                                  categoryController.text.isNotEmpty) {
+                                context.read<WebQuizsBloc>().add(
+                                      AddNewQuizThemeEvent(
                                         filePath: filePath!,
                                         name: nameControlle.text,
-                                        categoryId: categoryControlle.text,
+                                        categoryId: func(),
                                       ),
                                     );
                               }

@@ -4,10 +4,12 @@ import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
+import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +25,8 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
   @override
   void initState() {
     super.initState();
-    context.read<WebBloc>().add(GetAllThemes());
+    context.read<WebQuizsBloc>().add(GetAllQuizThemesEvent());
+    context.read<WebQuizsBloc>().add(GetAllQuizsEvent());
   }
 
   @override
@@ -39,6 +42,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 width: 110,
@@ -51,7 +55,20 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                   text: "Add",
                   icon: Assets.icons.add.svg(),
                 ),
-              )
+              ),
+              MaterialInkWellButton(
+                borderRadius: BorderRadius.circular(25),
+                width: 50,
+                height: 50,
+                function: () {
+                  context.read<WebQuizsBloc>().add(GetAllQuizThemesEvent());
+                },
+                gradient: AppGradient.gradient,
+                child: const Icon(
+                  Icons.refresh,
+                  color: ColorName.white,
+                ),
+              ),
             ],
           ),
           20.h,
@@ -76,7 +93,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
           ),
           10.h,
           Expanded(
-            child: BlocConsumer<WebBloc, WebState>(
+            child: BlocConsumer<WebQuizsBloc, WebQuizsState>(
               listener: (context, state) {},
               builder: (context, state) {
                 if (state.getAllThemesStatus.isProgress) {

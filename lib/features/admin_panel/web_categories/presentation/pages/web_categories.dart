@@ -5,9 +5,10 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
+import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,6 +41,7 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 width: 110,
@@ -52,7 +54,22 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
                   text: "Add",
                   icon: Assets.icons.add.svg(),
                 ),
-              )
+              ),
+              MaterialInkWellButton(
+                borderRadius: BorderRadius.circular(25),
+                width: 50,
+                height: 50,
+                function: () {
+                  context
+                      .read<WebCategoriesBloc>()
+                      .add(GetAllCategoriesEvent());
+                },
+                gradient: AppGradient.gradient,
+                child: const Icon(
+                  Icons.refresh,
+                  color: ColorName.white,
+                ),
+              ),
             ],
           ),
           20.h,

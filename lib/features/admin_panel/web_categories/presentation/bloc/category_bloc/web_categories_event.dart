@@ -11,6 +11,20 @@ class AddCategoryEvent extends WebCategoriesEvent {
 }
 class GetAllCategoriesEvent extends WebCategoriesEvent {}
 
+
+class GetAllThemesEvent extends WebCategoriesEvent {}
+
+class AddNewThemeEvent extends WebCategoriesEvent {
+  final Uint8List filePath;
+  final String name;
+  final String categoryId;
+  const AddNewThemeEvent({
+    required this.filePath,
+    required this.name,
+    required this.categoryId,
+  });
+}
+
 class DeleteCategoryEvent extends WebCategoriesEvent {
   const DeleteCategoryEvent({required this.model});
   final CategoryModel? model;
