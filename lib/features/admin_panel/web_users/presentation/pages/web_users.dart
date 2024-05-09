@@ -5,7 +5,6 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
-import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,16 +23,6 @@ class _WebUsersPageState extends State<WebUsersPage> {
     context.read<WebUsersBloc>().add(GetUsersEvent());
   }
 
-  String searchQuery = "";
-  List<UserModel> searchResults = [];
-
-  List<UserModel> searchByName(String query, List<UserModel> users) {
-    return users
-        .where((user) =>
-            user.fullName!.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -42,10 +31,9 @@ class _WebUsersPageState extends State<WebUsersPage> {
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
-          boxShadow: [AppShadow.defShadow],
-          borderRadius: BorderRadius.circular(30),
-          color: Colors.white,
-        ),
+            boxShadow: [AppShadow.defShadow],
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

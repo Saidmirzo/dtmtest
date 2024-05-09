@@ -10,11 +10,13 @@ import 'package:dtmtest/common/res/dropdown.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widgets/add_advertising_dialog.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -244,14 +246,34 @@ mixin DialogMixin {
     );
   }
 
-  Future<dynamic> addAdminsDialog(BuildContext context, EditAdd editAdd) {
+  Future<dynamic> addAdminsDialog(
+      BuildContext context, EditAdd editAdd, AdminModel? model) {
+    var name = TextEditingController();
+    var login = TextEditingController();
+    var password = TextEditingController();
+    if (model != null) {
+      name.text = model.name ?? '';
+      login.text = model.login ?? '';
+      password.text = model.password ?? '';
+    }
     return showAdaptiveDialog(
       context: context,
       builder: (_) {
         var size = MediaQuery.of(context).size;
         return AlertDialog(
-          title: Text(editAdd == EditAdd.add ? "Add admin" : "Edit admin"),
-          backgroundColor: ColorName.backgroundColor,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(editAdd == EditAdd.add ? "Add admin" : "Edit admin"),
+              IconButton(
+                onPressed: () {
+                  context.maybePop();
+                },
+                icon: const Icon(Icons.close),
+              ),
+            ],
+          ),
+          backgroundColor: ColorName.white,
           content: SizedBox(
             width: size.width * .25,
             child: Column(
@@ -259,48 +281,66 @@ mixin DialogMixin {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text("Name"),
-                const CustomTextField(
+                5.h,
+                CustomTextField(
                   backgroundColor: ColorName.backgroundColor,
                   hintText: "Name",
-                  leading: Padding(
-                    padding: EdgeInsets.only(left: 25, right: 10),
-                    child: Icon(Icons.search),
-                  ),
+                  controller: name,
                   borderColor: Colors.transparent,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
                 ),
+                10.h,
                 const Text("Login"),
-                const CustomTextField(
+                5.h,
+                CustomTextField(
                   backgroundColor: ColorName.backgroundColor,
                   hintText: "Login",
-                  leading: Padding(
-                    padding: EdgeInsets.only(left: 25, right: 10),
-                    child: Icon(Icons.search),
-                  ),
+                  controller: login,
                   borderColor: Colors.transparent,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
                 ),
+                10.h,
                 const Text("Password"),
-                const CustomTextField(
+                5.h,
+                CustomTextField(
                   backgroundColor: ColorName.backgroundColor,
                   hintText: "Password",
-                  leading: Padding(
-                    padding: EdgeInsets.only(left: 25, right: 10),
-                    child: Icon(Icons.search),
-                  ),
+                  controller: password,
                   borderColor: Colors.transparent,
                   contentPadding:
-                      EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
                 ),
                 20.h,
                 GradientButton(
                   radius: 20,
                   onPressed: () {
+                    if (editAdd == EditAdd.add) {
+                      context.read<WebUsersBloc>().add(
+                            AddAdminEvent(
+                              model: AdminModel(
+                                name: name.text,
+                                login: login.text,
+                                password: password.text,
+                              ),
+                            ),
+                          );
+                    } else {
+                      context.read<WebUsersBloc>().add(
+                            EditAdminEvent(
+                              model: AdminModel(
+                                id: model?.id,
+                                name: name.text,
+                                login: login.text,
+                                password: password.text,
+                              ),
+                            ),
+                          );
+                    }
                     context.maybePop();
                   },
-                  text: "Add",
+                  text: editAdd == EditAdd.add ? "Add" : "Edit",
                 )
               ],
             ),
