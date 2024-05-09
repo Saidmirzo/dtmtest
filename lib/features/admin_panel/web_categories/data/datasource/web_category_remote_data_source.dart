@@ -10,7 +10,7 @@ abstract class WebRemoteCategoryDataSource {
   Future<String> addCategory(CategoryModel model);
   Future<String> deleteCategory(CategoryModel? model);
   Future<String> editCategory(CategoryModel? model);
-  Future<List<ThemeModel>> getAllThemes();
+  Future<List<ThemeModel>> getAllThemes(String? id);
   Future<String> addNewTheme(ThemeModel themeModel, String categoryId);
 }
 
@@ -66,9 +66,14 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   }
 
   @override
-  Future<List<ThemeModel>> getAllThemes() async {
+  Future<List<ThemeModel>> getAllThemes(String? id) async {
     List<ThemeModel> themes = [];
-    final result = await categoryCollection.get();
+    QuerySnapshot result;
+    if (id != null) {
+      result = await categoryCollection.where('', isEqualTo: id).get();
+    } else {
+      result = await categoryCollection.get();
+    }
     for (var element in result.docs) {
       final themesDocs =
           await categoryCollection.doc(element.id).collection('theme').get();

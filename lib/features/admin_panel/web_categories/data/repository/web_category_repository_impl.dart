@@ -103,9 +103,9 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<ThemeModel>>> getAllThemes() async {
+  Future<Either<Failure, List<ThemeModel>>> getAllThemes(String? id) async {
     try {
-      final result = await webRemoteCategoryDataSource.getAllThemes();
+      final result = await webRemoteCategoryDataSource.getAllThemes(id);
       return Right(result);
     } catch (e) {
       return const Left(ServerFailure('get themes Error'));

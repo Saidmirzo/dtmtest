@@ -10,7 +10,7 @@ abstract class WebCategoryRepository {
   Future<Either<Failure, String>> addCategory(CategoryModel model);
   Future<Either<Failure, String>> deleteCategory(CategoryModel? model);
   Future<Either<Failure, String>> editCategory(CategoryModel? model);
-  Future<Either<Failure, List<ThemeModel>>> getAllThemes();
+  Future<Either<Failure, List<ThemeModel>>> getAllThemes(String? id);
   Future<Either<Failure, String>> addNewTheme(
       Uint8List filePath, String name, String categoryId);
 }

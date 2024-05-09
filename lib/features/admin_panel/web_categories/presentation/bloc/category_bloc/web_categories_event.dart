@@ -5,14 +5,18 @@ class WebCategoriesEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
 class AddCategoryEvent extends WebCategoriesEvent {
   const AddCategoryEvent({required this.model});
   final CategoryModel model;
 }
+
 class GetAllCategoriesEvent extends WebCategoriesEvent {}
 
-
-class GetAllThemesEvent extends WebCategoriesEvent {}
+class GetAllThemesEvent extends WebCategoriesEvent {
+  String? id;
+  GetAllThemesEvent([this.id]);
+}
 
 class AddNewThemeEvent extends WebCategoriesEvent {
   final Uint8List filePath;

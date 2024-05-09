@@ -116,10 +116,9 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
     );
   }
 
-  
   _getAllThemesEvent(event, emit) async {
     emit(state.copyWith(getAllThemesStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.getAllThemes();
+    final result = await webCategoryRepository.getAllThemes(event.id);
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -153,7 +152,7 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
             addNewThemeStatus: BlocStatus.completed,
           ),
         );
-        add(GetAllThemesEvent());
+        add(GetAllThemesEvent(event.categoryId));
       },
     );
   }
