@@ -11,7 +11,13 @@ class GetAllAdvertisingEvent extends WebAdvertisingEvent {}
 
 class AddNewAdvertising extends WebAdvertisingEvent {
   final AdvertisingModel advertisingModel;
-  const AddNewAdvertising({required this.advertisingModel});
+  final Uint8List byte;
+  final String fileName;
+  const AddNewAdvertising({
+    required this.advertisingModel,
+    required this.byte,
+    required this.fileName,
+  });
 }
 
 class UploadImageEvent extends WebAdvertisingEvent {
@@ -21,8 +27,14 @@ class UploadImageEvent extends WebAdvertisingEvent {
 }
 
 class EditAdvertisingEvent extends WebAdvertisingEvent {
+  final Uint8List? byte;
+  final String? fileName;
   final AdvertisingModel advertisingModel;
-  const EditAdvertisingEvent({required this.advertisingModel});
+  const EditAdvertisingEvent({
+    required this.advertisingModel,
+    this.byte,
+    this.fileName,
+  });
 }
 
 class DeleteAdvertisingEvent extends WebAdvertisingEvent {
