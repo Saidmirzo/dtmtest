@@ -13,7 +13,11 @@ class AddQuizsEvent extends WebQuizsEvent {
 
 class GetAllQuizsEvent extends WebQuizsEvent {}
 
-class GetAllQuizThemesEvent extends WebQuizsEvent {}
+// ignore: must_be_immutable
+class GetAllQuizThemesEvent extends WebQuizsEvent {
+  String? id;
+  GetAllQuizThemesEvent([this.id]);
+}
 
 class AddNewQuizThemeEvent extends WebQuizsEvent {
   final Uint8List filePath;

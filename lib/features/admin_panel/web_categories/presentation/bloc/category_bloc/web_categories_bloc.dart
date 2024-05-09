@@ -111,6 +111,7 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
     );
   }
 
+
   _getAllThemesEvent(GetAllThemesEvent event, emit) async {
     emit(state.copyWith(getThemesStatus: BlocStatus.inProgress));
     final result = await webCategoryRepository.getAllThemes(event.categoryId);

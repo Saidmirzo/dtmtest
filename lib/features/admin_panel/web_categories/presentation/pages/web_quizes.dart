@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
+import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
@@ -22,6 +25,8 @@ class WebQuizesPage extends StatefulWidget {
 }
 
 class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController quizsController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -56,6 +61,82 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                   icon: Assets.icons.add.svg(),
                 ),
               ),
+              BlocConsumer<WebQuizsBloc, WebQuizsState>(
+                  listener: (context, state) {
+                if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
+                  UI.spinner();
+                }
+              }, builder: (context, state) {
+                if (state.getAllCategoriesStatus.isComplated) {
+                  return DropdownMenu(
+                    // controller: categoryController,
+                    initialSelection: state.listCategories?[0].name,
+                    inputDecorationTheme: InputDecorationTheme(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(
+                          width: 3,
+                          color: ColorName.blue,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 20),
+                      isDense: true,
+                    ),
+                    onSelected: (value) {
+                      // dropValue = value;
+                      // categoryController.text = value!;
+
+                      // log(categoryController.text);
+                    },
+                    textStyle: AppTextStyles.body16w4,
+                    dropdownMenuEntries:
+                        state.listCategories!.map<DropdownMenuEntry>((e) {
+                      return DropdownMenuEntry(
+                          value: e.name ?? '', label: e.name ?? '');
+                    }).toList(),
+                    menuHeight: 300,
+                  );
+                }
+                return const SizedBox.shrink();
+              }),
+              BlocConsumer<WebQuizsBloc, WebQuizsState>(
+                  listener: (context, state) {
+                if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
+                  UI.spinner();
+                }
+              }, builder: (context, state) {
+                if (state.getAllThemesStatus.isComplated) {
+                  return DropdownMenu(
+                    // controller: categoryController,
+                    initialSelection: state.listCategories?[0].name,
+                    inputDecorationTheme: InputDecorationTheme(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(
+                          width: 3,
+                          color: ColorName.blue,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.only(left: 20),
+                      isDense: true,
+                    ),
+                    onSelected: (value) {
+                      // dropValue = value;
+                      // categoryController.text = value!;
+
+                      // log(categoryController.text);
+                    },
+                    textStyle: AppTextStyles.body16w4,
+                    dropdownMenuEntries:
+                        state.listThemes!.map<DropdownMenuEntry>((e) {
+                      return DropdownMenuEntry(
+                          value: e.name ?? '', label: e.name ?? '');
+                    }).toList(),
+                    menuHeight: 300,
+                  );
+                }
+                return const SizedBox.shrink();
+              }),
               MaterialInkWellButton(
                 borderRadius: BorderRadius.circular(25),
                 width: 50,
