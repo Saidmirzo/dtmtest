@@ -12,7 +12,7 @@ part 'web_categories_state.dart';
 class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
   final WebRepository webRepository;
   WebCategoriesBloc({required this.webRepository})
-      : super(WebCategoriesState()) {
+      : super(const WebCategoriesState()) {
     on<GetAllCategoriesEvent>(_getAllCategoryEvent);
     on<AddCategoryEvent>(_addCategoryEvent);
     on<DeleteCategoryEvent>(_deleteCategoryEvent);

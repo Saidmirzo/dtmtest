@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
-import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 
 abstract class TarifsRemoteDataSource {
   Future<String> editPlan(PlanModel? model);
@@ -13,17 +12,8 @@ abstract class TarifsRemoteDataSource {
 
 class TarifsRemoteDataSourceImpl implements TarifsRemoteDataSource {
   TarifsRemoteDataSourceImpl();
-
-  final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('users');
-  final CollectionReference categoryCollection =
-      FirebaseFirestore.instance.collection('category');
-  final CollectionReference advertisingCollection =
-      FirebaseFirestore.instance.collection('advertising');
   final CollectionReference planCollection =
       FirebaseFirestore.instance.collection('plans');
-  final CollectionReference adminsCollection =
-      FirebaseFirestore.instance.collection('admins');
 
   @override
   Future<String> deletePlan(PlanModel? model) async {

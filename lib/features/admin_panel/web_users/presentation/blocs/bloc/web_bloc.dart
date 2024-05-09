@@ -22,9 +22,7 @@ class WebBloc extends Bloc<WebEvent, WebState> {
     on<GetAllUsersEvent>(_getALlUserEvent);
     on<GetAllThemes>(_getAllThemesEvent);
     on<AddNewThemeEvent>(_addNewThemeEvent);
-
   }
-
 
   _getALlUserEvent(event, emit) async {
     emit(state.copyWith(getAllUsersStatus: BlocStatus.inProgress));
@@ -85,5 +83,4 @@ class WebBloc extends Bloc<WebEvent, WebState> {
       },
     );
   }
-
 }
