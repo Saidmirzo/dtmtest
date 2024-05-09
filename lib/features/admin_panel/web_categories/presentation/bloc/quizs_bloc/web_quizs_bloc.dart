@@ -74,7 +74,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
 
   _deleteQuizsEvent(DeleteQuizsEvent event, emit) async {
     emit(state.copyWith(deleteCategoryStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.deleteCategory(event.model);
+    final result = await webCategoryRepository.deleteCategory(event.id);
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -83,15 +83,9 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
         ),
       ),
       (r) {
-        List<CategoryModel> categList = [];
-        categList.addAll(state.listCategories ?? []);
-        int index = categList.indexWhere((element) =>
-            element.name?.toLowerCase() == event.model?.name?.toLowerCase());
-        categList.removeAt(index);
         emit(
           state.copyWith(
-              deleteCategoryStatus: BlocStatus.completed,
-              listCategories: categList),
+              deleteCategoryStatus: BlocStatus.completed),
         );
       },
     );
@@ -118,7 +112,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
 
   _getAllThemesEvent(event, emit) async {
     emit(state.copyWith(getAllThemesStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.getAllThemes();
+    final result = await webCategoryRepository.getAllCategories();
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -128,7 +122,6 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
       (r) => emit(
         state.copyWith(
           getAllThemesStatus: BlocStatus.completed,
-          listThemes: r,
         ),
       ),
     );
@@ -136,7 +129,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
 
   _addNewThemeEvent(AddNewQuizThemeEvent event, emit) async {
     emit(state.copyWith(addNewThemeStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.addNewTheme(
+    final result = await webCategoryRepository.addTheme(
         event.filePath, event.name, event.categoryId);
 
     result.fold(
