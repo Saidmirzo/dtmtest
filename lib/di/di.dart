@@ -9,7 +9,6 @@ import 'package:dtmtest/features/admin_panel/web_auth/data/model/admin_model.dar
 import 'package:dtmtest/features/admin_panel/web_auth/data/repository/web_auth_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/domain/repository/web_auth_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/data_sources/tarifs_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/repositories/tarifs_repository_impl.dart';
