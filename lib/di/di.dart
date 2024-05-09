@@ -12,6 +12,8 @@ import 'package:dtmtest/features/admin_panel/web_auth/data/datasource/web_remote
 import 'package:dtmtest/features/admin_panel/web_auth/data/repository/web_auth_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/domain/repository/web_auth_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_home/domain/web_home_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_home/presentation/bloc/web_home_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/data_sources/tarifs_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/repositories/tarifs_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/repositories/tarifs_repository.dart';
@@ -84,6 +86,7 @@ Future<void> init() async {
   di.registerFactory(() => WebAdvertisingBloc(advertisingRepository: di()));
   di.registerFactory(() => TarifsBloc(tarifRepository: di()));
   di.registerFactory(() => WebAuthBloc(webAuthRepository: di()));
+  di.registerFactory(() => WebHomeBloc(webHomeRepository: di()));
 
   //UseCases
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
@@ -138,6 +141,12 @@ Future<void> init() async {
 
   di.registerFactory<WebCategoryRepository>(
     () => WebCategoryRepositoryImpl(webRemoteCategoryDataSource: di()),
+  );
+  di.registerFactory<WebHomeRepository>(
+    () => WebHomeRepositoryImpl(
+      webRemoteCategoryDataSource: di(),
+      webUsersRemoteDataSource: di(),
+    ),
   );
   // DataSource
 

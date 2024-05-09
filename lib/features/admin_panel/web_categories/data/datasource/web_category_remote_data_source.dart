@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_home/data/model/home_detail_model.dart';
 
 abstract class WebRemoteCategoryDataSource {
   Future<List<CategoryModel>> getAllCategories();
@@ -11,6 +13,7 @@ abstract class WebRemoteCategoryDataSource {
   Future<String> editCategory(CategoryModel? model);
 
   Future<List<ThemeModel>> getAllThemes(String categoryId);
+  Future<HomeDetailModel> getAllThemesCount();
   Future<String> addTheme(ThemeModel themeModel, String categoryId);
   Future<String> editTheme(
     String categoryId,
@@ -22,6 +25,31 @@ abstract class WebRemoteCategoryDataSource {
 class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   final CollectionReference categoryCollection =
       FirebaseFirestore.instance.collection('category');
+
+  @override
+  Future<HomeDetailModel> getAllThemesCount() async {
+    List<ThemeModel> themes = [];
+    final result = await categoryCollection.get();
+    for (var element in result.docs) {
+      final themesDocs =
+          await categoryCollection.doc(element.id).collection('theme').get();
+      themes.addAll(
+        themesDocs.docs.map(
+          (e) => ThemeModel.fromJson(
+            jsonDecode(
+              jsonEncode(e.data()),
+            ),
+          ),
+        ),
+      );
+    }
+    int quizs = 0;
+    for (var element in themes) {
+      quizs += element.quiz?.length ?? 0;
+    }
+    return HomeDetailModel(themes: themes.length, quizes: quizs);
+  }
+
   @override
   Future<String> addCategory(CategoryModel model) async {
     try {
