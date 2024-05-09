@@ -1,4 +1,5 @@
 import 'package:dtmtest/core/platform/network_info.dart';
+import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/datasource/advertising_datasource.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/repository/advertising_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/domain/advertising_repository.dart';
@@ -9,15 +10,18 @@ import 'package:dtmtest/features/admin_panel/web_auth/data/repository/web_auth_r
 import 'package:dtmtest/features/admin_panel/web_auth/domain/repository/web_auth_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/admins_bloc/web_admins_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/data_sources/tarifs_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/data/repositories/tarifs_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/repositories/tarifs_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/web_categories_bloc.dart';
-import 'package:dtmtest/features/admin_panel/all_data_sources/web_remote_data_source.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/data_sources/web_users_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_repository_impl.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/repositories/web_users_repository_impl.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
+import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_users_repository.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_locale_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/datasource/auth_remote_datasource.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
@@ -62,7 +66,7 @@ Future<void> init() async {
   );
   di.registerFactory(() => AuthBloc(authRepository: di()));
   di.registerFactory(() => WebBloc(webRepository: di()));
-  di.registerFactory(() => WebAdminsBloc(webRepository: di()));
+  di.registerFactory(() => WebUsersBloc(webUsersRepository: di()));
   di.registerFactory(() => CategoryBloc(categoryRepository: di()));
   di.registerFactory(() => WebCategoriesBloc(webRepository: di()));
   di.registerFactory(() => ThemesBloc(themesRepository: di()));
@@ -70,23 +74,10 @@ Future<void> init() async {
   di.registerFactory(() => HistoryBloc(webRepository: di()));
   di.registerFactory(() => TestsBloc(testsRepository: di()));
   di.registerFactory(
-    () => HomeBloc(
-      repository: di(),
-      advertisingRepository: di(),
-    ),
-  );
-  di.registerFactory(
-    () => ProfileBloc(
-      authRepository: di(),
-      webRepository: di(),
-      advertisingRepository: di(),
-    ),
-  );
-  di.registerFactory(
-    () => WebAdvertisingBloc(
-      advertisingRepository: di(),
-    ),
-  );
+      () => HomeBloc(repository: di(), advertisingRepository: di()));
+  di.registerFactory(() => ProfileBloc(
+      authRepository: di(), webRepository: di(), advertisingRepository: di()));
+  di.registerFactory(() => WebAdvertisingBloc(advertisingRepository: di()));
   di.registerFactory(() => TarifsBloc(tarifRepository: di()));
   di.registerFactory(() => WebAuthBloc(webAuthRepository: di()));
 
@@ -94,6 +85,7 @@ Future<void> init() async {
   // di.registerLazySingleton(() => LoginUseCase(repository: di()));
 
   //Repository
+
   di.registerFactory<AuthRepository>(
     () => AuthRepositoryImpl(
       authRemoteDataSource: di(),
@@ -133,7 +125,12 @@ Future<void> init() async {
   di.registerFactory<WebAuthRepository>(
     () => WebAuthRepositoryImpl(webAuthRemoteDataSource: di()),
   );
+  di.registerFactory<WebUsersRepository>(
+    () => WebUsersRepositoryImpl(webRemoteDataSource: di()),
+  );
+
   // DataSource
+
   di.registerLazySingleton<AuthLocaleDataSource>(
     () => AuthLocaleDataSourceImpl(),
   );
@@ -159,7 +156,9 @@ Future<void> init() async {
     () => TarifsRemoteDataSourceImpl(),
   );
   di.registerLazySingleton<WebAuthRemoteDataSource>(
-    () => WebAuthRemoteDataSourceImpl(),
+    () => WebAuthRemoteDataSourceImpl(),);
+  di.registerLazySingleton<WebUsersRemoteDataSource>(
+    () => WebUsersRemoteDataSourceImpl(authLocaleDataSource: di()),
   );
 
   /// Network
