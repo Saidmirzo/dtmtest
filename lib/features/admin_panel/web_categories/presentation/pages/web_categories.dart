@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
-import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
+import 'package:dtmtest/features/admin_panel/widgets/custom_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -55,139 +55,65 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
                   icon: Assets.icons.add.svg(),
                 ),
               ),
-              MaterialInkWellButton(
-                borderRadius: BorderRadius.circular(25),
-                width: 50,
-                height: 50,
-                function: () {
-                  context
-                      .read<WebCategoriesBloc>()
-                      .add(GetAllCategoriesEvent());
-                },
-                gradient: AppGradient.gradient,
-                child: const Icon(
-                  Icons.refresh,
-                  color: ColorName.white,
-                ),
-              ),
             ],
           ),
           20.h,
-          const SizedBox(
-            height: 30,
-            child: Row(
-              children: [
-                AdminRowWidget(
-                  width: 50,
-                  text: '№',
-                ),
-                // Container(
-                //   width: 30,
-                //   height: 30,
-                //   decoration: BoxDecoration(
-                //       color: ColorName.backgroundColor,
-                //       borderRadius: BorderRadius.circular(5)),
-                // ),
-                // const VerticalDivider(),
-                AdminRowWidget(
-                  width: 250,
-                  text: 'Name',
-                ),
-                AdminRowWidget(
-                  width: 100,
-                  text: 'Theme count',
-                ),
-                AdminRowWidget(
-                  width: 100,
-                  text: 'Quiz count',
-                  disableDivider: true,
-                ),
-              ],
-            ),
-          ),
-          10.h,
           Expanded(
-            child: BlocBuilder<WebCategoriesBloc, WebCategoriesState>(
+            child: BlocConsumer<WebCategoriesBloc, WebCategoriesState>(
               builder: (context, state) {
-                if (state.editategoryStatus == BlocStatus.inProgress ||
-                    state.getAllCategoriesStatus == BlocStatus.inProgress ||
-                    state.deleteCategoryStatus == BlocStatus.inProgress) {
+                if (state.getAllCategoriesStatus.isProgress) {
                   return UI.spinner();
                 }
-
-                return ListView.separated(
-                  itemCount: state.listCategories?.length ?? 0,
-                  itemBuilder: (_, index) => SizedBox(
-                    height: 30,
-                    child: Row(
-                      children: [
-                        AdminRowWidget(
-                          width: 50,
-                          text: '${index + 1}',
-                        ),
-                        // CustomImageChangerWidget(
-                        //   file: null,
-                        //   width: 30,
-                        //   height: 30,
-                        //   image: state.listCategories?[index].image ?? '',
-                        //   borderRadiusDef: BorderRadius.circular(5),
-                        // ),
-                        // const VerticalDivider(),
-                        AdminRowWidget(
-                          width: 250,
-                          text: state.listCategories?[index].name ?? "",
-                        ),
-                        AdminRowWidget(
-                          width: 100,
-                          text: state.listCategories?[index].themeCount
-                                  .toString() ??
-                              '',
-                        ),
-                        AdminRowWidget(
-                          width: 100,
-                          text: state.listCategories?[index].quizCount
-                                  .toString() ??
-                              '',
-                          disableDivider: true,
-                        ),
-                        PopupMenuButton(
-                          iconColor: ColorName.blue,
-                          surfaceTintColor: ColorName.white,
-                          position: PopupMenuPosition.under,
-                          onSelected: (value) {
-                            // your logic
-                          },
-                          itemBuilder: (BuildContext bc) {
-                            return [
-                              PopupMenuItem(
-                                value: '/Delete',
-                                child: const Text("Delete"),
-                                onTap: () {
-                                  context.read<WebCategoriesBloc>().add(
-                                      DeleteCategoryEvent(
-                                          id: state.listCategories?[index].id ??
-                                              ''));
-                                },
+                final List<CategoryModel> listCategory =
+                    state.listCategories ?? [];
+                return CustomTable(
+                    columnNames: const [
+                      '№',
+                      'Name',
+                      'Theme count',
+                      'Quiz count',
+                      ""
+                    ],
+                    columnList: List.generate(
+                        state.listCategories?.length ?? 0,
+                        (index) => [
+                              Text(
+                                '${index + 1}',
                               ),
-                              PopupMenuItem(
-                                value: '/Edit',
-                                child: const Text("Edit"),
-                                onTap: () {
-                                  addCategoryDialog(context, EditAdd.edit,
-                                      state.listCategories?[index], index);
-                                },
+                              Text(
+                                listCategory[index].name ?? 'Unk',
                               ),
-                            ];
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  separatorBuilder: (_, index) => 10.h,
-                );
+                              Text(
+                                listCategory[index].themeCount.toString(),
+                              ),
+                              Text(
+                                listCategory[index].quizCount.toString(),
+                              ),
+                            ]),
+                    onDelete: (index) {
+                      context.read<WebCategoriesBloc>().add(DeleteCategoryEvent(
+                          id: state.listCategories?[index].id ?? ''));
+                    },
+                    onEdit: (index) {
+                      addCategoryDialog(context, EditAdd.edit,
+                          state.listCategories?[index], index);
+                    });
+              },
+              listener: (context, state) {
+                if (state.addCategoryStatus == BlocStatus.completed ||
+                    state.editCategoryStatus == BlocStatus.completed ||
+                    state.deleteCategoryStatus == BlocStatus.completed) {
+                  context
+                      .read<WebCategoriesBloc>()
+                      .add(GetAllCategoriesEvent());
+                }
+              },
+              listenWhen: (previous, current) {
+                return previous.getAllCategoriesStatus ==
+                    current.getAllCategoriesStatus;
               },
             ),
-          ),
+          )
         ],
       ),
     );

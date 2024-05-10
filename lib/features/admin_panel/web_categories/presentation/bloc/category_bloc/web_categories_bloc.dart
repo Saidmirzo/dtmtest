@@ -21,7 +21,9 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
     on<DeleteCategoryEvent>(_deleteCategoryEvent);
     on<EditCategoryEvent>(_editCategoryEvent);
     on<GetAllThemesEvent>(_getAllThemesEvent);
-    on<AddNewThemeEvent>(_addNewThemeEvent);
+    on<AddThemeEvent>(_addThemeEvent);
+    on<EditThemeEvent>(_editThemeEvent);
+    on<DeleteThemeEvent>(_deleteThemeEvent);
   }
 
   _addCategoryEvent(AddCategoryEvent event, emit) async {
@@ -47,12 +49,12 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
   }
 
   _editCategoryEvent(EditCategoryEvent event, emit) async {
-    emit(state.copyWith(editategoryStatus: BlocStatus.inProgress));
+    emit(state.copyWith(editCategoryStatus: BlocStatus.inProgress));
     final result = await webCategoryRepository.editCategory(event.model);
     result.fold(
       (l) => emit(
         state.copyWith(
-          editategoryStatus: BlocStatus.failed,
+          editCategoryStatus: BlocStatus.failed,
           message: l.message,
         ),
       ),
@@ -65,7 +67,7 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
         categList.insert(index, event.model!);
         emit(
           state.copyWith(
-              editategoryStatus: BlocStatus.completed,
+              editCategoryStatus: BlocStatus.completed,
               listCategories: categList),
         );
       },
@@ -84,8 +86,7 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
       ),
       (r) {
         emit(
-          state.copyWith(
-              deleteCategoryStatus: BlocStatus.completed),
+          state.copyWith(deleteCategoryStatus: BlocStatus.completed),
         );
       },
     );
@@ -110,44 +111,86 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
     );
   }
 
-  
-  _getAllThemesEvent(event, emit) async {
-    emit(state.copyWith(getAllThemesStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.getAllThemes();
+  _getAllThemesEvent(GetAllThemesEvent event, emit) async {
+    emit(state.copyWith(getThemesStatus: BlocStatus.inProgress));
+    final result = await webCategoryRepository.getAllThemes(event.categoryId);
     result.fold(
       (l) => emit(
         state.copyWith(
-          getAllThemesStatus: BlocStatus.failed,
+          getThemesStatus: BlocStatus.failed,
         ),
       ),
       (r) => emit(
         state.copyWith(
-          getAllThemesStatus: BlocStatus.completed,
+          getThemesStatus: BlocStatus.completed,
           listThemes: r,
         ),
       ),
     );
   }
 
-  _addNewThemeEvent(AddNewThemeEvent event, emit) async {
-    emit(state.copyWith(addNewThemeStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.addNewTheme(
+  _addThemeEvent(AddThemeEvent event, emit) async {
+    emit(state.copyWith(addThemeStatus: BlocStatus.inProgress));
+    final result = await webCategoryRepository.addTheme(
         event.filePath, event.name, event.categoryId);
-
     result.fold(
       (l) => emit(
         state.copyWith(
-          addNewThemeStatus: BlocStatus.failed,
+          addThemeStatus: BlocStatus.failed,
           message: l.message,
         ),
       ),
       (r) {
         emit(
           state.copyWith(
-            addNewThemeStatus: BlocStatus.completed,
+            addThemeStatus: BlocStatus.completed,
           ),
         );
-        add(GetAllThemesEvent());
+        // add(GetAllThemesEvent());
+      },
+    );
+  }
+
+  _editThemeEvent(EditThemeEvent event, emit) async {
+    emit(state.copyWith(editThemeStatus: BlocStatus.inProgress));
+    final result =
+        await webCategoryRepository.editTheme(event.categoryId, event.model);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          editThemeStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) {
+        emit(
+          state.copyWith(
+            editThemeStatus: BlocStatus.completed,
+          ),
+        );
+        // add(GetAllThemesEvent());
+      },
+    );
+  }
+
+  _deleteThemeEvent(DeleteThemeEvent event, emit) async {
+    emit(state.copyWith(deleteThemeStatus: BlocStatus.inProgress));
+    final result = await webCategoryRepository.deleteTheme(
+        event.themeId, event.categoryId);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          deleteThemeStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) {
+        emit(
+          state.copyWith(
+            deleteThemeStatus: BlocStatus.completed,
+          ),
+        );
+        // add(GetAllThemesEvent());
       },
     );
   }

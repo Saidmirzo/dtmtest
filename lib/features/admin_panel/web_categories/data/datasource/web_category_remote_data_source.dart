@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +9,13 @@ abstract class WebRemoteCategoryDataSource {
   Future<String> addCategory(CategoryModel model);
   Future<String> deleteCategory(String id);
   Future<String> editCategory(CategoryModel? model);
-  Future<List<ThemeModel>> getAllThemes();
-  Future<String> addNewTheme(ThemeModel themeModel, String categoryId);
+  Future<List<ThemeModel>> getAllThemes(String categoryId);
+  Future<String> addTheme(ThemeModel themeModel, String categoryId);
+  Future<String> editTheme(
+    String categoryId,
+    ThemeModel model,
+  );
+  Future<String> deleteTheme(String themeId, String categoryId);
 }
 
 class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
@@ -19,7 +23,12 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
       FirebaseFirestore.instance.collection('category');
   @override
   Future<String> addCategory(CategoryModel model) async {
-    categoryCollection.add(model.toJson());
+    try {
+      await categoryCollection.add(model.toJson());
+      log("Элемент успешно добавлен");
+    } catch (e) {
+      log("Ошибка при добавление элемента: $e");
+    }
     return "success";
   }
 
@@ -27,7 +36,6 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   Future<String> deleteCategory(String id) async {
     try {
       await categoryCollection.doc(id).delete();
-
       log("Элемент успешно удален");
     } catch (e) {
       log("Ошибка при удалении элемента: $e");
@@ -66,30 +74,38 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   }
 
   @override
-  Future<List<ThemeModel>> getAllThemes() async {
-    List<ThemeModel> themes = [];
-    final result = await categoryCollection.get();
-    for (var element in result.docs) {
-      final themesDocs =
-          await categoryCollection.doc(element.id).collection('theme').get();
-      themes.addAll(
-        themesDocs.docs.map(
-          (e) => ThemeModel.fromJson(
-            jsonDecode(
-              jsonEncode(e.data()),
-            ),
-          ),
-        ),
-      );
-    }
-    return themes;
+  Future<List<ThemeModel>> getAllThemes(String categoryId) async {
+    final result =
+        await categoryCollection.doc(categoryId).collection('theme').get();
+    List<ThemeModel> themesList = result.docs.map((e) {
+      Map<String, dynamic> data = e.data();
+      data['id'] = e.id;
+      return ThemeModel.fromJson(data);
+    }).toList();
+    return themesList;
   }
 
   @override
-  Future<String> addNewTheme(ThemeModel themeModel, String categoryId) async {
+  Future<String> addTheme(ThemeModel themeModel, String categoryId) async {
     final CollectionReference category =
         categoryCollection.doc(categoryId).collection('theme');
     await category.add(themeModel.toJson());
+    return "Success";
+  }
+
+  @override
+  Future<String> deleteTheme(String themeId, String categoryId) async {
+    final CollectionReference category =
+        categoryCollection.doc(categoryId).collection('theme');
+    await category.doc(themeId).delete();
+    return "Success";
+  }
+
+  @override
+  Future<String> editTheme(String categoryId, ThemeModel? model) async {
+    final CollectionReference category =
+        categoryCollection.doc(categoryId).collection('theme');
+    await category.doc(model?.id).update(model!.toJson());
     return "Success";
   }
 }
