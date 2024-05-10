@@ -7,10 +7,15 @@ class WebCategoriesEvent extends Equatable {
 }
 
 class AddCategoryEvent extends WebCategoriesEvent {
-  const AddCategoryEvent({required this.model});
+  const AddCategoryEvent({
+    required this.model,
+    required this.byte,
+    required this.fileName,
+  });
   final CategoryModel model;
+  final Uint8List byte;
+  final String fileName;
 }
-
 
 class GetAllCategoriesEvent extends WebCategoriesEvent {}
 
@@ -20,14 +25,25 @@ class DeleteCategoryEvent extends WebCategoriesEvent {
 }
 
 class EditCategoryEvent extends WebCategoriesEvent {
-  const EditCategoryEvent({required this.index, required this.model});
-  final CategoryModel? model;
-  final int index;
+   EditCategoryEvent({
+    required this.model,
+    this.filePath,
+    this.name,
+  });
+  CategoryModel model;
+  final Uint8List? filePath;
+  final String? name;
 }
 
 class GetAllThemesEvent extends WebCategoriesEvent {
-  const GetAllThemesEvent({required this.categoryId});
+  const GetAllThemesEvent({
+    required this.categoryId,
+    required this.filePath,
+    required this.name,
+  });
   final String categoryId;
+  final Uint8List filePath;
+  final String name;
 }
 
 class AddThemeEvent extends WebCategoriesEvent {
@@ -46,7 +62,6 @@ class EditThemeEvent extends WebCategoriesEvent {
   final String categoryId;
   final ThemeModel model;
 }
-
 
 class DeleteThemeEvent extends WebCategoriesEvent {
   const DeleteThemeEvent({required this.categoryId, required this.themeId});

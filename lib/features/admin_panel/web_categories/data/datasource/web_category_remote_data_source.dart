@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:dtmtest/features/admin_panel/web_home/data/model/home_detail_model.dart';
 
 abstract class WebRemoteCategoryDataSource {
@@ -20,6 +23,7 @@ abstract class WebRemoteCategoryDataSource {
     ThemeModel model,
   );
   Future<String> deleteTheme(String themeId, String categoryId);
+  Future<String> postImage(Uint8List byte, String name);
 }
 
 class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
@@ -137,4 +141,26 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
     await category.doc(model?.id).update(model!.toJson());
     return "Success";
   }
+  @override
+  Future<String> postImage(Uint8List byte, String name) async {
+    var dio = Dio();
+    var multiPartFile = MultipartFile.fromBytes(
+      byte,
+      filename: name,
+      contentType: MediaType('image', 'jpeg'),
+    );
+    var formData = FormData.fromMap(
+      {
+        'file': multiPartFile,
+        'upload_preset': 'kxjpuwhs',
+      },
+    );
+
+    var response = await dio.post(
+      'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
+      data: formData,
+    );
+    return response.data["secure_url"];
+  }
+
 }

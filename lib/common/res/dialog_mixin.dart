@@ -62,93 +62,157 @@ mixin DialogMixin {
   }
 
   Future<dynamic> addCategoryDialog(
-      BuildContext context, EditAdd editAdd, CategoryModel? model, int index) {
+    BuildContext context,
+    EditAdd editAdd,
+    CategoryModel? model,
+  ) {
+    Widget? image;
+    Uint8List? byte;
+    String? fileName;
+    bool isActive = false;
+
     TextEditingController nameController = TextEditingController();
     if (model != null) {
       nameController.text = model.name ?? '';
+      isActive = model.isActive ?? false;
     }
+
     return showAdaptiveDialog(
       context: context,
       builder: (_) {
         var size = MediaQuery.of(context).size;
-        return AlertDialog(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(editAdd == EditAdd.add ? "Add category" : "Edit category"),
-              IconButton(
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(editAdd == EditAdd.add ? "Add category" : "Edit category"),
+                IconButton(
                   onPressed: () {
                     context.maybePop();
                   },
-                  icon: const Icon(Icons.close)),
-            ],
-          ),
-          backgroundColor: ColorName.backgroundColor,
-          content: SizedBox(
-            width: size.width * .25,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // const Text("Image"),
-                // 10.h,
-                // Container(
-                //   width: 100,
-                //   height: 100,
-                //   margin: const EdgeInsets.symmetric(vertical: 10),
-                //   decoration: BoxDecoration(
-                //       color: ColorName.grey,
-                //       borderRadius: BorderRadius.circular(20)),
-                // ),
-                const Text("Name"),
-                CustomTextField(
-                  backgroundColor: ColorName.backgroundColor,
-                  hintText: "Name",
-                  borderColor: Colors.transparent,
-                  controller: nameController,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+                  icon: const Icon(Icons.close),
                 ),
-                20.h,
+              ],
+            ),
+            backgroundColor: ColorName.white,
+            content: SizedBox(
+              width: size.width * .25,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Image"),
+                  10.h,
+                  GestureDetector(
+                    onTap: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
 
-                BlocBuilder<WebCategoriesBloc, WebCategoriesState>(
-                  builder: (context, state) {
-                    return GradientButton(
-                        radius: 20,
-                        onPressed: () {
-                          if (editAdd == EditAdd.add) {
-                            context.read<WebCategoriesBloc>().add(
-                                  AddCategoryEvent(
-                                    model: CategoryModel(
-                                      image: "",
-                                      name: nameController.text,
-                                      quizCount: 0,
-                                      themeCount: 0,
+                      if (result?.files.single.bytes != null) {
+                        byte = result!.files.single.bytes;
+                        image = Image.memory(byte!);
+                        fileName = result.files.single.name;
+                        setState(() {});
+                      }
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: ColorName.grey,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: image ?? Image.network(model?.image ?? ''),
+                    ),
+                  ),
+                  20.h,
+                  const Text("Name"),
+                  CustomTextField(
+                    backgroundColor: ColorName.backgroundColor,
+                    hintText: "Name",
+                    borderColor: Colors.transparent,
+                    controller: nameController,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 17),
+                  ),
+                  20.h,
+                  const Text("Is Active"),
+                  5.h,
+                  Switch.adaptive(
+                      value: isActive,
+                      onChanged: (value) {
+                        isActive = value;
+                        setState(() {});
+                      }),
+                  20.h,
+                  BlocConsumer<WebCategoriesBloc, WebCategoriesState>(
+                    listenWhen: (previous, current) =>
+                        previous.addCategoryStatus !=
+                            current.addCategoryStatus ||
+                        previous.editCategoryStatus !=
+                            current.editCategoryStatus,
+                    listener: (context, state) {
+                      if (state.addCategoryStatus.isComplated) {
+                        context.maybePop();
+                        showSnackBar(context, text: "Success added");
+                      } else if (state.addCategoryStatus == BlocStatus.failed) {
+                        showSnackBar(context, text: "Error");
+                      }
+                      if (state.editCategoryStatus.isComplated) {
+                        context.maybePop();
+                        showSnackBar(context, text: "Success edited");
+                      } else if (state.editCategoryStatus ==
+                          BlocStatus.failed) {
+                        showSnackBar(context, text: "Error");
+                      }
+                    },
+                    builder: (context, state) {
+                      return GradientButton(
+                          isLoading: state.editCategoryStatus.isProgress ||
+                              state.addCategoryStatus.isProgress,
+                          radius: 20,
+                          onPressed: () {
+                            if (editAdd == EditAdd.add) {
+                              context.read<WebCategoriesBloc>().add(
+                                    AddCategoryEvent(
+                                      model: CategoryModel(
+                                        isActive: isActive,
+                                        image: fileName,
+                                        name: nameController.text,
+                                        quizCount: 0,
+                                        themeCount: 0,
+                                      ),
+                                      byte: byte!,
+                                      fileName: fileName ?? "",
                                     ),
-                                  ),
-                                );
-                          } else {
-                            context.read<WebCategoriesBloc>().add(
-                                  EditCategoryEvent(
-                                    model: CategoryModel(
+                                  );
+                            } else {
+                              context.read<WebCategoriesBloc>().add(
+                                    EditCategoryEvent(
+                                      filePath: byte,
+                                      name: fileName,
+                                      model: CategoryModel(
+                                        isActive: isActive,
                                         id: model?.id,
                                         quizCount: model?.quizCount,
                                         themeCount: model?.themeCount,
-                                        name: nameController.text),
-                                    index: index,
-                                  ),
-                                );
-                          }
-
-                          context.maybePop();
-                        },
-                        text: editAdd == EditAdd.add ? "Add" : 'Edit');
-                  },
-                )
-              ],
+                                        name: nameController.text,
+                                        image: model?.image,
+                                      ),
+                                    ),
+                                  );
+                            }
+                          },
+                          text: editAdd == EditAdd.add ? "Add" : 'Edit');
+                    },
+                  )
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        });
       },
     );
   }

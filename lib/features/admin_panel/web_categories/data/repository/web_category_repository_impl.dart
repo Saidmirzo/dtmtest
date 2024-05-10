@@ -133,4 +133,15 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
       return const Left(ServerFailure('get themes Error'));
     }
   }
+  
+  @override
+  Future<Either<Failure, String>> uploadImage(
+      Uint8List byte, String name) async {
+    try {
+      final result = await webRemoteCategoryDataSource.postImage(byte, name);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure('add history Error'));
+    }
+  }
 }

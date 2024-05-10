@@ -19,4 +19,5 @@ abstract class WebCategoryRepository {
     ThemeModel model,
   );
   Future<Either<Failure, String>> deleteTheme(String themeId, String categoryId);
+  Future<Either<Failure, String>> uploadImage(Uint8List byte, String name);
 }
