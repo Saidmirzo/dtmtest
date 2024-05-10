@@ -113,7 +113,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
   _getAllThemesEvent(event, emit) async {
     emit(state.copyWith(getAllThemesStatus: BlocStatus.inProgress));
 
-    final result = await webCategoryRepository.getAllCategories();
+    final result = await webCategoryRepository.getAllThemes(event.id);
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -123,6 +123,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
       (r) => emit(
         state.copyWith(
           getAllThemesStatus: BlocStatus.completed,
+          listThemes: r,
         ),
       ),
     );
@@ -146,7 +147,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
             addNewThemeStatus: BlocStatus.completed,
           ),
         );
-        add(GetAllQuizThemesEvent(event.categoryId));
+        add(GetAllQuizThemesEvent(id: event.categoryId));
       },
     );
   }
