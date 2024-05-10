@@ -6,6 +6,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/widgets/custom_table_widget.dart';
@@ -71,40 +72,46 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
                 final List<CategoryModel> listCategory =
                     state.listCategories ?? [];
                 return CustomTable(
-                    columnNames: const [
-                      '№',
-                      'Name',
-                      'Theme count',
-                      'Quiz count',
-                      ""
+                  columnNames: const [
+                    '№',
+                    'Image',
+                    'Name',
+                    'Theme count',
+                    'Quiz count',
+                    ""
+                  ],
+                  columnList: List.generate(
+                    state.listCategories?.length ?? 0,
+                    (index) => [
+                      Text(
+                        '${index + 1}',
+                      ),
+                      CustomNetworkImage(
+                        networkImage: listCategory[index].image,
+                      ),
+                      Text(
+                        listCategory[index].name ?? 'Unk',
+                      ),
+                      Text(
+                        listCategory[index].themeCount.toString(),
+                      ),
+                      Text(
+                        listCategory[index].quizCount.toString(),
+                      ),
                     ],
-                    columnList: List.generate(
-                        state.listCategories?.length ?? 0,
-                        (index) => [
-                              Text(
-                                '${index + 1}',
-                              ),
-                              Text(
-                                listCategory[index].name ?? 'Unk',
-                              ),
-                              Text(
-                                listCategory[index].themeCount.toString(),
-                              ),
-                              Text(
-                                listCategory[index].quizCount.toString(),
-                              ),
-                            ]),
-                    onDelete: (index) {
-                      context.read<WebCategoriesBloc>().add(DeleteCategoryEvent(
-                          id: state.listCategories?[index].id ?? ''));
-                    },
-                    onEdit: (index) {
-                      addCategoryDialog(
-                        context,
-                        EditAdd.edit,
-                        state.listCategories?[index],
-                      );
-                    });
+                  ),
+                  onDelete: (index) {
+                    context.read<WebCategoriesBloc>().add(DeleteCategoryEvent(
+                        id: state.listCategories?[index].id ?? ''));
+                  },
+                  onEdit: (index) {
+                    addCategoryDialog(
+                      context,
+                      EditAdd.edit,
+                      state.listCategories?[index],
+                    );
+                  },
+                );
               },
               listener: (context, state) {
                 if (state.addCategoryStatus == BlocStatus.completed ||

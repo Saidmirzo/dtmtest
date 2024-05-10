@@ -87,6 +87,25 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
 
   _editCategoryEvent(EditCategoryEvent event, emit) async {
     emit(state.copyWith(editCategoryStatus: BlocStatus.inProgress));
+    String? link;
+    if (event.filePath != null && event.name != null) {
+      final result =
+          await webCategoryRepository.uploadImage(event.filePath!, event.name!);
+      result.fold(
+        (l) => emit(
+          state.copyWith(
+            addCategoryStatus: BlocStatus.failed,
+            message: l.message,
+          ),
+        ),
+        (r) async {
+          link = r;
+        },
+      );
+    }
+    if (link != null) {
+      event.model.image = link;
+    }
     final result = await webCategoryRepository.editCategory(event.model);
     result.fold(
       (l) => emit(
@@ -99,13 +118,14 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
         List<CategoryModel> categList = [];
         categList.addAll(state.listCategories ?? []);
         int index =
-            categList.indexWhere((element) => element.id == event.model?.id);
+            categList.indexWhere((element) => element.id == event.model.id);
         categList.removeAt(index);
-        categList.insert(index, event.model!);
+        categList.insert(index, event.model);
         emit(
           state.copyWith(
-              editCategoryStatus: BlocStatus.completed,
-              listCategories: categList),
+            editCategoryStatus: BlocStatus.completed,
+            listCategories: categList,
+          ),
         );
       },
     );

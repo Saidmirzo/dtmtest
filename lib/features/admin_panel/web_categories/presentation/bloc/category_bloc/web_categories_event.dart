@@ -25,14 +25,14 @@ class DeleteCategoryEvent extends WebCategoriesEvent {
 }
 
 class EditCategoryEvent extends WebCategoriesEvent {
-  const EditCategoryEvent({
+   EditCategoryEvent({
     required this.model,
-    required this.filePath,
-    required this.name,
+    this.filePath,
+    this.name,
   });
-  final CategoryModel? model;
-  final Uint8List filePath;
-  final String name;
+  CategoryModel model;
+  final Uint8List? filePath;
+  final String? name;
 }
 
 class GetAllThemesEvent extends WebCategoriesEvent {
