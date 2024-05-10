@@ -8,7 +8,7 @@ import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_mo
 abstract class WebCategoryRepository {
   Future<Either<Failure, List<CategoryModel>>> getAllCategories();
   Future<Either<Failure, String>> addCategory(CategoryModel model);
-  Future<Either<Failure, String>> deleteCategory(CategoryModel? model);
+  Future<Either<Failure, String>> deleteCategory(String id);
   Future<Either<Failure, String>> editCategory(CategoryModel? model);
   Future<Either<Failure, List<ThemeModel>>> getAllThemes();
   Future<Either<Failure, String>> addNewTheme(

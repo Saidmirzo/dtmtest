@@ -8,7 +8,7 @@ import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_mo
 abstract class WebRemoteCategoryDataSource {
   Future<List<CategoryModel>> getAllCategories();
   Future<String> addCategory(CategoryModel model);
-  Future<String> deleteCategory(CategoryModel? model);
+  Future<String> deleteCategory(String id);
   Future<String> editCategory(CategoryModel? model);
   Future<List<ThemeModel>> getAllThemes();
   Future<String> addNewTheme(ThemeModel themeModel, String categoryId);
@@ -24,9 +24,9 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   }
 
   @override
-  Future<String> deleteCategory(CategoryModel? model) async {
+  Future<String> deleteCategory(String id) async {
     try {
-      await categoryCollection.doc(model?.id).delete();
+      await categoryCollection.doc(id).delete();
 
       log("Элемент успешно удален");
     } catch (e) {

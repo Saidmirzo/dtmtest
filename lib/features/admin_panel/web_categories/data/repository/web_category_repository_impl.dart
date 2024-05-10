@@ -54,7 +54,7 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-  Future<Either<Failure, String>> deleteCategory(CategoryModel? model) async {
+  Future<Either<Failure, String>> deleteCategory(String model) async {
     try {
       final result = await webRemoteCategoryDataSource.deleteCategory(model);
       return Right(result);

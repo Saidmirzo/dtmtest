@@ -74,7 +74,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
 
   _deleteQuizsEvent(DeleteQuizsEvent event, emit) async {
     emit(state.copyWith(deleteCategoryStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.deleteCategory(event.model);
+    final result = await webCategoryRepository.deleteCategory(event.id);
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -83,15 +83,9 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
         ),
       ),
       (r) {
-        List<CategoryModel> categList = [];
-        categList.addAll(state.listCategories ?? []);
-        int index = categList.indexWhere((element) =>
-            element.name?.toLowerCase() == event.model?.name?.toLowerCase());
-        categList.removeAt(index);
         emit(
           state.copyWith(
-              deleteCategoryStatus: BlocStatus.completed,
-              listCategories: categList),
+              deleteCategoryStatus: BlocStatus.completed),
         );
       },
     );

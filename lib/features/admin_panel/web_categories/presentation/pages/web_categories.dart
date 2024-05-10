@@ -165,7 +165,8 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
                                 onTap: () {
                                   context.read<WebCategoriesBloc>().add(
                                       DeleteCategoryEvent(
-                                          model: state.listCategories?[index]));
+                                          id: state.listCategories?[index].id ??
+                                              ''));
                                 },
                               ),
                               PopupMenuItem(

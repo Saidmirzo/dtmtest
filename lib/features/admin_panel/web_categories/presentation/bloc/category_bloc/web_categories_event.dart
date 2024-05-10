@@ -26,8 +26,8 @@ class AddNewThemeEvent extends WebCategoriesEvent {
 }
 
 class DeleteCategoryEvent extends WebCategoriesEvent {
-  const DeleteCategoryEvent({required this.model});
-  final CategoryModel? model;
+  const DeleteCategoryEvent({required this.id});
+  final String  id;
 }
 
 class EditCategoryEvent extends WebCategoriesEvent {
