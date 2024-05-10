@@ -27,8 +27,29 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
   }
 
   _addCategoryEvent(AddCategoryEvent event, emit) async {
+    // emit(state.copyWith(addCategoryStatus: BlocStatus.inProgress));
+    // final result = await webCategoryRepository.addCategory(event.model);
+    // result.fold(
+    //   (l) => emit(
+    //     state.copyWith(
+    //       addCategoryStatus: BlocStatus.failed,
+    //       message: l.message,
+    //     ),
+    //   ),
+    //   (r) {
+    //     emit(
+    //       state.copyWith(
+    //         addCategoryStatus: BlocStatus.completed,
+    //       ),
+    //     );
+
+    //     add(GetAllCategoriesEvent());
+    //   },
+    // );
     emit(state.copyWith(addCategoryStatus: BlocStatus.inProgress));
-    final result = await webCategoryRepository.addCategory(event.model);
+    final result =
+        await webCategoryRepository.uploadImage(event.byte, event.fileName);
+    String? link;
     result.fold(
       (l) => emit(
         state.copyWith(
@@ -36,16 +57,32 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
           message: l.message,
         ),
       ),
-      (r) {
-        emit(
-          state.copyWith(
-            addCategoryStatus: BlocStatus.completed,
-          ),
-        );
-
-        add(GetAllCategoriesEvent());
+      (r) async {
+        link = r;
       },
     );
+    if (link != null) {
+      final CategoryModel advertisingModel = event.model;
+      advertisingModel.image = link;
+      final response =
+          await webCategoryRepository.addCategory(advertisingModel);
+      response.fold(
+        (l) => emit(
+          state.copyWith(
+            addCategoryStatus: BlocStatus.failed,
+            message: l.message,
+          ),
+        ),
+        (r) {
+          emit(
+            state.copyWith(
+              addCategoryStatus: BlocStatus.completed,
+            ),
+          );
+          add(GetAllCategoriesEvent());
+        },
+      );
+    }
   }
 
   _editCategoryEvent(EditCategoryEvent event, emit) async {
@@ -110,7 +147,6 @@ class WebCategoriesBloc extends Bloc<WebCategoriesEvent, WebCategoriesState> {
       ),
     );
   }
-
 
   _getAllThemesEvent(GetAllThemesEvent event, emit) async {
     emit(state.copyWith(getThemesStatus: BlocStatus.inProgress));

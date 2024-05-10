@@ -49,7 +49,11 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
                   replaceTextVSIcon: true,
                   radius: 50,
                   onPressed: () {
-                    addCategoryDialog(context, EditAdd.add, null, 0);
+                    addCategoryDialog(
+                      context,
+                      EditAdd.add,
+                      null,
+                    );
                   },
                   text: "Add",
                   icon: Assets.icons.add.svg(),
@@ -95,8 +99,11 @@ class _WebCategoriesPageState extends State<WebCategoriesPage>
                           id: state.listCategories?[index].id ?? ''));
                     },
                     onEdit: (index) {
-                      addCategoryDialog(context, EditAdd.edit,
-                          state.listCategories?[index], index);
+                      addCategoryDialog(
+                        context,
+                        EditAdd.edit,
+                        state.listCategories?[index],
+                      );
                     });
               },
               listener: (context, state) {
