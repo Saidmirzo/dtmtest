@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
@@ -25,15 +23,22 @@ class WebQuizesPage extends StatefulWidget {
 }
 
 class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
-  TextEditingController categoryController = TextEditingController();
+  TextEditingController? categoryController = TextEditingController();
   TextEditingController quizsController = TextEditingController();
   String idCategory = '';
   String idTheme = '';
   @override
   void initState() {
     super.initState();
-    // context.read<WebQuizsBloc>().add(GetAllQuizThemesEvent());
     context.read<WebQuizsBloc>().add(GetAllQuizsEvent());
+    final String? id = context.read<WebQuizsBloc>().categoryId;
+
+    if (id != null) {
+      context.read<WebQuizsBloc>().add(GetAllQuizThemesEvent(id: id));
+
+      idCategory = id;
+      idTheme = '';
+    }
   }
 
   @override
@@ -72,7 +77,8 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
               }, builder: (context, state) {
                 if (state.getAllCategoriesStatus.isComplated) {
                   return DropdownMenu<String>(
-                    initialSelection: state.listCategories?[0].name,
+                    controller: categoryController,
+                    initialSelection: context.read<WebQuizsBloc>().categoryId,
                     inputDecorationTheme: InputDecorationTheme(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
@@ -85,19 +91,24 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                       isDense: true,
                     ),
                     onSelected: (value) {
-                      context
-                          .read<WebQuizsBloc>()
-                          .add(GetAllQuizThemesEvent(id: value));
+                      if (value != null) {
+                        context
+                            .read<WebQuizsBloc>()
+                            .add(GetAllQuizThemesEvent(id: value));
 
-                      setState(() {
-                        idCategory = value!;
-                      });
+                        setState(() {
+                          idCategory = value;
+                          idTheme = '';
+                        });
+                      }
                     },
                     textStyle: AppTextStyles.body16w4,
                     dropdownMenuEntries: state.listCategories!
                         .map<DropdownMenuEntry<String>>((e) {
                       return DropdownMenuEntry(
-                          value: e.id ?? '', label: e.name ?? '');
+                        value: e.id ?? '',
+                        label: e.name ?? '',
+                      );
                     }).toList(),
                     menuHeight: 300,
                   );
@@ -106,44 +117,55 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
               }),
               const Spacer(),
               idCategory == ''
-                  ? const SizedBox.shrink()
-                  : BlocConsumer<WebQuizsBloc, WebQuizsState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        if (state.getAllThemesStatus.isProgress) {
-                          return UI.spinner();
-                        }
-                        if (state.getAllThemesStatus.isComplated) {
-                          return DropdownMenu(
-                            // controller: categoryController,
-                            initialSelection: state.listCategories?[0].name,
-                            inputDecorationTheme: InputDecorationTheme(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: const BorderSide(
-                                  width: 3,
-                                  color: ColorName.blue,
-                                ),
-                              ),
-                              contentPadding: const EdgeInsets.only(left: 20),
-                              isDense: true,
-                            ),
-                            onSelected: (value) {
-                              setState(() {
-                                idTheme = value!;
-                              });
-                            },
-                            textStyle: AppTextStyles.body16w4,
-                            dropdownMenuEntries:
-                                state.listThemes!.map<DropdownMenuEntry>((e) {
-                              return DropdownMenuEntry(
-                                  value: e.id ?? '', label: e.name ?? '');
-                            }).toList(),
-                            menuHeight: 300,
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      }),
+                  ? const SizedBox(
+                      width: 300,
+                    )
+                  : SizedBox(
+                      width: 300,
+                      child: BlocConsumer<WebQuizsBloc, WebQuizsState>(
+                          listener: (context, state) {},
+                          builder: (context, state) {
+                            if (state.getAllThemesStatus.isProgress) {
+                              return UI.spinner();
+                            }
+                            if (state.getAllThemesStatus.isComplated) {
+                              if (state.listThemes!.isEmpty ||
+                                  state.listThemes == null) {
+                                return const SizedBox.shrink();
+                              } else {
+                                return DropdownMenu(
+                                  initialSelection:
+                                      state.listCategories?[0].name,
+                                  inputDecorationTheme: InputDecorationTheme(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25),
+                                      borderSide: const BorderSide(
+                                        width: 3,
+                                        color: ColorName.blue,
+                                      ),
+                                    ),
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 20),
+                                    isDense: true,
+                                  ),
+                                  onSelected: (value) {
+                                    setState(() {
+                                      idTheme = value!;
+                                    });
+                                  },
+                                  textStyle: AppTextStyles.body16w4,
+                                  dropdownMenuEntries: state.listThemes!
+                                      .map<DropdownMenuEntry>((e) {
+                                    return DropdownMenuEntry(
+                                        value: e.id ?? '', label: e.name ?? '');
+                                  }).toList(),
+                                  menuHeight: 300,
+                                );
+                              }
+                            }
+                            return const SizedBox.shrink();
+                          }),
+                    ),
               const Spacer(),
               MaterialInkWellButton(
                 borderRadius: BorderRadius.circular(25),
@@ -164,11 +186,15 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
           ),
           20.h,
           if (idTheme == '')
-            const AboutThemesWidget()
+            Expanded(
+              child: AboutThemesWidget(),
+            )
           else
             Expanded(
-                child: SingleChildScrollView(
-                    child: QuizsWidget(idTheme: idTheme))),
+              child: SingleChildScrollView(
+                child: QuizsWidget(idTheme: idTheme),
+              ),
+            ),
         ],
       ),
     );
@@ -201,10 +227,6 @@ class QuizsWidget extends StatelessWidget {
                 width: 200,
                 text: 'Question',
               ),
-              // AdminRowWidget(
-              //   width: 100,
-              //   text: 'Question count',
-              // ),
             ],
           ),
         ),

@@ -1,4 +1,3 @@
-
 import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
@@ -7,8 +6,11 @@ import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/qu
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class AboutThemesWidget extends StatelessWidget {
-  const AboutThemesWidget({super.key});
+  AboutThemesWidget({super.key});
+
+  List<ThemeModel> listTheme = [];
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,14 @@ class AboutThemesWidget extends StatelessWidget {
         ),
         10.h,
         BlocConsumer<WebQuizsBloc, WebQuizsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
+          listener: (context, state) {
+            if (state.getAllThemesStatus.isProgress) {}
+          },
+          builder: (context, state) {           
             if (state.getAllThemesStatus.isProgress) {
               return UI.spinner();
             }
-            final List<ThemeModel> listTheme = state.listThemes ?? [];
+            listTheme = state.listThemes ?? [];
             return ListView.separated(
               itemCount: listTheme.length,
               shrinkWrap: true,
