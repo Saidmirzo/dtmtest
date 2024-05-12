@@ -14,6 +14,7 @@ part 'web_quizs_bloc.freezed.dart';
 
 class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
   final WebCategoryRepository webCategoryRepository;
+  String? categoryId = '';
   WebQuizsBloc({required this.webCategoryRepository})
       : super(const WebQuizsState()) {
     on<AddQuizsEvent>(_addQuizsEvent);
@@ -84,8 +85,7 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
       ),
       (r) {
         emit(
-          state.copyWith(
-              deleteCategoryStatus: BlocStatus.completed),
+          state.copyWith(deleteCategoryStatus: BlocStatus.completed),
         );
       },
     );
@@ -110,9 +110,9 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
     );
   }
 
-  _getAllThemesEvent(event, emit) async {
+  _getAllThemesEvent(GetAllQuizThemesEvent event, emit) async {
     emit(state.copyWith(getAllThemesStatus: BlocStatus.inProgress));
-
+    categoryId = event.id;
     final result = await webCategoryRepository.getAllThemes(event.id);
     result.fold(
       (l) => emit(

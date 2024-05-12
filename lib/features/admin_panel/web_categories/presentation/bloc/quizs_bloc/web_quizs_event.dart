@@ -15,8 +15,8 @@ class GetAllQuizsEvent extends WebQuizsEvent {}
 
 // ignore: must_be_immutable
 class GetAllQuizThemesEvent extends WebQuizsEvent {
-  String? id;  
-  GetAllQuizThemesEvent({this.id});
+  String id;  
+  GetAllQuizThemesEvent({required this.id});
 }
 
 class AddNewQuizThemeEvent extends WebQuizsEvent {
