@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
@@ -68,7 +69,13 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                         ],
                         borderRadius: BorderRadius.circular(15)),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          "Email",
+                          style: AppTextStyles.body16w6,
+                        ),
+                        8.h,
                         CustomTextField(
                           leading: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -104,49 +111,52 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                           },
                           // isValidate: true,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 25),
-                          child: CustomTextField(
-                            leading: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Assets.icons.password.svg(
-                                    color: ColorName.customColor,
-                                  ),
-                                  const SizedBox(
-                                      height: 20,
-                                      child: VerticalDivider(
-                                        color: ColorName.customColor,
-                                      ))
-                                ],
-                              ),
+                        15.h,
+                        Text(
+                          LocaleKeys.login_password.tr(),
+                          style: AppTextStyles.body16w6,
+                        ),
+                        8.h,
+                        CustomTextField(
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Assets.icons.password.svg(
+                                  color: ColorName.customColor,
+                                ),
+                                const SizedBox(
+                                    height: 20,
+                                    child: VerticalDivider(
+                                      color: ColorName.customColor,
+                                    ))
+                              ],
                             ),
-                            focusNode: passwordFocusNode,
-                            hintText: LocaleKeys.login_password.tr(),
-                            controller: password,
-                            borderColor: ColorName.customColor,
-                            style: AppTextStyles.body16w4
-                                .copyWith(color: ColorName.customColor),
-                            isPassword: true,
-                            radius: 10,
-                            validator: (p0) {
-                              if (p0 != null) {
-                                if (p0.length < 6) {
-                                  passwordFocusNode.requestFocus();
+                          ),
+                          focusNode: passwordFocusNode,
+                          hintText: "******",
+                          controller: password,
+                          borderColor: ColorName.customColor,
+                          style: AppTextStyles.body16w4
+                              .copyWith(color: ColorName.customColor),
+                          isPassword: true,
+                          radius: 10,
+                          validator: (p0) {
+                            if (p0 != null) {
+                              if (p0.length < 6) {
+                                passwordFocusNode.requestFocus();
 
-                                  return LocaleKeys.login_passwordistooshort
-                                      .tr();
-                                } else {
-                                  return null;
-                                }
+                                return LocaleKeys.login_passwordistooshort.tr();
                               } else {
                                 return null;
                               }
-                            },
-                          ),
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
+                        25.h,
                         GradientButton(
                           radius: 10,
                           isLoading: state.loginWithEmailState.isProgress,
@@ -180,7 +190,7 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                       },
                       icon: state.loginWithGoogleStaus.isProgress
                           ? UI.spinner()
-                          : Assets.icons.google.svg(color: ColorName.blue),
+                          : Assets.icons.google.svg(),
                     ),
                   ),
                   Row(
@@ -234,16 +244,17 @@ class _SignInPageState extends State<SignInPage> with DialogMixin {
                       Text(
                         LocaleKeys.login_termsofuse.tr(),
                         style: AppTextStyles.body16w5
-                            .copyWith(color: ColorName.blue),
+                            .copyWith(color: ColorName.white),
                       ),
                       InkWell(
                         onTap: () {
-                          AutoRouter.of(context).push(const PrivacyPolicyRoute());
+                          AutoRouter.of(context)
+                              .push(const PrivacyPolicyRoute());
                         },
                         child: Text(
                           LocaleKeys.login_privacypolice.tr(),
                           style: AppTextStyles.body16w5
-                              .copyWith(color: ColorName.blue),
+                              .copyWith(color: ColorName.white),
                         ),
                       ),
                     ],
