@@ -7,8 +7,8 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_model.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
-import 'package:dtmtest/features/mobile/leaders_board/widgets/leader_number_one_widget.dart';
-import 'package:dtmtest/features/mobile/leaders_board/widgets/leaders_wiget.dart';
+import 'package:dtmtest/features/mobile/home/widgets/leader_number_one_widget.dart';
+import 'package:dtmtest/features/mobile/home/widgets/leaders_wiget.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -24,15 +24,6 @@ class LeaderBoardPage extends StatefulWidget {
 
 class _LeaderBoardPageState extends State<LeaderBoardPage> {
   List<UserModel?> raitingList = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    // context.read<HomeBloc>().add(GetAllStatisticsEvent());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
