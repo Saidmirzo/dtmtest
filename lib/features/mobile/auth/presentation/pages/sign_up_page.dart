@@ -1,15 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/custom_textfield.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
+import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/auth/data/model/user_register_model.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../widgets/custom_text_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -32,7 +33,7 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: ColorName.blueAccent,
+      backgroundColor: ColorName.customColor,
       body: BlocConsumer<AuthBloc, AuthState>(
         listenWhen: (previous, current) =>
             previous.registerWithEmailState != current.registerWithEmailState ||
@@ -59,61 +60,96 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
               child: Column(
                 children: [
                   const SizedBox(height: 220),
-                  CustomTextField(
-                    hintText: 'Full Name',
-                    controller: fullName,
-                    isPassword: false,
-                    radius: 10,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        fullNameFocusNode.requestFocus();
-                        return "Full name is too short";
-                      }
-                      if (value.length < 5) {
-                        return "Full name is too short";
-                      }
-                      return null;
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: CustomTextField(
-                      hintText: 'Email',
-                      controller: email,
-                      isPassword: false,
-                      radius: 10,
-                      validator: (p0) {
-                        if (!EmailValidator.validate(p0 ?? '')) {
-                          emailFocusNode.requestFocus();
-                          return "Invalide email";
-                        } else {
-                          return null;
-                        }
-                      },
-                      // isValidate: true,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 28),
-                    child: CustomTextField(
-                      hintText: 'Password',
-                      controller: password,
-                      isPassword: true,
-                      radius: 10,
-                      validator: (p0) {
-                        if (p0 != null) {
-                          if (p0.length < 6) {
-                            passwordFocusNode.requestFocus();
-              
-                            return "Password is too short";
-                          } else {
-                            return null;
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 20),
+                    decoration: BoxDecoration(
+                        color: ColorName.white,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            offset: const Offset(6, 6),
+                            color: ColorName.black.withOpacity(.25),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Column(children: [
+                      CustomTextField(
+                        hintText: 'Full Name',
+                        controller: fullName,
+                        isPassword: false,
+                        radius: 10,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            fullNameFocusNode.requestFocus();
+                            return "Full name is too short";
                           }
-                        } else {
+                          if (value.length < 5) {
+                            return "Full name is too short";
+                          }
                           return null;
-                        }
-                      },
-                    ),
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: CustomTextField(
+                          hintText: 'Email',
+                          controller: email,
+                          isPassword: false,
+                          radius: 10,
+                          validator: (p0) {
+                            if (!EmailValidator.validate(p0 ?? '')) {
+                              emailFocusNode.requestFocus();
+                              return "Invalide email";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 28),
+                        child: CustomTextField(
+                          hintText: 'Password',
+                          controller: password,
+                          isPassword: true,
+                          radius: 10,
+                          validator: (p0) {
+                            if (p0 != null) {
+                              if (p0.length < 6) {
+                                passwordFocusNode.requestFocus();
+
+                                return "Password is too short";
+                              } else {
+                                return null;
+                              }
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                      GradientButton(
+                        radius: 10,
+                        isLoading: state.registerWithEmailState.isProgress,
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(
+                                  RegisterUserEvent(
+                                    userRegisterModel: UserRegisterModel(
+                                      fullName: fullName.text,
+                                      email: email.text,
+                                      password: password.text,
+                                      userImage: '',
+                                    ),
+                                  ),
+                                );
+                          }
+                        },
+                        text: LocaleKeys.login_signup.tr(),
+                        color: ColorName.orange,
+                      )
+                    ]),
                   ),
                   const Spacer(),
                   Padding(
@@ -126,7 +162,7 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
                       },
                       icon: state.loginWithGoogleStaus.isProgress
                           ? UI.spinner()
-                          : Assets.icons.google.svg(color: ColorName.blue),
+                          : Assets.icons.google.svg(),
                     ),
                   ),
                   Padding(
@@ -144,26 +180,6 @@ class _SignUpPageState extends State<SignUpPage> with DialogMixin {
                         ),
                       ),
                     ),
-                  ),
-                  CustomTextButton(
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                              RegisterUserEvent(
-                                userRegisterModel: UserRegisterModel(
-                                  fullName: fullName.text,
-                                  email: email.text,
-                                  password: password.text,
-                                  userImage: '',
-                                ),
-                              ),
-                            );
-                      }
-                    },
-                    borderRadius: 10,
-                    preficWidget: state.registerWithEmailState.isProgress
-                        ? UI.spinner()
-                        : const Text('Next'),
                   ),
                 ],
               ),

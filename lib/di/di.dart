@@ -42,7 +42,7 @@ import 'package:dtmtest/features/mobile/profile/data/datasource/profile_remote_d
 import 'package:dtmtest/features/mobile/profile/data/repository/profile_repository_impl.dart';
 import 'package:dtmtest/features/mobile/profile/domain/repository/profile_repository.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/bloc/profile_bloc.dart';
-import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/data/datasource/tests_remote_datasource.dart';
 import 'package:dtmtest/features/mobile/tests/data/repository/tests_repository_impl.dart';
 import 'package:dtmtest/features/mobile/tests/domain/repository/tests_repository.dart';
