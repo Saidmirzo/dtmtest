@@ -48,6 +48,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   _updateProfileData(UpdateProfileDataEvent event, emit) async {
     emit(state.copyWith(updateProfileDataStatus: BlocStatus.inProgress));
+    String? userImage;
+    if (event.byte != null && event.fileName != null) {
+      final respone =
+          await advertisingRepository.uploadImage(event.byte!, event.fileName!);
+      respone.fold(
+        (l) => emit(
+          state.copyWith(
+            updateProfileDataStatus: BlocStatus.failed,
+            message: l.message,
+          ),
+        ),
+        (r) {
+          userImage = r;
+        },
+      );
+    }
+    event.model.userImage= userImage ?? event.model.userImage;
     final result = await authRepository.updateProfileData(event.model);
     result.fold(
       (l) => emit(
@@ -62,6 +79,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             updateProfileDataStatus: BlocStatus.completed,
           ),
         );
+        add(GetProfileDataEvent());
       },
     );
   }

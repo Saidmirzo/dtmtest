@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,10 @@ class CustomNetworkImage extends StatelessWidget {
     this.shape = BoxShape.rectangle,
     this.border,
     this.color,
+    this.localeImage,
   });
   final String? networkImage, defImage;
+  final Uint8List? localeImage;
   final Widget? defWidget;
   final BoxShape shape;
   final double? width, height;
@@ -27,15 +31,23 @@ class CustomNetworkImage extends StatelessWidget {
       imageUrl: networkImage ?? '',
       fit: BoxFit.cover,
       imageBuilder: (context, imageProvider) => Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            color: color,
-            shape: shape,
-            border: border,
-            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-          ),
-          child: defWidget),
+        width: width,
+        height: height,
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          color: color,
+          shape: shape,
+          border: border,
+          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+        ),
+        child: defWidget ??
+            (localeImage != null
+                ? Image.memory(
+                    localeImage!,
+                    fit: BoxFit.cover,
+                  )
+                : null),
+      ),
       errorWidget: (context, url, error) {
         return defImage != null
             ? Container(
@@ -47,8 +59,13 @@ class CustomNetworkImage extends StatelessWidget {
                   border: border,
                   color: color,
                   image: DecorationImage(
-                      image: AssetImage(defImage ?? ''), fit: BoxFit.cover),
+                    image: AssetImage(defImage ?? ''),
+                    fit: BoxFit.cover,
+                  ),
                 ),
+                child: localeImage != null
+                    ? Image.memory(localeImage!)
+                    : const SizedBox.shrink(),
               )
             : Container(
                 width: width,

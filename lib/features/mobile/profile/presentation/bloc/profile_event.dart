@@ -8,20 +8,24 @@ class ProfileEvent extends Equatable {
 class GetProfileDataEvent extends ProfileEvent {}
 
 class UpdateProfileDataEvent extends ProfileEvent {
-  UpdateProfileDataEvent({required this.model});
   final UserModel model;
+  final Uint8List? byte;
+  final String? fileName;
+  UpdateProfileDataEvent({required this.model, this.byte, this.fileName});
 }
+
 class ProfileUpdateImageEvent extends ProfileEvent {
   final Uint8List byte;
   final String name, publicId;
-   ProfileUpdateImageEvent({
+  ProfileUpdateImageEvent({
     required this.byte,
     required this.name,
     required this.publicId,
   });
 }
+
 class ProfileUploadImageEvent extends ProfileEvent {
   final Uint8List byte;
   final String name;
-   ProfileUploadImageEvent({required this.byte, required this.name});
+  ProfileUploadImageEvent({required this.byte, required this.name});
 }
