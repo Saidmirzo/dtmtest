@@ -62,7 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
         child: BlocConsumer<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state.getProfileDataStatus == BlocStatus.inProgress ||
-                state.updateImageStatus == BlocStatus.inProgress) {
+                state.uploadImageStatus == BlocStatus.inProgress ||
+                state.updateProfileDataStatus == BlocStatus.inProgress) {
               return Center(
                 child: UI.spinner(),
               );
@@ -154,14 +155,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           networkImage: state.profileData?.userImage,
                           defWidget: Stack(
                             children: [
-                              // state.profileData?.userImage == null
-                              //     ? Assets.icons.profileBold.svg(
-                              //         width: 70,
-                              //         height: 70,
-                              //       )
-                              //     : UI.nothing,
-                              // Assets.images.defimage.image(),
-
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: GestureDetector(
@@ -173,24 +166,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                         await image?.readAsBytes();
 
                                     if (bytes != null) {
-                                      if (state.profileData?.userImage ==
-                                          null) {
-                                        context
-                                            .read<ProfileBloc>()
-                                            .add(ProfileUploadImageEvent(
-                                              byte: bytes,
-                                              name: image?.name ?? '',
-                                            ));
-                                      } else {
-                                        // context.read<ProfileBloc>().add(
-                                        //     ProfileUpdateImageEvent(
-                                        //         byte: bytes,
-                                        //         name: image?.name ?? '',
-                                        //         publicId: extractImageId(state
-                                        //                 .profileData
-                                        //                 ?.userImage ??
-                                        //             '')));
-                                      }
+                                      // if (state.profileData?.userImage ==
+                                      //     null) {
+                                      context
+                                          .read<ProfileBloc>()
+                                          .add(ProfileUploadImageEvent(
+                                            byte: bytes,
+                                            name: image?.name ?? '',
+                                          ));
+                                      // } else {
+                                      // context.read<ProfileBloc>().add(
+                                      //     ProfileUpdateImageEvent(
+                                      //         byte: bytes,
+                                      //         name: image?.name ?? '',
+                                      //         publicId: extractImageId(state
+                                      //                 .profileData
+                                      //                 ?.userImage ??
+                                      //             '')));
+                                      // }
                                     }
                                   },
                                   child: Container(
@@ -314,6 +307,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       state.profileData!.copyWith(userImage: state.imageLink)));
             }
           },
+          listenWhen: (previous, current) =>
+              previous.updateImageStatus != current.updateImageStatus ||
+              previous.updateProfileDataStatus !=
+                  current.updateProfileDataStatus ||
+              previous.uploadImageStatus != current.uploadImageStatus,
         ),
       ),
     );
