@@ -24,7 +24,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) : super(const ProfileState()) {
     on<GetProfileDataEvent>(_getProfileData);
     on<UpdateProfileDataEvent>(_updateProfileData);
-    on<ProfileUpdateImageEvent>(_updateImageEvent);
+    // on<ProfileUpdateImageEvent>(_updateImageEvent);
     on<ProfileUploadImageEvent>(_uploadImageEvent);
   }
   _getProfileData(event, emit) async {
@@ -66,25 +66,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
-  _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
-    emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
-    final result = await advertisingRepository.updateImage(
-        event.byte, event.name, event.publicId);
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          updateImageStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          updateImageStatus: BlocStatus.completed,
-          imageLink: r,
-        ),
-      ),
-    );
-  }
+  // _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
+  //   emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
+  //   final result = await advertisingRepository.updateImage(
+  //       event.byte, event.name, event.publicId);
+  //   result.fold(
+  //     (l) => emit(
+  //       state.copyWith(
+  //         updateImageStatus: BlocStatus.failed,
+  //         message: l.message,
+  //       ),
+  //     ),
+  //     (r) => emit(
+  //       state.copyWith(
+  //         updateImageStatus: BlocStatus.completed,
+  //         imageLink: r,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _uploadImageEvent(ProfileUploadImageEvent event, emit) async {
     emit(state.copyWith(uploadImageStatus: BlocStatus.inProgress));
