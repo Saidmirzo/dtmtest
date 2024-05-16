@@ -144,6 +144,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         );
                                   }
+                                  bytes = null;
+                                  fileNamae = null;
                                   setState(() {
                                     isEditInfo = !isEditInfo;
                                   });
