@@ -58,19 +58,33 @@ class _ProfilePageState extends State<ProfilePage> {
       decoration: BoxDecoration(
         gradient: AppGradient.backgroundGradient,
       ),
-      child: SingleChildScrollView(
-        child: BlocConsumer<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state.getProfileDataStatus == BlocStatus.inProgress ||
-                state.uploadImageStatus == BlocStatus.inProgress ||
-                state.updateProfileDataStatus == BlocStatus.inProgress) {
-              return Center(
-                child: UI.spinner(),
-              );
-            } else if (state.getProfileDataStatus == BlocStatus.completed) {
-              nameController.text = state.profileData?.fullName ?? 'Noname';
-            }
-            return SafeArea(
+      child: BlocConsumer<ProfileBloc, ProfileState>(
+        listener: (BuildContext context, ProfileState state) {
+          if (state.updateProfileDataStatus == BlocStatus.completed) {
+            context.read<ProfileBloc>().add(GetProfileDataEvent());
+          } else if (state.uploadImageStatus == BlocStatus.completed) {
+            context.read<ProfileBloc>().add(UpdateProfileDataEvent(
+                model:
+                    state.profileData!.copyWith(userImage: state.imageLink)));
+          }
+        },
+        listenWhen: (previous, current) =>
+            previous.updateImageStatus != current.updateImageStatus ||
+            previous.updateProfileDataStatus !=
+                current.updateProfileDataStatus ||
+            previous.uploadImageStatus != current.uploadImageStatus,
+        builder: (context, state) {
+          if (state.getProfileDataStatus == BlocStatus.inProgress ||
+              state.uploadImageStatus == BlocStatus.inProgress ||
+              state.updateProfileDataStatus == BlocStatus.inProgress) {
+            return Center(
+              child: UI.spinner(),
+            );
+          } else if (state.getProfileDataStatus == BlocStatus.completed) {
+            nameController.text = state.profileData?.fullName ?? 'Noname';
+          }
+          return SingleChildScrollView(
+            child: SafeArea(
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
@@ -296,23 +310,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-            );
-          },
-          listener: (BuildContext context, ProfileState state) {
-            if (state.updateProfileDataStatus == BlocStatus.completed) {
-              context.read<ProfileBloc>().add(GetProfileDataEvent());
-            } else if (state.uploadImageStatus == BlocStatus.completed) {
-              context.read<ProfileBloc>().add(UpdateProfileDataEvent(
-                  model:
-                      state.profileData!.copyWith(userImage: state.imageLink)));
-            }
-          },
-          listenWhen: (previous, current) =>
-              previous.updateImageStatus != current.updateImageStatus ||
-              previous.updateProfileDataStatus !=
-                  current.updateProfileDataStatus ||
-              previous.uploadImageStatus != current.uploadImageStatus,
-        ),
+            ),
+          );
+        },
       ),
     );
   }
