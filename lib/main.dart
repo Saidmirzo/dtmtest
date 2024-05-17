@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          title: "DTM Test AdminDashboard",
+          title: "DTM Test",
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light(useMaterial3: false),
         ),
