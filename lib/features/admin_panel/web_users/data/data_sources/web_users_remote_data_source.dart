@@ -35,7 +35,7 @@ class WebUsersRemoteDataSourceImpl implements WebUsersRemoteDataSource {
       data['id'] = e.id;
       return UserModel.fromJson(data);
     }).toList();
-    return users;
+    return users.reversed.toList();
   }
 
   @override
