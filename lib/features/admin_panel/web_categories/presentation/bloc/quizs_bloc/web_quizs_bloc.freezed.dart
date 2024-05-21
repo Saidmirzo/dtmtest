@@ -19,9 +19,11 @@ mixin _$WebQuizsState {
   BlocStatus get addCategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get getAllCategoriesStatus => throw _privateConstructorUsedError;
   BlocStatus get deleteCategoryStatus => throw _privateConstructorUsedError;
-  BlocStatus get editategoryStatus => throw _privateConstructorUsedError;
+  BlocStatus get editCategoryStatus => throw _privateConstructorUsedError;
   BlocStatus get getAllThemesStatus => throw _privateConstructorUsedError;
   BlocStatus get addNewThemeStatus => throw _privateConstructorUsedError;
+  BlocStatus get editThemeStatus => throw _privateConstructorUsedError;
+  BlocStatus get deleteThemeStatus => throw _privateConstructorUsedError;
   List<CategoryModel>? get listCategories => throw _privateConstructorUsedError;
   List<ThemeModel>? get listThemes => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
@@ -41,9 +43,11 @@ abstract class $WebQuizsStateCopyWith<$Res> {
       {BlocStatus addCategoryStatus,
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
-      BlocStatus editategoryStatus,
+      BlocStatus editCategoryStatus,
       BlocStatus getAllThemesStatus,
       BlocStatus addNewThemeStatus,
+      BlocStatus editThemeStatus,
+      BlocStatus deleteThemeStatus,
       List<CategoryModel>? listCategories,
       List<ThemeModel>? listThemes,
       String? message});
@@ -65,9 +69,11 @@ class _$WebQuizsStateCopyWithImpl<$Res, $Val extends WebQuizsState>
     Object? addCategoryStatus = null,
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
-    Object? editategoryStatus = null,
+    Object? editCategoryStatus = null,
     Object? getAllThemesStatus = null,
     Object? addNewThemeStatus = null,
+    Object? editThemeStatus = null,
+    Object? deleteThemeStatus = null,
     Object? listCategories = freezed,
     Object? listThemes = freezed,
     Object? message = freezed,
@@ -85,9 +91,9 @@ class _$WebQuizsStateCopyWithImpl<$Res, $Val extends WebQuizsState>
           ? _value.deleteCategoryStatus
           : deleteCategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
-      editategoryStatus: null == editategoryStatus
-          ? _value.editategoryStatus
-          : editategoryStatus // ignore: cast_nullable_to_non_nullable
+      editCategoryStatus: null == editCategoryStatus
+          ? _value.editCategoryStatus
+          : editCategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       getAllThemesStatus: null == getAllThemesStatus
           ? _value.getAllThemesStatus
@@ -96,6 +102,14 @@ class _$WebQuizsStateCopyWithImpl<$Res, $Val extends WebQuizsState>
       addNewThemeStatus: null == addNewThemeStatus
           ? _value.addNewThemeStatus
           : addNewThemeStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      editThemeStatus: null == editThemeStatus
+          ? _value.editThemeStatus
+          : editThemeStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      deleteThemeStatus: null == deleteThemeStatus
+          ? _value.deleteThemeStatus
+          : deleteThemeStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       listCategories: freezed == listCategories
           ? _value.listCategories
@@ -125,9 +139,11 @@ abstract class _$$WebQuizsStateImplCopyWith<$Res>
       {BlocStatus addCategoryStatus,
       BlocStatus getAllCategoriesStatus,
       BlocStatus deleteCategoryStatus,
-      BlocStatus editategoryStatus,
+      BlocStatus editCategoryStatus,
       BlocStatus getAllThemesStatus,
       BlocStatus addNewThemeStatus,
+      BlocStatus editThemeStatus,
+      BlocStatus deleteThemeStatus,
       List<CategoryModel>? listCategories,
       List<ThemeModel>? listThemes,
       String? message});
@@ -147,9 +163,11 @@ class __$$WebQuizsStateImplCopyWithImpl<$Res>
     Object? addCategoryStatus = null,
     Object? getAllCategoriesStatus = null,
     Object? deleteCategoryStatus = null,
-    Object? editategoryStatus = null,
+    Object? editCategoryStatus = null,
     Object? getAllThemesStatus = null,
     Object? addNewThemeStatus = null,
+    Object? editThemeStatus = null,
+    Object? deleteThemeStatus = null,
     Object? listCategories = freezed,
     Object? listThemes = freezed,
     Object? message = freezed,
@@ -167,9 +185,9 @@ class __$$WebQuizsStateImplCopyWithImpl<$Res>
           ? _value.deleteCategoryStatus
           : deleteCategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
-      editategoryStatus: null == editategoryStatus
-          ? _value.editategoryStatus
-          : editategoryStatus // ignore: cast_nullable_to_non_nullable
+      editCategoryStatus: null == editCategoryStatus
+          ? _value.editCategoryStatus
+          : editCategoryStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       getAllThemesStatus: null == getAllThemesStatus
           ? _value.getAllThemesStatus
@@ -178,6 +196,14 @@ class __$$WebQuizsStateImplCopyWithImpl<$Res>
       addNewThemeStatus: null == addNewThemeStatus
           ? _value.addNewThemeStatus
           : addNewThemeStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      editThemeStatus: null == editThemeStatus
+          ? _value.editThemeStatus
+          : editThemeStatus // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      deleteThemeStatus: null == deleteThemeStatus
+          ? _value.deleteThemeStatus
+          : deleteThemeStatus // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       listCategories: freezed == listCategories
           ? _value._listCategories
@@ -202,9 +228,11 @@ class _$WebQuizsStateImpl extends _WebQuizsState {
       {this.addCategoryStatus = BlocStatus.notInitialized,
       this.getAllCategoriesStatus = BlocStatus.notInitialized,
       this.deleteCategoryStatus = BlocStatus.notInitialized,
-      this.editategoryStatus = BlocStatus.notInitialized,
+      this.editCategoryStatus = BlocStatus.notInitialized,
       this.getAllThemesStatus = BlocStatus.notInitialized,
       this.addNewThemeStatus = BlocStatus.notInitialized,
+      this.editThemeStatus = BlocStatus.notInitialized,
+      this.deleteThemeStatus = BlocStatus.notInitialized,
       final List<CategoryModel>? listCategories,
       final List<ThemeModel>? listThemes,
       this.message})
@@ -223,13 +251,19 @@ class _$WebQuizsStateImpl extends _WebQuizsState {
   final BlocStatus deleteCategoryStatus;
   @override
   @JsonKey()
-  final BlocStatus editategoryStatus;
+  final BlocStatus editCategoryStatus;
   @override
   @JsonKey()
   final BlocStatus getAllThemesStatus;
   @override
   @JsonKey()
   final BlocStatus addNewThemeStatus;
+  @override
+  @JsonKey()
+  final BlocStatus editThemeStatus;
+  @override
+  @JsonKey()
+  final BlocStatus deleteThemeStatus;
   final List<CategoryModel>? _listCategories;
   @override
   List<CategoryModel>? get listCategories {
@@ -255,7 +289,7 @@ class _$WebQuizsStateImpl extends _WebQuizsState {
 
   @override
   String toString() {
-    return 'WebQuizsState(addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editategoryStatus: $editategoryStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, listCategories: $listCategories, listThemes: $listThemes, message: $message)';
+    return 'WebQuizsState(addCategoryStatus: $addCategoryStatus, getAllCategoriesStatus: $getAllCategoriesStatus, deleteCategoryStatus: $deleteCategoryStatus, editCategoryStatus: $editCategoryStatus, getAllThemesStatus: $getAllThemesStatus, addNewThemeStatus: $addNewThemeStatus, editThemeStatus: $editThemeStatus, deleteThemeStatus: $deleteThemeStatus, listCategories: $listCategories, listThemes: $listThemes, message: $message)';
   }
 
   @override
@@ -269,12 +303,16 @@ class _$WebQuizsStateImpl extends _WebQuizsState {
                 other.getAllCategoriesStatus == getAllCategoriesStatus) &&
             (identical(other.deleteCategoryStatus, deleteCategoryStatus) ||
                 other.deleteCategoryStatus == deleteCategoryStatus) &&
-            (identical(other.editategoryStatus, editategoryStatus) ||
-                other.editategoryStatus == editategoryStatus) &&
+            (identical(other.editCategoryStatus, editCategoryStatus) ||
+                other.editCategoryStatus == editCategoryStatus) &&
             (identical(other.getAllThemesStatus, getAllThemesStatus) ||
                 other.getAllThemesStatus == getAllThemesStatus) &&
             (identical(other.addNewThemeStatus, addNewThemeStatus) ||
                 other.addNewThemeStatus == addNewThemeStatus) &&
+            (identical(other.editThemeStatus, editThemeStatus) ||
+                other.editThemeStatus == editThemeStatus) &&
+            (identical(other.deleteThemeStatus, deleteThemeStatus) ||
+                other.deleteThemeStatus == deleteThemeStatus) &&
             const DeepCollectionEquality()
                 .equals(other._listCategories, _listCategories) &&
             const DeepCollectionEquality()
@@ -288,9 +326,11 @@ class _$WebQuizsStateImpl extends _WebQuizsState {
       addCategoryStatus,
       getAllCategoriesStatus,
       deleteCategoryStatus,
-      editategoryStatus,
+      editCategoryStatus,
       getAllThemesStatus,
       addNewThemeStatus,
+      editThemeStatus,
+      deleteThemeStatus,
       const DeepCollectionEquality().hash(_listCategories),
       const DeepCollectionEquality().hash(_listThemes),
       message);
@@ -307,9 +347,11 @@ abstract class _WebQuizsState extends WebQuizsState {
       {final BlocStatus addCategoryStatus,
       final BlocStatus getAllCategoriesStatus,
       final BlocStatus deleteCategoryStatus,
-      final BlocStatus editategoryStatus,
+      final BlocStatus editCategoryStatus,
       final BlocStatus getAllThemesStatus,
       final BlocStatus addNewThemeStatus,
+      final BlocStatus editThemeStatus,
+      final BlocStatus deleteThemeStatus,
       final List<CategoryModel>? listCategories,
       final List<ThemeModel>? listThemes,
       final String? message}) = _$WebQuizsStateImpl;
@@ -322,11 +364,15 @@ abstract class _WebQuizsState extends WebQuizsState {
   @override
   BlocStatus get deleteCategoryStatus;
   @override
-  BlocStatus get editategoryStatus;
+  BlocStatus get editCategoryStatus;
   @override
   BlocStatus get getAllThemesStatus;
   @override
   BlocStatus get addNewThemeStatus;
+  @override
+  BlocStatus get editThemeStatus;
+  @override
+  BlocStatus get deleteThemeStatus;
   @override
   List<CategoryModel>? get listCategories;
   @override

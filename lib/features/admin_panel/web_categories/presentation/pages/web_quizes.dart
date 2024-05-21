@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dtmtest/common/components/admin_row_widget.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
 import 'package:dtmtest/common/extentions.dart';
@@ -7,9 +6,8 @@ import 'package:dtmtest/common/gradient_button.dart';
 import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/widgets/about_quiz_widget.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/widgets/about_themes_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +28,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
   @override
   void initState() {
     super.initState();
-    context.read<WebQuizsBloc>().add(GetAllQuizsEvent());
+    context.read<WebQuizsBloc>().add(GetAllQuizCategoryEvent());
     final String? id = context.read<WebQuizsBloc>().categoryId;
 
     if (id != null) {
@@ -62,7 +60,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                   replaceTextVSIcon: true,
                   radius: 50,
                   onPressed: () {
-                    addThemeDialog(context, EditAdd.add);
+                    addThemeDialog(context, EditAdd.add, null);
                   },
                   text: "Add",
                   icon: Assets.icons.add.svg(),
@@ -187,86 +185,20 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
           20.h,
           if (idTheme == '')
             Expanded(
-              child: AboutThemesWidget(),
+              child: SingleChildScrollView(
+                child: AboutThemesWidget(),
+              ),
             )
           else
             Expanded(
               child: SingleChildScrollView(
-                child: QuizsWidget(idTheme: idTheme),
+                child: QuizsWidget(
+                  idTheme: idTheme,
+                ),
               ),
             ),
         ],
       ),
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class QuizsWidget extends StatelessWidget {
-  String idTheme;
-  QuizsWidget({
-    super.key,
-    required this.idTheme,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(
-          height: 30,
-          child: Row(
-            children: [
-              AdminRowWidget(
-                width: 50,
-                text: '№',
-              ),
-              AdminRowWidget(
-                width: 200,
-                text: 'Question',
-              ),
-            ],
-          ),
-        ),
-        BlocConsumer<WebQuizsBloc, WebQuizsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state.getAllThemesStatus.isProgress) {
-              return UI.spinner();
-            }
-            ThemeModel? list;
-            for (var element in state.listThemes!) {
-              if (element.id == idTheme) {
-                list = element;
-              }
-            }
-            return ListView.separated(
-              itemCount: list?.quiz?.length ?? 0,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero.copyWith(top: 20, bottom: 30),
-              shrinkWrap: true,
-              itemBuilder: (_, index) => SizedBox(
-                height: 30,
-                child: Row(
-                  children: [
-                    AdminRowWidget(
-                      width: 50,
-                      text: '${index + 1}',
-                    ),
-                    AdminRowWidget(
-                      width: 200,
-                      text: list?.quiz?[index].question ?? "Unknown",
-                    ),
-                  ],
-                ),
-              ),
-              separatorBuilder: (_, index) => 10.h,
-            );
-          },
-        ),
-      ],
     );
   }
 }

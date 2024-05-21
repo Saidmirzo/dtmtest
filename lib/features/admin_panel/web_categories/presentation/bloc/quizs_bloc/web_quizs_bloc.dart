@@ -17,15 +17,17 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
   String? categoryId = '';
   WebQuizsBloc({required this.webCategoryRepository})
       : super(const WebQuizsState()) {
-    on<AddQuizsEvent>(_addQuizsEvent);
-    on<DeleteQuizsEvent>(_deleteQuizsEvent);
-    on<EditQuizsEvent>(_editQuizsEvent);
-    on<GetAllQuizsEvent>(_getAllQuizsEvent);
+    on<AddQuizCategoryEvent>(_addQuizsEvent);
+    on<DeleteQuizCategoryEvent>(_deleteQuizsEvent);
+    on<EditQuizCategoryEvent>(_editQuizsEvent);
+    on<GetAllQuizCategoryEvent>(_getAllQuizsEvent);
     on<GetAllQuizThemesEvent>(_getAllThemesEvent);
     on<AddNewQuizThemeEvent>(_addNewThemeEvent);
+    on<EditQuizThemeEvent>(_editQuizThemeEvent);
+    on<DeleteQuizThemeEvent>(_deleteQuizThemeEvent);
   }
 
-  _addQuizsEvent(AddQuizsEvent event, emit) async {
+  _addQuizsEvent(AddQuizCategoryEvent event, emit) async {
     emit(state.copyWith(addCategoryStatus: BlocStatus.inProgress));
     final result = await webCategoryRepository.addCategory(event.model);
     result.fold(
@@ -42,18 +44,18 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
           ),
         );
 
-        add(GetAllQuizsEvent());
+        add(GetAllQuizCategoryEvent());
       },
     );
   }
 
-  _editQuizsEvent(EditQuizsEvent event, emit) async {
-    emit(state.copyWith(editategoryStatus: BlocStatus.inProgress));
+  _editQuizsEvent(EditQuizCategoryEvent event, emit) async {
+    emit(state.copyWith(editCategoryStatus: BlocStatus.inProgress));
     final result = await webCategoryRepository.editCategory(event.model);
     result.fold(
       (l) => emit(
         state.copyWith(
-          editategoryStatus: BlocStatus.failed,
+          editCategoryStatus: BlocStatus.failed,
           message: l.message,
         ),
       ),
@@ -66,14 +68,14 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
         categList.insert(index, event.model!);
         emit(
           state.copyWith(
-              editategoryStatus: BlocStatus.completed,
+              editCategoryStatus: BlocStatus.completed,
               listCategories: categList),
         );
       },
     );
   }
 
-  _deleteQuizsEvent(DeleteQuizsEvent event, emit) async {
+  _deleteQuizsEvent(DeleteQuizCategoryEvent event, emit) async {
     emit(state.copyWith(deleteCategoryStatus: BlocStatus.inProgress));
     final result = await webCategoryRepository.deleteCategory(event.id);
     result.fold(
@@ -151,4 +153,50 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
       },
     );
   }
+
+  _editQuizThemeEvent(EditQuizThemeEvent event, emit) async {
+    emit(state.copyWith(editThemeStatus: BlocStatus.inProgress));
+    final result =
+        await webCategoryRepository.editTheme(event.categoryId, event.model);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          editThemeStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) {
+        List<ThemeModel> themeList = [];
+        themeList.addAll(state.listThemes ?? []);
+        int index =
+            themeList.indexWhere((element) => element.id == event.model.id);
+        themeList.removeAt(index);
+        themeList.insert(index, event.model);
+        emit(
+          state.copyWith(
+              editThemeStatus: BlocStatus.completed, listThemes: themeList),
+        );
+      },
+    );
+  }
+
+  _deleteQuizThemeEvent(DeleteQuizThemeEvent event, emit) async {
+    emit(state.copyWith(deleteThemeStatus: BlocStatus.inProgress));
+    final result = await webCategoryRepository.deleteTheme(
+        event.idTheme, event.idCategory);
+    result.fold(
+      (l) => emit(
+        state.copyWith(
+          deleteThemeStatus: BlocStatus.failed,
+          message: l.message,
+        ),
+      ),
+      (r) {
+        emit(
+          state.copyWith(deleteThemeStatus: BlocStatus.completed),
+        );
+      },
+    );
+  }
 }
+  

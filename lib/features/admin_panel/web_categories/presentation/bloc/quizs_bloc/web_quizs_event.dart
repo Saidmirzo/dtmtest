@@ -6,16 +6,28 @@ class WebQuizsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class AddQuizsEvent extends WebQuizsEvent {
-  const AddQuizsEvent({required this.model});
+class AddQuizCategoryEvent extends WebQuizsEvent {
+  const AddQuizCategoryEvent({required this.model});
   final CategoryModel model;
 }
 
-class GetAllQuizsEvent extends WebQuizsEvent {}
+class GetAllQuizCategoryEvent extends WebQuizsEvent {}
+
+class DeleteQuizCategoryEvent extends WebQuizsEvent {
+  const DeleteQuizCategoryEvent({required this.id});
+
+  final String id;
+}
+
+class EditQuizCategoryEvent extends WebQuizsEvent {
+  const EditQuizCategoryEvent({required this.index, required this.model});
+  final CategoryModel? model;
+  final int index;
+}
 
 // ignore: must_be_immutable
 class GetAllQuizThemesEvent extends WebQuizsEvent {
-  String id;  
+  String id;
   GetAllQuizThemesEvent({required this.id});
 }
 
@@ -30,13 +42,15 @@ class AddNewQuizThemeEvent extends WebQuizsEvent {
   });
 }
 
-class DeleteQuizsEvent extends WebQuizsEvent {
-  const DeleteQuizsEvent({required this.id});
-  final String id;
+class DeleteQuizThemeEvent extends WebQuizsEvent {
+  const DeleteQuizThemeEvent({required this.idCategory, required this.idTheme});
+  final String idCategory;
+  final String idTheme;
 }
 
-class EditQuizsEvent extends WebQuizsEvent {
-  const EditQuizsEvent({required this.index, required this.model});
-  final CategoryModel? model;
-  final int index;
+class EditQuizThemeEvent extends WebQuizsEvent {
+  const EditQuizThemeEvent({required this.categoryId, required this.model});
+
+  final ThemeModel model;
+  final String categoryId;
 }

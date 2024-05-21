@@ -124,19 +124,6 @@ class _WebMainPageState extends State<WebMainPage> {
                     ],
                   ),
                   20.h,
-                  // SizedBox(
-                  //     width: size.width * .39,
-                  //     child: const CustomTextField(
-                  //       hintText: "Search",
-                  //       leading: Padding(
-                  //         padding: EdgeInsets.only(left: 25, right: 10),
-                  //         child: Icon(Icons.search),
-                  //       ),
-                  //       borderColor: Colors.transparent,
-                  //       contentPadding:
-                  //           EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-                  //     )),
-                  // 20.h,
                   Expanded(child: getPage(selIndex)),
                 ],
               ),

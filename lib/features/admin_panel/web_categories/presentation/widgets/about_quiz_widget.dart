@@ -1,5 +1,4 @@
-import 'package:dtmtest/common/enums/edit_add.dart';
-import 'package:dtmtest/common/res/dialog_mixin.dart';
+// ignore: must_be_immutable
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
@@ -8,46 +7,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
-class AboutThemesWidget extends StatelessWidget with DialogMixin {
-  AboutThemesWidget({super.key});
+class QuizsWidget extends StatefulWidget {
+  String idTheme;
+  QuizsWidget({
+    super.key,
+    required this.idTheme,
+  });
 
-  List<ThemeModel> listTheme = [];
+  @override
+  State<QuizsWidget> createState() => _QuizsWidgetState();
+}
 
+class _QuizsWidgetState extends State<QuizsWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WebQuizsBloc, WebQuizsState>(
-      listener: (context, state) {
-        if (state.getAllThemesStatus.isProgress) {}
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         if (state.getAllThemesStatus.isProgress) {
           return UI.spinner();
         }
-        listTheme = state.listThemes ?? [];
+        ThemeModel? list;
+        for (var element in state.listThemes!) {
+          if (element.id == widget.idTheme) {
+            list = element;
+          }
+        }
         return CustomTable(
-          columnNames: const ['№', 'Name', 'Question count', ""],
+          columnNames: const ['№', 'Question', ""],
           columnList: List.generate(
-            listTheme.length,
+            list?.quiz?.length ?? 0,
             (index) => [
               Text(
                 '${index + 1}',
               ),
               Text(
-                listTheme[index].name ?? 'Unk',
-              ),
-              Text(
-                listTheme[index].quizCount.toString(),
+                list?.quiz?[index].question ?? 'Unk',
               ),
             ],
           ),
           onDelete: (index) {},
-          onEdit: (index) {
-            addThemeDialog(
-              context,
-              EditAdd.edit,
-              listTheme[index],
-            );
-          },
+          onEdit: (index) {},
         );
       },
     );

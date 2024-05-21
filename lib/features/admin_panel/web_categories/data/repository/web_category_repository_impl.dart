@@ -101,7 +101,6 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-
   Future<Either<Failure, List<ThemeModel>>> getAllThemes(String categoryId) async {
     try {
       final result = await webRemoteCategoryDataSource.getAllThemes(categoryId);
