@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
@@ -10,7 +9,6 @@ import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/history/widgets/history_widget.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

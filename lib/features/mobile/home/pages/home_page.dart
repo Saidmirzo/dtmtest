@@ -51,17 +51,22 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CustomNetworkImage(
-                          width: 50,
-                          height: 50,
-                          color: ColorName.white,
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 212, 192, 192),
-                            width: 1,
+                        GestureDetector(
+                          onTap: () {
+                            context.tabsRouter.setActiveIndex(3);
+                          },
+                          child: CustomNetworkImage(
+                            width: 50,
+                            height: 50,
+                            color: ColorName.white,
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 212, 192, 192),
+                              width: 1,
+                            ),
+                            shape: BoxShape.circle,
+                            networkImage: state.userModel?.userImage,
+                            defImage: Assets.images.defimage.path,
                           ),
-                          shape: BoxShape.circle,
-                          networkImage: state.userModel?.userImage,
-                          defImage: Assets.images.defimage.path,
                         ),
                         13.w,
                         Column(
@@ -136,75 +141,80 @@ class _HomePageState extends State<HomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: state.listCategories?.length ?? 0,
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            // AutoRouter.of(context).push(
-                            //   ThemesRoute(
-                            //     categoryModel: (state.listCategories?[index])!,
-                            //   ),
-                            // );
-                          },
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            // height: 110,
-                            width: 150,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorName.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 6,
-                                  color: ColorName.black.withOpacity(.25),
-                                  offset: const Offset(6, 6),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 45,
-                                  height: 45,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: ColorName.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4,
-                                        offset: const Offset(3, 4),
-                                        color: ColorName.black.withOpacity(.25),
-                                        blurStyle: BlurStyle.normal,
-                                      ),
-                                    ],
+                        if (state.listCategories?[index].isActive == true) {
+                          return InkWell(
+                            onTap: () {
+                              // AutoRouter.of(context).push(
+                              //   ThemesRoute(
+                              //     categoryModel: (state.listCategories?[index])!,
+                              //   ),
+                              // );
+                            },
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              // height: 110,
+                              width: 150,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: ColorName.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 6,
+                                    color: ColorName.black.withOpacity(.25),
+                                    offset: const Offset(6, 6),
                                   ),
-                                  child: Assets.images.bookImage.image(),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    LocaleKeys.home_new.tr(),
-                                    style: AppTextStyles.body12w7.copyWith(
-                                      color: ColorName.red,
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 45,
+                                    height: 45,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: ColorName.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 4,
+                                          offset: const Offset(3, 4),
+                                          color:
+                                              ColorName.black.withOpacity(.25),
+                                          blurStyle: BlurStyle.normal,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Assets.images.bookImage.image(),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      LocaleKeys.home_new.tr(),
+                                      style: AppTextStyles.body12w7.copyWith(
+                                        color: ColorName.red,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  state.listCategories?[index].name ??
-                                      "Matematika",
-                                  style: AppTextStyles.body20w7.copyWith(
-                                    color: ColorName.customColor,
+                                  Text(
+                                    state.listCategories?[index].name ??
+                                        "Matematika",
+                                    style: AppTextStyles.body20w7.copyWith(
+                                      color: ColorName.customColor,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
+                        return null;
                       },
                       separatorBuilder: (context, index) => 10.w,
                     );
