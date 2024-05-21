@@ -250,7 +250,7 @@ mixin DialogMixin {
               context.maybePop();
             } else if (state.addNewThemeStatus == BlocStatus.failed) {
               showSnackBar(context, text: 'Error');
-            }
+            } 
           },
           builder: (context, state) {
             if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
@@ -369,6 +369,7 @@ mixin DialogMixin {
                                         ),
                                       );
                                 }
+                                 
                               }
                             },
                             text: editAdd == EditAdd.add ? "Add" : 'Edit',

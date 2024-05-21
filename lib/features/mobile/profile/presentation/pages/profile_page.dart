@@ -14,6 +14,7 @@ import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_w
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +32,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool isEditInfo = false;
   ImagePicker picker = ImagePicker();
+  Uint8List? bytes;
+  String? fileNamae;
 
   TextEditingController nameController = TextEditingController();
   // TextEditingController firstnameController = TextEditingController();
@@ -58,18 +61,33 @@ class _ProfilePageState extends State<ProfilePage> {
       decoration: BoxDecoration(
         gradient: AppGradient.backgroundGradient,
       ),
-      child: SingleChildScrollView(
-        child: BlocConsumer<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state.getProfileDataStatus == BlocStatus.inProgress ||
-                state.updateImageStatus == BlocStatus.inProgress) {
-              return Center(
-                child: UI.spinner(),
-              );
-            } else if (state.getProfileDataStatus == BlocStatus.completed) {
-              nameController.text = state.profileData?.fullName ?? 'Noname';
-            }
-            return SafeArea(
+      child: BlocConsumer<ProfileBloc, ProfileState>(
+        listener: (BuildContext context, ProfileState state) {
+          if (state.updateProfileDataStatus == BlocStatus.completed) {
+            context.read<ProfileBloc>().add(GetProfileDataEvent());
+          } else if (state.uploadImageStatus == BlocStatus.completed) {
+            context.read<ProfileBloc>().add(UpdateProfileDataEvent(
+                model:
+                    state.profileData!.copyWith(userImage: state.imageLink)));
+          }
+        },
+        listenWhen: (previous, current) =>
+            previous.updateImageStatus != current.updateImageStatus ||
+            previous.updateProfileDataStatus !=
+                current.updateProfileDataStatus ||
+            previous.uploadImageStatus != current.uploadImageStatus,
+        builder: (context, state) {
+          if (state.getProfileDataStatus == BlocStatus.inProgress ||
+              state.uploadImageStatus == BlocStatus.inProgress ||
+              state.updateProfileDataStatus == BlocStatus.inProgress) {
+            return Center(
+              child: UI.spinner(),
+            );
+          } else if (state.getProfileDataStatus == BlocStatus.completed) {
+            nameController.text = state.profileData?.fullName ?? 'Noname';
+          }
+          return SingleChildScrollView(
+            child: SafeArea(
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
@@ -112,16 +130,25 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             InkWell(
                               onTap: () {
-                                setState(() {
-                                  isEditInfo = !isEditInfo;
-                                });
-                                if (nameController.text.trim() !=
-                                        state.profileData?.fullName?.trim() &&
-                                    isEditInfo == false) {
-                                  context.read<ProfileBloc>().add(
-                                      UpdateProfileDataEvent(
-                                          model: state.profileData!.copyWith(
-                                              fullName: nameController.text)));
+                                if (!state.updateImageStatus.isProgress) {
+                                  if ((nameController.text.trim() !=
+                                          state.profileData?.fullName?.trim() ||
+                                      bytes != null)) {
+                                    context.read<ProfileBloc>().add(
+                                          UpdateProfileDataEvent(
+                                            byte: bytes,
+                                            fileName: fileNamae,
+                                            model: state.profileData!.copyWith(
+                                              fullName: nameController.text,
+                                            ),
+                                          ),
+                                        );
+                                  }
+                                  bytes = null;
+                                  fileNamae = null;
+                                  setState(() {
+                                    isEditInfo = !isEditInfo;
+                                  });
                                 }
                               },
                               child: Container(
@@ -129,91 +156,70 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 50,
                                 color: Colors.transparent,
                                 alignment: Alignment.center,
-                                child: Text(
-                                  isEditInfo
-                                      ? LocaleKeys.save.tr()
-                                      : LocaleKeys.edit.tr(),
-                                  style: AppTextStyles.body16w7.copyWith(
-                                    color: ColorName.white,
-                                  ),
-                                ),
+                                child: state.updateProfileDataStatus.isProgress
+                                    ? UI.spinner()
+                                    : Text(
+                                        isEditInfo
+                                            ? LocaleKeys.save.tr()
+                                            : LocaleKeys.edit.tr(),
+                                        style: AppTextStyles.body16w7.copyWith(
+                                          color: ColorName.white,
+                                        ),
+                                      ),
                               ),
                             ),
                           ],
                         ),
                         32.h,
-                        CustomNetworkImage(
-                          width: 70,
-                          height: 70,
-                          color: ColorName.white,
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 212, 192, 192),
-                            width: 1,
-                          ),
-                          shape: BoxShape.circle,
-                          networkImage: state.profileData?.userImage,
-                          defWidget: Stack(
-                            children: [
-                              // state.profileData?.userImage == null
-                              //     ? Assets.icons.profileBold.svg(
-                              //         width: 70,
-                              //         height: 70,
-                              //       )
-                              //     : UI.nothing,
-                              // Assets.images.defimage.image(),
-
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    final ImagePicker picker = ImagePicker();
-                                    final XFile? image = await picker.pickImage(
-                                        source: ImageSource.gallery);
-                                    Uint8List? bytes =
-                                        await image?.readAsBytes();
-
-                                    if (bytes != null) {
-                                      if (state.profileData?.userImage ==
-                                          null) {
-                                        context
-                                            .read<ProfileBloc>()
-                                            .add(ProfileUploadImageEvent(
-                                              byte: bytes,
-                                              name: image?.name ?? '',
-                                            ));
-                                      } else {
-                                        // context.read<ProfileBloc>().add(
-                                        //     ProfileUpdateImageEvent(
-                                        //         byte: bytes,
-                                        //         name: image?.name ?? '',
-                                        //         publicId: extractImageId(state
-                                        //                 .profileData
-                                        //                 ?.userImage ??
-                                        //             '')));
-                                      }
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: ColorName.white,
-                                      border: Border.all(
-                                          color: ColorName.customColor,
-                                          width: 2),
-                                    ),
-                                    child: const Icon(
-                                      CupertinoIcons.plus,
-                                      color: ColorName.customColor,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ),
+                        Stack(
+                          fit: StackFit.loose,
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            CustomNetworkImage(
+                              width: 70,
+                              height: 70,
+                              localeImage: bytes,
+                              color: ColorName.white,
+                              border: Border.all(
+                                color: const Color.fromARGB(255, 212, 192, 192),
+                                width: 1,
                               ),
-                            ],
-                          ),
+                              shape: BoxShape.circle,
+                              networkImage: state.profileData?.userImage,
+                              defImage: Assets.images.defimage.path,
+                            ),
+                            isEditInfo
+                                ? GestureDetector(
+                                    onTap: () async {
+                                      final ImagePicker picker = ImagePicker();
+                                      final XFile? image =
+                                          await picker.pickImage(
+                                        source: ImageSource.gallery,
+                                      );
+                                      bytes = await image?.readAsBytes();
+                                      fileNamae = image?.name;
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: ColorName.white,
+                                        border: Border.all(
+                                            color: ColorName.customColor,
+                                            width: 2),
+                                      ),
+                                      child: const Icon(
+                                        CupertinoIcons.plus,
+                                        color: ColorName.customColor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
                         ),
                         20.h,
                         UserInfoWidget(
@@ -303,18 +309,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-            );
-          },
-          listener: (BuildContext context, ProfileState state) {
-            if (state.updateProfileDataStatus == BlocStatus.completed) {
-              context.read<ProfileBloc>().add(GetProfileDataEvent());
-            } else if (state.uploadImageStatus == BlocStatus.completed) {
-              context.read<ProfileBloc>().add(UpdateProfileDataEvent(
-                  model:
-                      state.profileData!.copyWith(userImage: state.imageLink)));
-            }
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

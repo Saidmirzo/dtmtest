@@ -58,7 +58,10 @@ class AdvertisingRemoteDataSourceImpl implements AdvertisingRemoteDataSource {
     var multiPartFile = MultipartFile.fromBytes(
       byte,
       filename: name,
-      contentType: MediaType('image', 'jpeg'),
+      contentType: MediaType(
+        'image',
+        'jpeg',
+      ),
     );
     var formData = FormData.fromMap(
       {
@@ -71,6 +74,8 @@ class AdvertisingRemoteDataSourceImpl implements AdvertisingRemoteDataSource {
       'https://api.cloudinary.com/v1_1/df7fvomdn/upload',
       data: formData,
     );
+    print(response);
+    print(formData);
     return response.data["secure_url"];
   }
 

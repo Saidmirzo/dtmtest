@@ -3,6 +3,7 @@ import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/datasource/web_category_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/repository/quiz_parser.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/domain/repository/web_category_repository.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
@@ -83,25 +84,25 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
 
   @override
   Future<Either<Failure, String>> addTheme(
-      Uint8List filePath, String name, String categoryId) async {
+      Uint8List bytes, String name, String categoryId) async {
     try {
-      final List<Quiz> quizs = await _parseFromFile(filePath);
-      final ThemeModel themeModel = ThemeModel(
-        createdTime: DateTime.now().millisecondsSinceEpoch.toString(),
-        name: name,
-        quiz: quizs,
-        quizCount: quizs.length,
-      );
-      final result =
-          await webRemoteCategoryDataSource.addTheme(themeModel, categoryId);
-      return Right(result);
+      final List<ThemeModel> themeModels = await parseFromFile(bytes);
+      if (themeModels.isNotEmpty) {
+        final result =
+            await webRemoteCategoryDataSource.addTheme(themeModels, categoryId);
+        return Right(result);
+      } else {
+        return const Left(CacheFailure("Parse error"));
+      }
     } catch (e) {
       return const Left(ServerFailure('Add new theme Error'));
     }
   }
 
   @override
-  Future<Either<Failure, List<ThemeModel>>> getAllThemes(String categoryId) async {
+
+  Future<Either<Failure, List<ThemeModel>>> getAllThemes(
+      String categoryId) async {
     try {
       final result = await webRemoteCategoryDataSource.getAllThemes(categoryId);
       return Right(result);
@@ -123,7 +124,8 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-  Future<Either<Failure, String>> editTheme( String categoryId, ThemeModel model) async {
+  Future<Either<Failure, String>> editTheme(
+      String categoryId, ThemeModel model) async {
     try {
       final result =
           await webRemoteCategoryDataSource.editTheme(categoryId, model);
@@ -132,7 +134,7 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
       return const Left(ServerFailure('get themes Error'));
     }
   }
-  
+
   @override
   Future<Either<Failure, String>> uploadImage(
       Uint8List byte, String name) async {

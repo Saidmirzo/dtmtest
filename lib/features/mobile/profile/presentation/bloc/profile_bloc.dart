@@ -24,7 +24,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) : super(const ProfileState()) {
     on<GetProfileDataEvent>(_getProfileData);
     on<UpdateProfileDataEvent>(_updateProfileData);
-    on<ProfileUpdateImageEvent>(_updateImageEvent);
+    // on<ProfileUpdateImageEvent>(_updateImageEvent);
     on<ProfileUploadImageEvent>(_uploadImageEvent);
   }
   _getProfileData(event, emit) async {
@@ -48,6 +48,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   _updateProfileData(UpdateProfileDataEvent event, emit) async {
     emit(state.copyWith(updateProfileDataStatus: BlocStatus.inProgress));
+    String? userImage;
+    if (event.byte != null && event.fileName != null) {
+      final respone =
+          await advertisingRepository.uploadImage(event.byte!, event.fileName!);
+      respone.fold(
+        (l) => emit(
+          state.copyWith(
+            updateProfileDataStatus: BlocStatus.failed,
+            message: l.message,
+          ),
+        ),
+        (r) {
+          userImage = r;
+        },
+      );
+    }
+    event.model.userImage= userImage ?? event.model.userImage;
     final result = await authRepository.updateProfileData(event.model);
     result.fold(
       (l) => emit(
@@ -62,29 +79,30 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             updateProfileDataStatus: BlocStatus.completed,
           ),
         );
+        add(GetProfileDataEvent());
       },
     );
   }
 
-  _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
-    emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
-    final result = await advertisingRepository.updateImage(
-        event.byte, event.name, event.publicId);
-    result.fold(
-      (l) => emit(
-        state.copyWith(
-          updateImageStatus: BlocStatus.failed,
-          message: l.message,
-        ),
-      ),
-      (r) => emit(
-        state.copyWith(
-          updateImageStatus: BlocStatus.completed,
-          imageLink: r,
-        ),
-      ),
-    );
-  }
+  // _updateImageEvent(ProfileUpdateImageEvent event, emit) async {
+  //   emit(state.copyWith(updateImageStatus: BlocStatus.inProgress));
+  //   final result = await advertisingRepository.updateImage(
+  //       event.byte, event.name, event.publicId);
+  //   result.fold(
+  //     (l) => emit(
+  //       state.copyWith(
+  //         updateImageStatus: BlocStatus.failed,
+  //         message: l.message,
+  //       ),
+  //     ),
+  //     (r) => emit(
+  //       state.copyWith(
+  //         updateImageStatus: BlocStatus.completed,
+  //         imageLink: r,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   _uploadImageEvent(ProfileUploadImageEvent event, emit) async {
     emit(state.copyWith(uploadImageStatus: BlocStatus.inProgress));

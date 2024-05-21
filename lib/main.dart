@@ -2,18 +2,18 @@ import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/bloc/bloc/web_advertising_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_auth/presentation/bloc/bloc/web_auth_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_home/presentation/bloc/web_home_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/bloc/web_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/blocs/users_bloc/web_users_bloc.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
 import 'package:dtmtest/features/mobile/category/presentation/bloc/category_bloc.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/home/bloc/home_bloc.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/bloc/profile_bloc.dart';
-import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/bloc/plans_bloc.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/bloc/bloc/tests_bloc.dart';
 import 'package:dtmtest/features/mobile/themes/presentation/bloc/themes_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -32,7 +32,7 @@ Future<void> main() async {
   ]).then(
     (_) => runApp(
       EasyLocalization(
-        useOnlyLangCode: true, 
+        useOnlyLangCode: true,
         supportedLocales: const [
           Locale('en'),
           Locale('uz'),
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          title: "DTM Test AdminDashboard",
+          title: "DTM Test",
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light(useMaterial3: false),
         ),

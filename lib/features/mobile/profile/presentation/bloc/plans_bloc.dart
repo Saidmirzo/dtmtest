@@ -2,13 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_repository.dart';
-import 'package:dtmtest/features/admin_panel/web_users/domain/repositories/web_users_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'plans_bloc.freezed.dart';
 part 'plans_event.dart';
 part 'plans_state.dart';
-part 'plans_bloc.freezed.dart';
 
 class PlansBloc extends Bloc<PlansEvent, PlansState> {
   final WebRepository webRepository;
@@ -27,7 +26,7 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
                 getAllPlanStatus: BlocStatus.failed,
                 message: l.message,
               ),
-            ), (r) {      
+            ), (r) {
       emit(
         state.copyWith(
           getAllPlanStatus: BlocStatus.completed,

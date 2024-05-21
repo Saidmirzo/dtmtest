@@ -7,9 +7,10 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/di/di.dart';
 import 'package:dtmtest/features/mobile/history/bloc/history_bloc.dart';
 import 'package:dtmtest/features/mobile/history/widgets/history_widget.dart';
+import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
@@ -22,8 +23,15 @@ class HistoryPage extends StatelessWidget {
       create: (context) => di<HistoryBloc>()..add(GetAllHistoryEvent()),
       child: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (context, state) {
+          final List<HistoryModel> listHistory = state.listHistory ?? [];
+
           if (state.getAllHistoryStatus == BlocStatus.inProgress) {
             return Center(child: UI.spinner());
+          }
+          if (listHistory.isEmpty) {
+            return const Center(
+              child: Text('History list is empty'),
+            );
           }
           return Container(
             decoration: BoxDecoration(
@@ -42,32 +50,38 @@ class HistoryPage extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 50),
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30)),
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
                           color: ColorName.white),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: state.listHistory?.length ?? 0,
-                        padding: const EdgeInsets.all(18),
-                        itemBuilder: (_, index) => HistoryWidget(
-                          onTap: () {
-                            context.pushRoute(HistoryDatailRoute(
-                                historyModel: state.listHistory?[index]));
-                          },
-                          name: state.listHistory?[index].categoryName ?? '',
-                          subname: '',
-                          date: '',
-                          time: DateTime.fromMillisecondsSinceEpoch(int.parse(
-                                  state.listHistory?[index].time ?? "0"))
-                              .toString()
-                              .formatDate(),
-                          correctCount:
-                              state.listHistory?[index].correctCount ?? 0,
-                          quizCount: state.listHistory?[index].quizCount ?? 0,
-                          index: index,
+                      child: RefreshIndicator(
+                        displacement: 40,
+                        edgeOffset: 20,
+                        onRefresh: () async {
+                          context.read<HistoryBloc>().add(GetAllHistoryEvent());
+                        },
+                        child: ListView.separated(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: listHistory.length,
+                          padding: const EdgeInsets.all(18),
+                          itemBuilder: (_, index) => HistoryWidget(
+                            onTap: () {
+                              context.pushRoute(HistoryDatailRoute(
+                                  historyModel: listHistory[index]));
+                            },
+                            name: listHistory[index].categoryName ?? '',
+                            subname: '',
+                            date: '',
+                            time: DateTime.fromMillisecondsSinceEpoch(
+                                    int.parse(listHistory[index].time ?? "0"))
+                                .toString()
+                                .formatDate(),
+                            correctCount: listHistory[index].correctCount ?? 0,
+                            quizCount: listHistory[index].quizCount ?? 0,
+                            index: index,
+                          ),
+                          separatorBuilder: (_, index) => 10.h,
                         ),
-                        separatorBuilder: (_, index) => 10.h,
                       ),
                     ),
                   )

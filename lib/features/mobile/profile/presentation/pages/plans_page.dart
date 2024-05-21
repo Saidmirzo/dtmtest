@@ -2,9 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
-import 'package:dtmtest/features/mobile/tarifs/data/plans_local_data.dart';
-import 'package:dtmtest/features/mobile/tarifs/presentation/bloc/plans_bloc.dart';
-import 'package:dtmtest/features/mobile/tarifs/presentation/widget/plans_custom_container.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/bloc/plans_bloc.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/widgets/plans_custom_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,9 +17,6 @@ class PlansPage extends StatefulWidget {
 }
 
 class _PlansPageState extends State<PlansPage> {
-  bool switchAdapter = false;
-  final plansLocalData = PlansLocalData();
-
   @override
   void initState() {
     super.initState();
@@ -67,15 +63,6 @@ class _PlansPageState extends State<PlansPage> {
                   ),
                 ),
                 20.h,
-                // SwitchApdapterWidget(
-                //   switchAdapter: switchAdapter,
-                //   function: () {
-                //     setState(() {
-                //       switchAdapter = !switchAdapter;
-                //     });
-                //   },
-                // ),
-                // 25.h,
                 SizedBox(
                   child: ListView.separated(
                     shrinkWrap: true,

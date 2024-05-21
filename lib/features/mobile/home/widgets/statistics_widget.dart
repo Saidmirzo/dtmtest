@@ -63,7 +63,7 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
             color: ColorName.white,
           ),
         ),
-        20.h,
+        20.h, 
         BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state.getAllStatisticsStatus == BlocStatus.completed) {

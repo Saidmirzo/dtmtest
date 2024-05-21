@@ -17,7 +17,7 @@ abstract class WebRemoteCategoryDataSource {
 
   Future<List<ThemeModel>> getAllThemes(String categoryId);
   Future<HomeDetailModel> getAllThemesCount();
-  Future<String> addTheme(ThemeModel themeModel, String categoryId);
+  Future<String> addTheme(List<ThemeModel> themeModel, String categoryId);
   Future<String> editTheme(
     String categoryId,
     ThemeModel model,
@@ -119,10 +119,13 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   }
 
   @override
-  Future<String> addTheme(ThemeModel themeModel, String categoryId) async {
-    final CollectionReference category =
+  Future<String> addTheme(
+      List<ThemeModel> themeModels, String categoryId) async {
+    final CollectionReference theme =
         categoryCollection.doc(categoryId).collection('theme');
-    await category.add(themeModel.toJson());
+    for (var element in themeModels) {
+      await theme.add(element.toJson());
+    }
     return "Success";
   }
 
@@ -141,6 +144,7 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
     await category.doc(model?.id).update(model!.toJson());
     return "Success";
   }
+
   @override
   Future<String> postImage(Uint8List byte, String name) async {
     var dio = Dio();
@@ -162,5 +166,4 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
     );
     return response.data["secure_url"];
   }
-
 }
