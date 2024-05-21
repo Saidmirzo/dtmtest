@@ -132,7 +132,10 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
   _addNewThemeEvent(AddNewQuizThemeEvent event, emit) async {
     emit(state.copyWith(addNewThemeStatus: BlocStatus.inProgress));
     final result = await webCategoryRepository.addTheme(
-        event.filePath, event.name, event.categoryId);
+      event.filePath,
+      event.name,
+      event.categoryId,
+    );
 
     result.fold(
       (l) => emit(

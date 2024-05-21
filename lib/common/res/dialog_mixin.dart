@@ -245,7 +245,7 @@ mixin DialogMixin {
               context.maybePop();
             } else if (state.addNewThemeStatus == BlocStatus.failed) {
               showSnackBar(context, text: 'Error');
-            }
+            } 
           },
           builder: (context, state) {
             if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
@@ -349,7 +349,7 @@ mixin DialogMixin {
                             onPressed: () {
                               // func();
                               if (nameControlle.text.isNotEmpty &&
-                                  categoryController.text.isNotEmpty) {
+                                  categoryController.text.isNotEmpty && filePath!=null) {
                                 context.read<WebQuizsBloc>().add(
                                       AddNewQuizThemeEvent(
                                         filePath: filePath!,

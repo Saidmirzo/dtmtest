@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
