@@ -36,9 +36,6 @@ class _MainPageState extends State<MainPage> {
               type: BottomNavigationBarType.fixed,
               currentIndex: tabsRouter.activeIndex,
               onTap: (value) {
-                setState(() {
-                  activeIndexForAppBar = value;
-                });
                 tabsRouter.setActiveIndex(value);
               },
               selectedLabelStyle: const TextStyle(
