@@ -12,6 +12,7 @@ import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/data/models/advertising_model.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widgets/add_advertising_dialog.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
@@ -217,7 +218,11 @@ mixin DialogMixin {
     );
   }
 
-  Future<dynamic> addThemeDialog(BuildContext context, EditAdd editAdd) {
+  Future<dynamic> addThemeDialog(
+    BuildContext context,
+    EditAdd editAdd,
+    ThemeModel? thememodel,
+  ) {
     final nameControlle = TextEditingController();
     final categoryController =
         TextEditingController(text: 'ezywxeyEuGNRwc9dKFGF');
@@ -317,18 +322,6 @@ mixin DialogMixin {
                             }).toList(),
                             menuHeight: 300,
                           ),
-                    // CustomTextField(
-                    //   controller: categoryControlle,
-                    //   backgroundColor: ColorName.backgroundColor,
-                    //   hintText: "Category",
-                    //   leading: const Padding(
-                    //     padding: EdgeInsets.only(left: 25, right: 10),
-                    //     child: Icon(Icons.search),
-                    //   ),
-                    //   borderColor: Colors.transparent,
-                    //   contentPadding: const EdgeInsets.symmetric(
-                    //       horizontal: 25, vertical: 17),
-                    // ),
                     IconButton(
                       onPressed: () {
                         FilePicker.platform.pickFiles().then(
@@ -349,18 +342,38 @@ mixin DialogMixin {
                             onPressed: () {
                               // func();
                               if (nameControlle.text.isNotEmpty &&
-                                  categoryController.text.isNotEmpty && filePath!=null) {
-                                context.read<WebQuizsBloc>().add(
-                                      AddNewQuizThemeEvent(
-                                        filePath: filePath!,
-                                        name: nameControlle.text,
-                                        categoryId: func(),
-                                      ),
-                                    );
+                                  categoryController.text.isNotEmpty) {
+                                if (editAdd == EditAdd.add) {
+                                  context.read<WebQuizsBloc>().add(
+                                        AddNewQuizThemeEvent(
+                                          filePath: filePath!,
+                                          name: nameControlle.text,
+                                          categoryId: func(),
+                                        ),
+                                      );
+                                } else {
+                                  var quizs = thememodel?.quiz;
+
+                                  final ThemeModel themeModel = ThemeModel(
+                                    createdTime: DateTime.now()
+                                        .millisecondsSinceEpoch
+                                        .toString(),
+                                    name: nameControlle.text,
+                                    quiz: quizs,
+                                    quizCount: thememodel?.quizCount,
+                                  );
+                                  context.read<WebQuizsBloc>().add(
+                                        EditQuizThemeEvent(
+                                          model: themeModel,
+                                          categoryId: func(),
+                                        ),
+                                      );
+                                }
+                                 
                               }
                             },
-                            text: "Add",
-                          )
+                            text: editAdd == EditAdd.add ? "Add" : 'Edit',
+                          ),
                   ],
                 ),
               ),
