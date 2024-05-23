@@ -82,7 +82,7 @@ Future<void> init() async {
   di.registerFactory(
       () => HomeBloc(repository: di(), advertisingRepository: di()));
   di.registerFactory(() => ProfileBloc(
-      authRepository: di(), webRepository: di(), advertisingRepository: di()));
+      authRepository: di(),  advertisingRepository: di()));
   di.registerFactory(() => WebAdvertisingBloc(advertisingRepository: di()));
   di.registerFactory(() => TarifsBloc(tarifRepository: di()));
   di.registerFactory(() => WebAuthBloc(webAuthRepository: di()));
