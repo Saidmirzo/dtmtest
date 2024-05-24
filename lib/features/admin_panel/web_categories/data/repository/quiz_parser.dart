@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/repository/theme_model.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as html_parser;
-import 'theme_model.dart';
-import 'dart:html' as html;
+import 'package:path_provider/path_provider.dart';
 
 List<Question> parseQuestions(String htmlContent) {
   List<Question> questions = [];
@@ -53,8 +55,7 @@ List<Question> parseQuestions(String htmlContent) {
 
 Future<List<ThemeModel>> parseFromFile(Uint8List bytes) async {
   try {
-    final blob = html.Blob([bytes]);
-    String fileContents = await readFileAsText(blob);
+    String fileContents = await readFileAsText(bytes);
 
     dom.Document document = html_parser.parse(fileContents);
     final List<String> selectedElements = document
@@ -125,19 +126,11 @@ bool isLetter(String input) {
   return RegExp(r'^[a-zA-Z]$').hasMatch(input);
 }
 
-Future<String> readFileAsText(html.Blob blob) {
-  final reader = html.FileReader();
-  final completer = Completer<String>();
-
-  reader.onLoadEnd.listen((_) {
-    completer.complete(reader.result as String);
-  });
-
-  reader.onError.listen((error) {
-    completer.completeError(error);
-  });
-
-  reader.readAsText(blob);
-
-  return completer.future;
+Future<String> readFileAsText(Uint8List bytes) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/temp_file.txt');
+  await file.writeAsBytes(bytes);
+  String contents = await file.readAsString();
+  await file.delete(); // Удаляем временный файл после чтения
+  return contents;
 }
