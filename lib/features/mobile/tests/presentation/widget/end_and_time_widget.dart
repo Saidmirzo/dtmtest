@@ -1,12 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
+import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import 'package:dtmtest/common/extentions.dart';
-import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 
 class EndTestsAndTimeWidget extends StatefulWidget {
   const EndTestsAndTimeWidget({
@@ -56,28 +55,30 @@ class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
             color: ColorName.yellow,
           ),
         ),
-        30.h,
+        15.h,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              InkWell(
+              InnerShadowWidget(
                 onTap: widget.onTap,
-                child: InnerShadowWidget(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                  child: widget.isLoading
-                      ? UI.spinner()
-                      : Text(
-                          "${LocaleKeys.category_finish.tr()}...",
-                          style: AppTextStyles.body12w7.copyWith(
-                            color: ColorName.white,
-                          ),
+                height: 35,
+                alignment: Alignment.center,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                child: widget.isLoading
+                    ? UI.spinner()
+                    : Text(
+                        "${LocaleKeys.category_finish.tr()}...",
+                        style: AppTextStyles.body12w7.copyWith(
+                          color: ColorName.white,
                         ),
-                ),
+                      ),
               ),
               InnerShadowWidget(
+                height: 35,
+                alignment: Alignment.center,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                 child: Text(
