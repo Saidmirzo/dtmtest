@@ -126,6 +126,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                     },
                     time: themeModel.duration ?? 0,
                   ),
+                  10.h,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Text(

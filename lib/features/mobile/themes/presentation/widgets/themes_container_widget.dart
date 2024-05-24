@@ -4,6 +4,8 @@ import 'package:dtmtest/common/res/res.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 // ignore: must_be_immutable
 class ThemesContainerWidget extends StatelessWidget {
@@ -34,13 +36,16 @@ class ThemesContainerWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              mavzunomi ?? '',
-              style: AppTextStyles.body16w4
-                  .copyWith(color: ColorName.blackTextColor),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 1.6,
+              child: Text(
+                mavzunomi ?? '',
+                style: AppTextStyles.body16w4
+                    .copyWith(color: ColorName.blackTextColor),
+              ),
             ),
             Text(
-             "${LocaleKeys.category_numberofquestions.tr()} : $savollarSoni",
+              "${LocaleKeys.category_numberofquestions.tr()} : $savollarSoni",
               style: AppTextStyles.body16w4
                   .copyWith(color: ColorName.greyTextColor),
             ),

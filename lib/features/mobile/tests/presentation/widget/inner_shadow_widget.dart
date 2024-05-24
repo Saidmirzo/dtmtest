@@ -8,37 +8,41 @@ class InnerShadowWidget extends StatelessWidget {
   EdgeInsetsGeometry? padding;
   final double? width, height;
   final AlignmentGeometry? alignment;
+  final void Function()? onTap;
   InnerShadowWidget({
     super.key,
     required this.child,
     this.padding,
     this.width,
     this.height,
-    this.alignment,
+    this.alignment, this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      alignment: alignment,
-      padding: padding,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: ColorName.customInnerShadowColor,
-          ),
-          BoxShadow(
-            color: ColorName.customColor,
-            blurRadius: 4,
-            spreadRadius: -2,
-            offset: Offset(0, 4),
-          ),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        alignment: alignment,
+        padding: padding,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              color: ColorName.customInnerShadowColor,
+            ),
+            BoxShadow(
+              color: ColorName.customColor,
+              blurRadius: 4,
+              spreadRadius: -2,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
