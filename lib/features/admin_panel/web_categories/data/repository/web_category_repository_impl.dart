@@ -3,44 +3,43 @@ import 'package:dtmtest/core/error/failure.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/datasource/web_category_remote_data_source.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/data/repository/quiz_parser.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/domain/repository/web_category_repository.dart';
-import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
+import './parsers/quiz_parser_factory.dart';
 
 class WebCategoryRepositoryImpl implements WebCategoryRepository {
   final WebRemoteCategoryDataSource webRemoteCategoryDataSource;
 
   WebCategoryRepositoryImpl({required this.webRemoteCategoryDataSource});
 
-  Future<List<Quiz>> _parseFromFile(Uint8List path) async {
-    ByteData data = await rootBundle.load('assets/files/test.xlsx');
-    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    // if (bytes == path) {
-    //   log('equal');
-    // }
-    var excel = Excel.decodeBytes(bytes);
+  // Future<List<Quiz>> _parseFromFile(Uint8List path) async {
+  //   ByteData data = await rootBundle.load('assets/files/test.xlsx');
+  //   var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+  //   // if (bytes == path) {
+  //   //   log('equal');
+  //   // }
+  //   var excel = Excel.decodeBytes(bytes);
 
-    List<Map<String, dynamic>> questions = [];
+  //   List<Map<String, dynamic>> questions = [];
 
-    for (var table in excel.tables.keys) {
-      for (var row in excel.tables[table]!.rows) {
-        if (row[0] != null && row[0]!.value != null) {
-          var question = {
-            'question': row[0]!.value.toString(),
-            'options': row
-                .skip(1)
-                .where((cell) => cell != null && cell.value != null)
-                .map((cell) => cell?.value.toString())
-                .toList()
-          };
-          questions.add(question);
-        }
-      }
-    }
-    List<Quiz> quizs = questions.map((e) => Quiz.fromJson(e)).toList();
-    return quizs;
-  }
+  //   for (var table in excel.tables.keys) {
+  //     for (var row in excel.tables[table]!.rows) {
+  //       if (row[0] != null && row[0]!.value != null) {
+  //         var question = {
+  //           'question': row[0]!.value.toString(),
+  //           'options': row
+  //               .skip(1)
+  //               .where((cell) => cell != null && cell.value != null)
+  //               .map((cell) => cell?.value.toString())
+  //               .toList()
+  //         };
+  //         questions.add(question);
+  //       }
+  //     }
+  //   }
+  //   List<Quiz> quizs = questions.map((e) => Quiz.fromJson(e)).toList();
+  //   return quizs;
+  // }
 
   @override
   Future<Either<Failure, String>> addCategory(CategoryModel model) async {
@@ -86,7 +85,8 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   Future<Either<Failure, String>> addTheme(
       Uint8List bytes, String name, String categoryId) async {
     try {
-      final List<ThemeModel> themeModels = await parseFromFile(bytes);
+      final List<ThemeModel> themeModels =
+          await WebQuizParser().parseFromFile(bytes);
       if (themeModels.isNotEmpty) {
         final result =
             await webRemoteCategoryDataSource.addTheme(themeModels, categoryId);
@@ -100,7 +100,6 @@ class WebCategoryRepositoryImpl implements WebCategoryRepository {
   }
 
   @override
-
   Future<Either<Failure, List<ThemeModel>>> getAllThemes(
       String categoryId) async {
     try {
