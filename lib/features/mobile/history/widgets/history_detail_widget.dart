@@ -2,6 +2,7 @@ import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -41,9 +42,11 @@ class HistoryDetailWidget extends StatelessWidget {
                 ),
               ),
               10.w,
-              Text(
-                question,
-                style: AppTextStyles.body14w7,
+              Expanded(
+                child: Text(
+                  question,
+                  style: AppTextStyles.body14w7,
+                ),
               ),
             ],
           ),
@@ -59,8 +62,10 @@ class HistoryDetailWidget extends StatelessWidget {
                           style: AppTextStyles.body14w7
                               .copyWith(color: ColorName.red),
                         ),
-                        Text(
-                          answer,
+                        Expanded(
+                          child: Text(
+                            answer,
+                          ),
                         )
                       ],
                     )
@@ -73,8 +78,10 @@ class HistoryDetailWidget extends StatelessWidget {
                     style: AppTextStyles.body14w7
                         .copyWith(color: ColorName.customColor),
                   ),
-                  Text(
-                    currentAnswer,
+                  Expanded(
+                    child: Text(
+                      currentAnswer,
+                    ),
                   )
                 ],
               )

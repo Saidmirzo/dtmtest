@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:dtmtest/common/res/app_text_style.dart';
-import 'package:dtmtest/common/res/colors.gen.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,20 +27,25 @@ class BackNextWidgetOnTest extends StatelessWidget {
               : InkWell(
                   onTap: backFunction,
                   child: InnerShadowWidget(
+                    width: 120,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Icon(
                           CupertinoIcons.back,
                           color: ColorName.white,
                           size: 25,
                         ),
-                        Text(
-                          LocaleKeys.category_back.tr(),
-                          style: AppTextStyles.body16w6.copyWith(
-                            color: ColorName.white,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            LocaleKeys.category_back.tr(),
+                            style: AppTextStyles.body16w6.copyWith(
+                              color: ColorName.white,
+                            ),
                           ),
                         ),
                       ],
@@ -54,15 +57,19 @@ class BackNextWidgetOnTest extends StatelessWidget {
               : InkWell(
                   onTap: nextFunction,
                   child: InnerShadowWidget(
+                    width: 120,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          LocaleKeys.category_forward.tr(),
-                          style: AppTextStyles.body16w6.copyWith(
-                            color: ColorName.white,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            LocaleKeys.category_forward.tr(),
+                            style: AppTextStyles.body16w6.copyWith(
+                              color: ColorName.white,
+                            ),
                           ),
                         ),
                         Transform.rotate(
