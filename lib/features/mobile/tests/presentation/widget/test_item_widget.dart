@@ -91,16 +91,11 @@ class _TestItemWidgetState extends State<TestItemWidget>
                   width: 1,
                 ),
                 borderRadius: BorderRadius.circular(10),
-                child: Row(
-                  children: [
-                    20.w,
-                    Text(
-                      "${listOptions[index]})",
-                      style: AppTextStyles.body16w7.copyWith(
-                        color: ColorName.testTextColor,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  "${listOptions[index]})",
+                  style: AppTextStyles.body16w7.copyWith(
+                    color: ColorName.testTextColor,
+                  ),
                 ),
               );
             },
