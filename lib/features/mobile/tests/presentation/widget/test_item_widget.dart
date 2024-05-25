@@ -1,7 +1,5 @@
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/material_button.dart';
-import 'package:dtmtest/common/res/app_text_style.dart';
-import 'package:dtmtest/common/res/colors.gen.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
@@ -45,7 +43,7 @@ class _TestItemWidgetState extends State<TestItemWidget>
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Text(
             widget.quiz.question ?? LocaleKeys.category_unknown.tr(),
-            style: AppTextStyles.body16w7.copyWith(
+            style: AppTextStyles.body22w7.copyWith(
               color: ColorName.testTextColor,
             ),
           ),
@@ -114,7 +112,7 @@ class _TestItemWidgetState extends State<TestItemWidget>
   }
 
   List<String> _shuffleList(List<String> list) {
-    List<String> result=[];
+    List<String> result = [];
     result.addAll(list);
     result.shuffle();
     return result;

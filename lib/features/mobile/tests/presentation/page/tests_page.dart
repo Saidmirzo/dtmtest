@@ -127,18 +127,19 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                     time: themeModel.duration ?? 0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 30)
+                        .copyWith(top: 20),
                     child: Text(
                       "${LocaleKeys.category_question.tr()}: ${activeIndex + 1}/${themeModel.quiz?.length}",
-                      style: AppTextStyles.body24w5.copyWith(
+                      style: AppTextStyles.body20w4.copyWith(
                         color: ColorName.white,
-                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                   15.h,
                   Expanded(
                     child: PageView(
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: pageController,
                       children: List.generate(
                         themeModel.quiz!.length,

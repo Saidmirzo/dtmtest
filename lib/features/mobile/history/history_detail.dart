@@ -21,7 +21,7 @@ class HistoryDatailPage extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar:  CustomAppBar(
+        appBar: CustomAppBar(
           text: historyModel?.categoryName,
         ),
         body: SafeArea(
@@ -37,17 +37,17 @@ class HistoryDatailPage extends StatelessWidget {
                           topRight: Radius.circular(30)),
                       color: ColorName.white),
                   child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      padding: const EdgeInsets.all(20),
-                      itemBuilder: (_, index) => HistoryDetailWidget(
-                            question: historyList[index].question ?? '',
-                            currentAnswer:
-                                historyList[index].correctAnswer ?? '',
-                            answer: historyList[index].answer ?? '',
-                            index: index,
-                          ),
-                      separatorBuilder: (_, indx) => 10.h,
-                      itemCount: historyList.length),
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.all(20),
+                    itemBuilder: (_, index) => HistoryDetailWidget(
+                      question: historyList[index].question ?? '',
+                      currentAnswer: historyList[index].correctAnswer ?? '',
+                      answer: historyList[index].answer ?? '',
+                      index: index,
+                    ),
+                    separatorBuilder: (_, indx) => 10.h,
+                    itemCount: historyList.length,
+                  ),
                 ),
               )
             ],
