@@ -101,6 +101,8 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                   ),
                   20.h,
                   EndTestsAndTimeWidget(
+                    activeCount:
+                        "${activeIndex + 1}/${themeModel.quiz?.length}",
                     isLoading: state.saveToHistoryStatus.isProgress,
                     onTap: () {
                       showAccessDialog(
@@ -125,17 +127,6 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                       );
                     },
                     time: themeModel.duration ?? 0,
-                  ),
-                  10.h,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30)
-                        .copyWith(top: 20),
-                    child: Text(
-                      "${LocaleKeys.category_question.tr()}: ${activeIndex + 1}/${themeModel.quiz?.length}",
-                      style: AppTextStyles.body20w4.copyWith(
-                        color: ColorName.white,
-                      ),
-                    ),
                   ),
                   15.h,
                   Expanded(

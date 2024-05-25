@@ -12,11 +12,13 @@ class EndTestsAndTimeWidget extends StatefulWidget {
     super.key,
     required this.time,
     required this.onTap,
-    this.isLoading = false,
+
+    this.isLoading = false, required this.activeCount,
   });
   final int time;
   final Function() onTap;
   final bool isLoading;
+  final String activeCount;
 
   @override
   State<EndTestsAndTimeWidget> createState() => _EndTestsAndTimeWidgetState();
@@ -76,6 +78,12 @@ class _EndTestsAndTimeWidgetState extends State<EndTestsAndTimeWidget> {
                         ),
                       ),
               ),
+                Text(
+                    widget.activeCount,
+                    style: AppTextStyles.body20w4.copyWith(
+                      color: ColorName.white,
+                    ),
+                  ),
               InnerShadowWidget(
                 height: 35,
                 alignment: Alignment.center,

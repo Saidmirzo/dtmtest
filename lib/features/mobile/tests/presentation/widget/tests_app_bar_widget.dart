@@ -15,6 +15,7 @@ class TestsAppBarWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           border: Border.all(
@@ -24,43 +25,11 @@ class TestsAppBarWidget extends StatelessWidget {
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // 70.w,
-            Text(
-              text,
-              style: AppTextStyles.body24w7.copyWith(
-                color: ColorName.customColor,
-              ),
-            ),
-            // InkWell(
-            //   onTap: () {},
-            //   child: InnerShadowWidget(
-            //     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       children: [
-            //         Text(
-            //           "Test",
-            //           style: AppTextStyles.body16w6.copyWith(
-            //             color: ColorName.white,
-            //           ),
-            //         ),
-            //         Transform.rotate(
-            //           angle: 3 * pi / 2,
-            //           child: const Icon(
-            //             CupertinoIcons.back,
-            //             size: 25,
-            //             color: ColorName.white,
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-          ],
+        child: Text(
+          text,
+          style: AppTextStyles.body24w7.copyWith(
+            color: ColorName.customColor,
+          ),
         ),
       ),
     );

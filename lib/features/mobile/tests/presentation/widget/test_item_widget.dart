@@ -45,7 +45,7 @@ class _TestItemWidgetState extends State<TestItemWidget>
             child: Text(
               widget.quiz.question ?? LocaleKeys.category_unknown.tr(),
               style: AppTextStyles.body16w7.copyWith(
-                color: ColorName.testTextColor,
+                color: ColorName.white,
               ),
             ),
           ),
