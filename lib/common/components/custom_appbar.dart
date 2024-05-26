@@ -18,35 +18,35 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size(double.infinity, 100),
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: child ??
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      // ignore: deprecated_member_use
-                      AutoRouter.of(context).pop();
-                    },
-                    icon: const Icon(
-                      CupertinoIcons.back,
-                    ),
-                    iconSize: 25,
-                    color: ColorName.white,
+        child: child ??
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    // ignore: deprecated_member_use
+                    AutoRouter.of(context).pop();
+                  },
+                  icon: const Icon(
+                    CupertinoIcons.back,
                   ),
-                  Text(
+                  iconSize: 25,
+                  color: ColorName.white,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.35,
+                  child: Text(
                     text ?? '',
                     style: AppTextStyles.body24w5.copyWith(
                       color: ColorName.white,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  25.w,
-                ],
-              ),
-        ),
+                ),
+                25.w,
+              ],
+            ),
       ),
     );
   }

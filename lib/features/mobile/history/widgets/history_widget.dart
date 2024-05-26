@@ -14,10 +14,11 @@ class HistoryWidget extends StatelessWidget {
     required this.time,
     required this.correctCount,
     required this.quizCount,
-    this.onTap, required this.index,
+    this.onTap,
+    required this.index,
   });
   final String name, subname, date, time;
-  final num correctCount, quizCount,index;
+  final num correctCount, quizCount, index;
   final void Function()? onTap;
 
   @override
@@ -26,31 +27,33 @@ class HistoryWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(10),
-        height: 65,
         decoration: (BoxDecoration(
             border: Border.all(color: ColorName.customColor),
             borderRadius: BorderRadius.circular(7))),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          InnerShadowWidget(
-                width: 30,
-                height: 30,
-                alignment: Alignment.center,
-                child: Text(
-                  "${index + 1}",
-                  style:
-                      AppTextStyles.body16w4.copyWith(color: ColorName.white),
-                ),
+            InnerShadowWidget(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              child: Text(
+                "${index + 1}",
+                style: AppTextStyles.body16w4.copyWith(color: ColorName.white),
               ),
+            ),
             10.w,
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name,
-                  style: AppTextStyles.body16w7
-                      .copyWith(color: ColorName.customColor),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Text(
+                    name,
+                    style: AppTextStyles.body16w7
+                        .copyWith(color: ColorName.customColor),
+                  ),
                 ),
                 Text(
                   subname,
@@ -86,7 +89,7 @@ class HistoryWidget extends StatelessWidget {
                 style: AppTextStyles.body12w4,
               ),
               progressColor: Colors.yellow,
-              backgroundColor: ColorName.white,
+              backgroundColor: ColorName.grey,
             )
           ],
         ),
