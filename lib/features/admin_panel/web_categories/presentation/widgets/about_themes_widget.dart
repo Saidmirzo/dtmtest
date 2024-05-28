@@ -9,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class AboutThemesWidget extends StatelessWidget with DialogMixin {
-  AboutThemesWidget({super.key});
+  AboutThemesWidget({super.key, required this.idCategory});
 
+  final String idCategory;
   List<ThemeModel> listTheme = [];
 
   @override
@@ -40,7 +41,10 @@ class AboutThemesWidget extends StatelessWidget with DialogMixin {
               ),
             ],
           ),
-          onDelete: (index) {},
+          onDelete: (index) {
+            context.read<WebQuizsBloc>().add(DeleteQuizThemeEvent(
+                idCategory: idCategory, idTheme: listTheme[index].id ?? ''));
+          },
           onEdit: (index) {
             addThemeDialog(
               context,

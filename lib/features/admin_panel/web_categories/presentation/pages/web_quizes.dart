@@ -3,7 +3,6 @@ import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/edit_add.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/gradient_button.dart';
-import 'package:dtmtest/common/material_button.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
@@ -52,7 +51,6 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
                 width: 110,
@@ -66,7 +64,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                   icon: Assets.icons.add.svg(),
                 ),
               ),
-              const Spacer(),
+              20.w,
               BlocConsumer<WebQuizsBloc, WebQuizsState>(
                   listener: (context, state) {
                 if (state.getAllCategoriesStatus.isProgress) {
@@ -113,7 +111,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                 }
                 return const SizedBox.shrink();
               }),
-              const Spacer(),
+              20.w,
               idCategory == ''
                   ? const SizedBox(
                       width: 300,
@@ -164,29 +162,15 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                             return const SizedBox.shrink();
                           }),
                     ),
-              const Spacer(),
-              MaterialInkWellButton(
-                borderRadius: BorderRadius.circular(25),
-                width: 50,
-                height: 50,
-                function: () {
-                  context
-                      .read<WebQuizsBloc>()
-                      .add(GetAllQuizThemesEvent(id: idCategory));
-                },
-                gradient: AppGradient.gradient,
-                child: const Icon(
-                  Icons.refresh,
-                  color: ColorName.white,
-                ),
-              ),
             ],
           ),
           20.h,
           if (idTheme == '')
             Expanded(
               child: SingleChildScrollView(
-                child: AboutThemesWidget(),
+                child: AboutThemesWidget(
+                  idCategory: idCategory,
+                ),
               ),
             )
           else
@@ -194,6 +178,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
               child: SingleChildScrollView(
                 child: QuizsWidget(
                   idTheme: idTheme,
+                  idCategory: idCategory,
                 ),
               ),
             ),
