@@ -8,9 +8,9 @@ import 'package:dtmtest/features/admin_panel/web_categories/domain/repository/we
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'web_quizs_bloc.freezed.dart';
 part 'web_quizs_event.dart';
 part 'web_quizs_state.dart';
-part 'web_quizs_bloc.freezed.dart';
 
 class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
   final WebCategoryRepository webCategoryRepository;
@@ -198,8 +198,8 @@ class WebQuizsBloc extends Bloc<WebQuizsEvent, WebQuizsState> {
         emit(
           state.copyWith(deleteThemeStatus: BlocStatus.completed),
         );
+        add(GetAllQuizThemesEvent(id: event.idCategory));
       },
     );
   }
 }
-  

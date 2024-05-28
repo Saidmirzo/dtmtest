@@ -1,17 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore: must_be_immutable
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/widgets/custom_table_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class QuizsWidget extends StatefulWidget {
   String idTheme;
+  String idCategory;
+
   QuizsWidget({
     super.key,
     required this.idTheme,
+    required this.idCategory,
   });
 
   @override
@@ -34,7 +39,15 @@ class _QuizsWidgetState extends State<QuizsWidget> {
           }
         }
         return CustomTable(
-          columnNames: const ['№', 'Question', ""],
+          columnNames: const [
+            '№',
+            'Question',
+            "Option1",
+            "Option2",
+            "Option3",
+            "Option4",
+            ""
+          ],
           columnList: List.generate(
             list?.quiz?.length ?? 0,
             (index) => [
@@ -44,9 +57,17 @@ class _QuizsWidgetState extends State<QuizsWidget> {
               Text(
                 list?.quiz?[index].question ?? 'Unk',
               ),
+              ...List.generate(
+                list?.quiz?[index].options?.length ?? 0,
+                (childIndex) => Text(
+                  list?.quiz?[index].options?[childIndex] ?? 'Unk',
+                ),
+              )
             ],
           ),
-          onDelete: (index) {},
+          onDelete: (index) {
+            
+          },
           onEdit: (index) {},
         );
       },
