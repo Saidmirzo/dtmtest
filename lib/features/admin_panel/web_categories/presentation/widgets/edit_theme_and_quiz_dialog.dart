@@ -3,27 +3,35 @@ import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/res/res.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/category_bloc/web_categories_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
+class EditThemeAndQuizDialogWidget extends StatefulWidget {
   EditThemeAndQuizDialogWidget({
     super.key,
     required this.themeModel,
     required this.idCategory,
   });
   ThemeModel themeModel;
-  int maxColumn = 5;
   final String idCategory;
+
+  @override
+  State<EditThemeAndQuizDialogWidget> createState() =>
+      _EditThemeAndQuizDialogWidgetState();
+}
+
+class _EditThemeAndQuizDialogWidgetState
+    extends State<EditThemeAndQuizDialogWidget> with DialogMixin {
+  int maxColumn = 5;
+
   bool readOnly = false;
 
   @override
   Widget build(BuildContext context) {
     int max = 4;
-    themeModel.quiz?.forEach((element) {
+    widget.themeModel.quiz?.forEach((element) {
       if ((element.options?.length ?? 0) > 4) {
         max = element.options?.length ?? 0;
       }
@@ -66,10 +74,10 @@ class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
                         contentPadding: const EdgeInsets.all(10),
                         readOnly: readOnly,
                         onChanged: (value) {
-                          themeModel.name = value;
+                          widget.themeModel.name = value;
                         },
                         controller:
-                            TextEditingController(text: themeModel.name),
+                            TextEditingController(text: widget.themeModel.name),
                       ),
                     ),
                     const Spacer(),
@@ -83,8 +91,8 @@ class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
                       onTap: () {
                         context.read<WebQuizsBloc>().add(
                               EditQuizThemeEvent(
-                                model: themeModel,
-                                categoryId: idCategory,
+                                model: widget.themeModel,
+                                categoryId: widget.idCategory,
                               ),
                             );
                       },
@@ -105,14 +113,17 @@ class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
                       DataTable(
                         dataRowMaxHeight: 200,
                         columns: List.generate(
-                          maxColumn,
+                          maxColumn + 1,
                           (index) => DataColumn(
-                            label:
-                                Text(index == 0 ? "Question" : "Option$index"),
+                            label: Text(index == 0
+                                ? "Question"
+                                : maxColumn == index
+                                    ? ''
+                                    : "Option$index"),
                           ),
                         ),
                         rows: List<DataRow>.generate(
-                          themeModel.quiz?.length ?? 0,
+                          widget.themeModel.quiz?.length ?? 0,
                           (index) => DataRow(
                             cells: [
                               DataCell(
@@ -120,9 +131,11 @@ class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
                                   width: 200,
                                   child: QuizEditTextField(
                                     readOnly: readOnly,
-                                    text: themeModel.quiz?[index].question,
+                                    text:
+                                        widget.themeModel.quiz?[index].question,
                                     onChange: (value) {
-                                      themeModel.quiz?[index].question = value;
+                                      widget.themeModel.quiz?[index].question =
+                                          value;
                                     },
                                   ),
                                 ),
@@ -131,10 +144,10 @@ class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
                                 maxColumn - 1,
                                 (i) {
                                   if (i <
-                                      (themeModel
-                                              .quiz![index].options?.length ??
+                                      (widget.themeModel.quiz![index].options
+                                              ?.length ??
                                           0)) {
-                                    Quiz quiz = themeModel.quiz![index];
+                                    Quiz quiz = widget.themeModel.quiz![index];
                                     return DataCell(
                                       QuizEditTextField(
                                         readOnly: readOnly,
@@ -150,6 +163,22 @@ class EditThemeAndQuizDialogWidget extends StatelessWidget with DialogMixin {
                                     );
                                   }
                                 },
+                              ),
+                              DataCell(
+                                SizedBox(
+                                  width: 200,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.themeModel.quiz?.removeAt(index);
+                                      });
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: ColorName.red,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
