@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dtmtest/common/res/res.dart';
+import 'package:dtmtest/common/ui.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
@@ -11,6 +12,7 @@ class CustomTextButton extends StatelessWidget {
     this.color,
     this.borderColor,
     this.borderRadius,
+    this.isLoading = false,
   });
   final Widget? preficWidget;
   final Widget? suffixWidget;
@@ -18,6 +20,7 @@ class CustomTextButton extends StatelessWidget {
   final Color? color;
   final Color? borderColor;
   final double? borderRadius;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +30,19 @@ class CustomTextButton extends StatelessWidget {
         border: BorderSide(
           color: borderColor ?? ColorName.white.withOpacity(.35),
         ),
-        borderRadius:borderRadius?? 50,
+        borderRadius: borderRadius ?? 50,
       ),
-      onPressed: onTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          preficWidget ?? const SizedBox.shrink(),
-          const SizedBox(width: 10),
-          suffixWidget ?? const SizedBox.shrink(),
-        ],
-      ),
+      onPressed: isLoading ? null : onTap,
+      child: isLoading
+          ? UI.spinner()
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                preficWidget ?? const SizedBox.shrink(),
+                const SizedBox(width: 10),
+                suffixWidget ?? const SizedBox.shrink(),
+              ],
+            ),
     );
   }
 }

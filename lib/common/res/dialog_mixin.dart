@@ -14,6 +14,7 @@ import 'package:dtmtest/features/admin_panel/web_advertising/presentation/widget
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/bloc/quizs_bloc/web_quizs_bloc.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/widgets/edit_theme_and_quiz_dialog.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/domain/models/plan_model.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/bloc/tarifs_bloc.dart';
 import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
@@ -218,9 +219,22 @@ mixin DialogMixin {
     );
   }
 
+  Future editThemeAndQuizDialog(
+    BuildContext context,
+    ThemeModel themeModel,
+    String idCategory,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (context) => EditThemeAndQuizDialogWidget(
+        themeModel: themeModel,
+        idCategory: idCategory,
+      ),
+    );
+  }
+
   Future<dynamic> addThemeDialog(
     BuildContext context,
-    EditAdd editAdd,
     ThemeModel? thememodel,
   ) {
     final nameControlle = TextEditingController();
@@ -250,7 +264,7 @@ mixin DialogMixin {
               context.maybePop();
             } else if (state.addNewThemeStatus == BlocStatus.failed) {
               showSnackBar(context, text: 'Error');
-            } 
+            }
           },
           builder: (context, state) {
             if (state.getAllCategoriesStatus == BlocStatus.inProgress) {
@@ -260,7 +274,7 @@ mixin DialogMixin {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(editAdd == EditAdd.add ? "Add admin" : "Edit admin"),
+                  const Text("Add theme"),
                   IconButton(
                       onPressed: () {
                         context.maybePop();
@@ -343,36 +357,36 @@ mixin DialogMixin {
                               // func();
                               if (nameControlle.text.isNotEmpty &&
                                   categoryController.text.isNotEmpty) {
-                                if (editAdd == EditAdd.add) {
-                                  context.read<WebQuizsBloc>().add(
-                                        AddNewQuizThemeEvent(
-                                          filePath: filePath!,
-                                          name: nameControlle.text,
-                                          categoryId: func(),
-                                        ),
-                                      );
-                                } else {
-                                  var quizs = thememodel?.quiz;
+                                // if (editAdd == EditAdd.add) {
+                                context.read<WebQuizsBloc>().add(
+                                      AddNewQuizThemeEvent(
+                                        filePath: filePath!,
+                                        name: nameControlle.text,
+                                        categoryId: func(),
+                                      ),
+                                    );
+                                // }
+                                // else {
+                                //   var quizs = thememodel?.quiz;
 
-                                  final ThemeModel themeModel = ThemeModel(
-                                    createdTime: DateTime.now()
-                                        .millisecondsSinceEpoch
-                                        .toString(),
-                                    name: nameControlle.text,
-                                    quiz: quizs,
-                                    quizCount: thememodel?.quizCount,
-                                  );
-                                  context.read<WebQuizsBloc>().add(
-                                        EditQuizThemeEvent(
-                                          model: themeModel,
-                                          categoryId: func(),
-                                        ),
-                                      );
-                                }
-                                 
+                                //   final ThemeModel themeModel = ThemeModel(
+                                //     createdTime: DateTime.now()
+                                //         .millisecondsSinceEpoch
+                                //         .toString(),
+                                //     name: nameControlle.text,
+                                //     quiz: quizs,
+                                //     quizCount: thememodel?.quizCount,
+                                //   );
+                                //   context.read<WebQuizsBloc>().add(
+                                //         EditQuizThemeEvent(
+                                //           model: themeModel,
+                                //           categoryId: func(),
+                                //         ),
+                                //       );
+                                // }
                               }
                             },
-                            text: editAdd == EditAdd.add ? "Add" : 'Edit',
+                            text: "Add",
                           ),
                   ],
                 ),

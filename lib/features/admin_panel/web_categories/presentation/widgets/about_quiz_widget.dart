@@ -32,10 +32,10 @@ class _QuizsWidgetState extends State<QuizsWidget> {
         if (state.getAllThemesStatus.isProgress) {
           return UI.spinner();
         }
-        ThemeModel? list;
+        ThemeModel? themeModel;
         for (var element in state.listThemes!) {
           if (element.id == widget.idTheme) {
-            list = element;
+            themeModel = element;
           }
         }
         return CustomTable(
@@ -49,18 +49,18 @@ class _QuizsWidgetState extends State<QuizsWidget> {
             ""
           ],
           columnList: List.generate(
-            list?.quiz?.length ?? 0,
+            themeModel?.quiz?.length ?? 0,
             (index) => [
               Text(
                 '${index + 1}',
               ),
               Text(
-                list?.quiz?[index].question ?? 'Unk',
+                themeModel?.quiz?[index].question ?? 'Unk',
               ),
               ...List.generate(
-                list?.quiz?[index].options?.length ?? 0,
+                themeModel?.quiz?[index].options?.length ?? 0,
                 (childIndex) => Text(
-                  list?.quiz?[index].options?[childIndex] ?? 'Unk',
+                  themeModel?.quiz?[index].options?[childIndex] ?? 'Unk',
                 ),
               )
             ],

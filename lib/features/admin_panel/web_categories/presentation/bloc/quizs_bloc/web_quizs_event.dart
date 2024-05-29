@@ -6,24 +6,7 @@ class WebQuizsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class AddQuizCategoryEvent extends WebQuizsEvent {
-  const AddQuizCategoryEvent({required this.model});
-  final CategoryModel model;
-}
-
 class GetAllQuizCategoryEvent extends WebQuizsEvent {}
-
-class DeleteQuizCategoryEvent extends WebQuizsEvent {
-  const DeleteQuizCategoryEvent({required this.id});
-
-  final String id;
-}
-
-class EditQuizCategoryEvent extends WebQuizsEvent {
-  const EditQuizCategoryEvent({required this.index, required this.model});
-  final CategoryModel? model;
-  final int index;
-}
 
 // ignore: must_be_immutable
 class GetAllQuizThemesEvent extends WebQuizsEvent {

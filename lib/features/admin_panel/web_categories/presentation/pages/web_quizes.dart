@@ -58,7 +58,7 @@ class _WebQuizesPageState extends State<WebQuizesPage> with DialogMixin {
                   replaceTextVSIcon: true,
                   radius: 50,
                   onPressed: () {
-                    addThemeDialog(context, EditAdd.add, null);
+                    addThemeDialog(context, null);
                   },
                   text: "Add",
                   icon: Assets.icons.add.svg(),
