@@ -191,6 +191,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/no_connection.png
+  AssetGenImage get noConnection =>
+      const AssetGenImage('assets/images/no_connection.png');
+
   /// File path: assets/images/number_one_king.png
   AssetGenImage get numberOneKing =>
       const AssetGenImage('assets/images/number_one_king.png');
@@ -218,6 +222,7 @@ class $AssetsImagesGen {
         businessPlanImage,
         defimage,
         logo,
+        noConnection,
         numberOneKing,
         premiumPlansImage,
         proPlanImage,
