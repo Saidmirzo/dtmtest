@@ -46,11 +46,7 @@ class AboutThemesWidget extends StatelessWidget with DialogMixin {
                 idCategory: idCategory, idTheme: listTheme[index].id ?? ''));
           },
           onEdit: (index) {
-            addThemeDialog(
-              context,
-              EditAdd.edit,
-              listTheme[index],
-            );
+            editThemeAndQuizDialog(context, listTheme[index], idCategory);
           },
         );
       },

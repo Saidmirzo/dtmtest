@@ -139,6 +139,7 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
 
   @override
   Future<String> editTheme(String categoryId, ThemeModel? model) async {
+    model?.quizCount = model.quiz?.length;
     final CollectionReference category =
         categoryCollection.doc(categoryId).collection('theme');
     await category.doc(model?.id).update(model!.toJson());
