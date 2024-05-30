@@ -17,7 +17,7 @@ abstract class WebRemoteCategoryDataSource {
 
   Future<List<ThemeModel>> getAllThemes(String categoryId);
   Future<HomeDetailModel> getAllThemesCount();
-  Future<String> addTheme(List<ThemeModel> themeModel, String categoryId);
+  Future<String> addTheme(ThemeModel themeModel, String categoryId);
   Future<String> editTheme(
     String categoryId,
     ThemeModel model,
@@ -119,13 +119,10 @@ class WebRemoteCategoryDataSourceImpl implements WebRemoteCategoryDataSource {
   }
 
   @override
-  Future<String> addTheme(
-      List<ThemeModel> themeModels, String categoryId) async {
+  Future<String> addTheme(ThemeModel themeModel, String categoryId) async {
     final CollectionReference theme =
         categoryCollection.doc(categoryId).collection('theme');
-    for (var element in themeModels) {
-      await theme.add(element.toJson());
-    }
+    await theme.add(themeModel.toJson());
     return "Success";
   }
 
