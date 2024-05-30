@@ -338,7 +338,10 @@ mixin DialogMixin {
                           ),
                     IconButton(
                       onPressed: () {
-                        FilePicker.platform.pickFiles().then(
+                        FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['xlsx', 'xls'],
+                        ).then(
                           (value) {
                             if (value != null) {
                               filePath = value.files.first.bytes;
