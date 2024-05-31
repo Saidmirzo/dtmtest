@@ -27,6 +27,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CategoryPage(),
       );
     },
+    ConnectivityRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ConnectivityScreen(),
+      );
+    },
     HistoryDatailRoute.name: (routeData) {
       final args = routeData.argsAs<HistoryDatailRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -221,6 +227,20 @@ class CategoryRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CategoryRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ConnectivityScreen]
+class ConnectivityRoute extends PageRouteInfo<void> {
+  const ConnectivityRoute({List<PageRouteInfo>? children})
+      : super(
+          ConnectivityRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ConnectivityRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

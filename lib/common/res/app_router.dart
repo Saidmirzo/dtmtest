@@ -1,17 +1,17 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dtmtest/features/admin_panel/web_auth/presentation/pages/web_auth_page.dart';
-import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
-import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_admins.dart';
 import 'package:dtmtest/features/admin_panel/web_advertising/presentation/pages/web_advertising.dart';
+import 'package:dtmtest/features/admin_panel/web_auth/presentation/pages/web_auth_page.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/data/models/category_model.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
 import 'package:dtmtest/features/admin_panel/web_categories/presentation/pages/web_categories.dart';
+import 'package:dtmtest/features/admin_panel/web_categories/presentation/pages/web_quizes.dart';
 import 'package:dtmtest/features/admin_panel/web_home/presentation/web_home.dart';
 import 'package:dtmtest/features/admin_panel/web_main_page.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/data/models/theme_model.dart';
-import 'package:dtmtest/features/admin_panel/web_categories/presentation/pages/web_quizes.dart';
 import 'package:dtmtest/features/admin_panel/web_tarifs/presentation/tarifs.dart';
+import 'package:dtmtest/features/admin_panel/web_users/data/models/admin_model.dart';
+import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_admins.dart';
 import 'package:dtmtest/features/admin_panel/web_users/presentation/pages/web_users.dart';
-import 'package:dtmtest/features/mobile/profile/presentation/pages/about_us.dart';
+import 'package:dtmtest/features/mobile/auth/presentation/pages/connectivity_screen.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/mobile_login_page.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/sifn_in_page.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/pages/sign_up_page.dart';
@@ -22,9 +22,10 @@ import 'package:dtmtest/features/mobile/history/history_detail.dart';
 import 'package:dtmtest/features/mobile/home/pages/home_page.dart';
 import 'package:dtmtest/features/mobile/home/pages/leaders_board.dart';
 import 'package:dtmtest/features/mobile/mobile_main_page.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/pages/about_us.dart';
+import 'package:dtmtest/features/mobile/profile/presentation/pages/plans_page.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/pages/privacy_police.dart';
 import 'package:dtmtest/features/mobile/profile/presentation/pages/profile_page.dart';
-import 'package:dtmtest/features/mobile/profile/presentation/pages/plans_page.dart';
 import 'package:dtmtest/features/mobile/tests/data/models/history_model.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/page/tests_page.dart';
 import 'package:dtmtest/features/mobile/tests/presentation/page/tests_result_page.dart';
@@ -51,6 +52,7 @@ class AppRouter extends _$AppRouter {
   static const String aboutUs = '/aboutUs';
   static const String privacyPolicy = '/privacyPolicy';
   static const String webAuthRoute = '/webAuthRoute';
+  static const String noConnectionPage = '/noConnectionPage';
 
   @override
   final List<AutoRoute> routes = [
@@ -150,6 +152,10 @@ class AppRouter extends _$AppRouter {
     AutoRoute(
       page: PrivacyPolicyRoute.page,
       path: privacyPolicy,
+    ),
+    AutoRoute(
+      page: ConnectivityRoute.page,
+      path: noConnectionPage,
     ),
   ];
 }
