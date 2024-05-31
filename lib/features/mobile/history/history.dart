@@ -60,6 +60,7 @@ class HistoryPage extends StatelessWidget {
                           context.read<HistoryBloc>().add(GetAllHistoryEvent());
                         },
                         child: ListView.separated(
+                          reverse: true,
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: listHistory.length,
                           padding: const EdgeInsets.all(18),
