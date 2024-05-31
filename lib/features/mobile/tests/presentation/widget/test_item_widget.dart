@@ -92,7 +92,7 @@ class _TestItemWidgetState extends State<TestItemWidget>
                 ),
                 borderRadius: BorderRadius.circular(10),
                 child: Text(
-                  "${listOptions[index]})",
+                  listOptions[index],
                   style: AppTextStyles.body16w7.copyWith(
                     color: ColorName.testTextColor,
                   ),
