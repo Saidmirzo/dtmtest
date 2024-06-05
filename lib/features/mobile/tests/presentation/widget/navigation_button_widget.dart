@@ -12,18 +12,21 @@ class NavigateButtonsWidget extends StatelessWidget {
     required this.activeIndex,
     required this.pageController,
     required this.quizColllection,
+    required this.scrollController,
   });
 
   final ThemeModel themeModel;
   final int activeIndex;
   final PageController pageController;
   final List<QuizCollection> quizColllection;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
       child: ListView.separated(
+        controller: scrollController,
         padding: EdgeInsets.zero.copyWith(left: 30, right: 30),
         separatorBuilder: (context, index) {
           return 10.w;

@@ -22,6 +22,7 @@ class _MainPageState extends State<MainPage> {
         gradient: AppGradient.backgroundGradient,
       ),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         body: AutoTabsScaffold(
           routes: const [

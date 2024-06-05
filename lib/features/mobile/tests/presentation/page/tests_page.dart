@@ -33,6 +33,7 @@ class TestsPage extends StatefulWidget {
 
 class _TestsPageState extends State<TestsPage> with DialogMixin {
   late PageController pageController;
+  late ScrollController indicatorController;
   late List<QuizCollection> quizColection;
 
   _genrateCollection() {
@@ -50,8 +51,10 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
     super.initState();
     _genrateCollection();
     pageController = PageController();
+    indicatorController = ScrollController();
     pageController.addListener(
       () {
+        _onPageChanged(pageController.page ?? 1);
         setState(
           () {
             final int index = pageController.page!.ceil();
@@ -61,6 +64,15 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
           },
         );
       },
+    );
+  }
+
+  void _onPageChanged(double index) {
+    // Scroll to the corresponding indicator
+    indicatorController.animateTo(
+      index * 50.0, // Adjust the value based on your indicator width
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linear,
     );
   }
 
@@ -94,6 +106,7 @@ class _TestsPageState extends State<TestsPage> with DialogMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   NavigateButtonsWidget(
+                    scrollController: indicatorController,
                     themeModel: themeModel,
                     activeIndex: activeIndex,
                     pageController: pageController,

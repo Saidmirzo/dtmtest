@@ -5,6 +5,7 @@ import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
 import 'package:dtmtest/common/res/app_router.dart';
+import 'package:dtmtest/common/res/dialog_mixin.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -29,7 +30,7 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends State<ProfilePage> with DialogMixin {
   bool isEditInfo = false;
   ImagePicker picker = ImagePicker();
   Uint8List? bytes;
@@ -287,7 +288,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           builder: (context, state) {
                             return InkWell(
                               onTap: () {
-                                context.read<AuthBloc>().add(LogOutEvent());
+                                showAccessDialog(
+                                  context,
+                                  onYes: () => context
+                                      .read<AuthBloc>()
+                                      .add(LogOutEvent()),
+                                );
                               },
                               child: InnerShadowWidget(
                                 padding: const EdgeInsets.symmetric(
