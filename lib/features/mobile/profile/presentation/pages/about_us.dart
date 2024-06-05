@@ -25,7 +25,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
           text: "Biz haqimizda",
         ),
         body: ThemesBackgroundContainer(
-          color: ColorName.white,
+          color: const Color.fromRGBO(255, 255, 255, 1),
           child: Markdown(
             padding: const EdgeInsets.symmetric(horizontal: 15)
                 .copyWith(top: 30, bottom: 50),
