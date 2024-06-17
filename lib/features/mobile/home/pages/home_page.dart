@@ -3,6 +3,7 @@ import 'package:dtmtest/common/constants.dart';
 import 'package:dtmtest/common/costomaizable.dart';
 import 'package:dtmtest/common/enums/bloc_status.dart';
 import 'package:dtmtest/common/extentions.dart';
+import 'package:dtmtest/common/res/app_router.dart';
 import 'package:dtmtest/common/ui.dart';
 import 'package:dtmtest/core/widgets/custom_network_image.dart';
 import 'package:dtmtest/features/mobile/auth/presentation/bloc/bloc/auth_bloc.dart';
@@ -144,11 +145,12 @@ class _HomePageState extends State<HomePage> {
                         if (state.listCategories?[index].isActive == true) {
                           return InkWell(
                             onTap: () {
-                              // AutoRouter.of(context).push(
-                              //   ThemesRoute(
-                              //     categoryModel: (state.listCategories?[index])!,
-                              //   ),
-                              // );
+                              AutoRouter.of(context).push(
+                                ThemesRoute(
+                                  categoryModel:
+                                      (state.listCategories?[index])!,
+                                ),
+                              );
                             },
                             borderRadius: BorderRadius.circular(15),
                             child: Container(

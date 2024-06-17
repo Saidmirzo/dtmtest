@@ -27,9 +27,10 @@ class HistoryWidget extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(10),
-        decoration: (BoxDecoration(
-            border: Border.all(color: ColorName.customColor),
-            borderRadius: BorderRadius.circular(7))),
+        decoration: BoxDecoration(
+          border: Border.all(color: ColorName.customColor),
+          borderRadius: BorderRadius.circular(7),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,7 +49,7 @@ class HistoryWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width * .4,
                   child: Text(
                     name,
                     style: AppTextStyles.body16w7

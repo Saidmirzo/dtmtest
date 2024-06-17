@@ -25,11 +25,11 @@ class _ThemesBackgroundContainerState extends State<ThemesBackgroundContainer> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       children: [
         30.h,
         Expanded(
           child: Container(
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(30),

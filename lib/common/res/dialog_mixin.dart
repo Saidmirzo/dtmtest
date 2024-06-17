@@ -37,7 +37,7 @@ mixin DialogMixin {
       builder: (context) {
         return AlertDialog(
           content: Text(
-            text ?? '',
+            text ?? 'Are your shure',
             style: AppTextStyles.body16w5,
           ),
           actions: [

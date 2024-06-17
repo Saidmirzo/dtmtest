@@ -38,6 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   width: MediaQuery.of(context).size.width / 1.35,
                   child: Text(
                     text ?? '',
+                    textAlign: TextAlign.center,
                     style: AppTextStyles.body24w5.copyWith(
                       color: ColorName.white,
                       fontWeight: FontWeight.w600,
