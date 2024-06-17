@@ -32,63 +32,71 @@ class HistoryPage extends StatelessWidget {
             return const Center(
               child: Text('History list is empty'),
             );
-          }
-          return Container(
-            decoration: BoxDecoration(
-              gradient: AppGradient.backgroundGradient,
-            ),
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Text(
-                    LocaleKeys.history.tr(),
-                    style:
-                        AppTextStyles.body20w5.copyWith(color: ColorName.white),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 50),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
+          } else if (state.getAllHistoryStatus.isComplated) {
+            return Container(
+              decoration: BoxDecoration(
+                gradient: AppGradient.backgroundGradient,
+              ),
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    Text(
+                      LocaleKeys.history.tr(),
+                      style: AppTextStyles.body20w5
+                          .copyWith(color: ColorName.white),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                            color: ColorName.white),
+                        child: RefreshIndicator(
+                          displacement: 40,
+                          edgeOffset: 20,
+                          onRefresh: () async {
+                            context
+                                .read<HistoryBloc>()
+                                .add(GetAllHistoryEvent());
+                          },
+                          child: ListView.separated(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: listHistory.length,
+                            padding: const EdgeInsets.all(18),
+                            itemBuilder: (_, index) => HistoryWidget(
+                              onTap: () {
+                                context.pushRoute(HistoryDatailRoute(
+                                    historyModel: listHistory[index]));
+                              },
+                              name: listHistory[index].categoryName ?? '',
+                              subname: '',
+                              date: '',
+                              time: DateTime.fromMillisecondsSinceEpoch(
+                                      int.parse(listHistory[index].time ?? "0"))
+                                  .toString()
+                                  .formatDate(),
+                              correctCount:
+                                  listHistory[index].correctCount ?? 0,
+                              quizCount: listHistory[index].quizCount ?? 0,
+                              index: index,
+                            ),
+                            separatorBuilder: (_, index) => 10.h,
                           ),
-                          color: ColorName.white),
-                      child: RefreshIndicator(
-                        displacement: 40,
-                        edgeOffset: 20,
-                        onRefresh: () async {
-                          context.read<HistoryBloc>().add(GetAllHistoryEvent());
-                        },
-                        child: ListView.separated(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: listHistory.length,
-                          padding: const EdgeInsets.all(18),
-                          itemBuilder: (_, index) => HistoryWidget(
-                            onTap: () {
-                              context.pushRoute(HistoryDatailRoute(
-                                  historyModel: listHistory[index]));
-                            },
-                            name: listHistory[index].categoryName ?? '',
-                            subname: '',
-                            date: '',
-                            time: DateTime.fromMillisecondsSinceEpoch(
-                                    int.parse(listHistory[index].time ?? "0"))
-                                .toString()
-                                .formatDate(),
-                            correctCount: listHistory[index].correctCount ?? 0,
-                            quizCount: listHistory[index].quizCount ?? 0,
-                            index: index,
-                          ),
-                          separatorBuilder: (_, index) => 10.h,
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            return const Center(
+              child: Text('Please try again'),
+            );
+          }
         },
       ),
     );

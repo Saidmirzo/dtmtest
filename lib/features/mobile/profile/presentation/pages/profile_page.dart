@@ -15,7 +15,6 @@ import 'package:dtmtest/features/mobile/tests/presentation/widget/inner_shadow_w
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -86,237 +85,247 @@ class _ProfilePageState extends State<ProfilePage> with DialogMixin {
             );
           } else if (state.getProfileDataStatus == BlocStatus.completed) {
             nameController.text = state.profileData?.fullName ?? 'Noname';
-          }
-          return SingleChildScrollView(
-            child: SafeArea(
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Assets.images.profileAppbarSvg.svg(
-                      fit: BoxFit.fitWidth,
-                      width: MediaQuery.of(context).size.width,
+            return SingleChildScrollView(
+              child: SafeArea(
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Assets.images.profileAppbarSvg.svg(
+                        fit: BoxFit.fitWidth,
+                        width: MediaQuery.of(context).size.width,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            isEditInfo
-                                ? IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isEditInfo = !isEditInfo;
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.cancel,
-                                      size: 30,
-                                    ),
-                                    color: ColorName.white,
-                                    alignment: Alignment.center,
-                                  )
-                                : 50.w,
-                            Text(
-                              LocaleKeys.profile.tr(),
-                              style: AppTextStyles.body24w7.copyWith(
-                                color: ColorName.white,
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                if (!state.updateImageStatus.isProgress) {
-                                  if ((nameController.text.trim() !=
-                                          state.profileData?.fullName?.trim() ||
-                                      bytes != null)) {
-                                    context.read<ProfileBloc>().add(
-                                          UpdateProfileDataEvent(
-                                            byte: bytes,
-                                            fileName: fileNamae,
-                                            model: state.profileData!.copyWith(
-                                              fullName: nameController.text,
-                                            ),
-                                          ),
-                                        );
-                                  }
-                                  bytes = null;
-                                  fileNamae = null;
-                                  setState(() {
-                                    isEditInfo = !isEditInfo;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.transparent,
-                                alignment: Alignment.center,
-                                child: state.updateProfileDataStatus.isProgress
-                                    ? UI.spinner()
-                                    : Text(
-                                        isEditInfo
-                                            ? LocaleKeys.save.tr()
-                                            : LocaleKeys.edit.tr(),
-                                        style: AppTextStyles.body16w7.copyWith(
-                                          color: ColorName.white,
-                                        ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              isEditInfo
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isEditInfo = !isEditInfo;
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.cancel,
+                                        size: 30,
                                       ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        32.h,
-                        Stack(
-                          fit: StackFit.loose,
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            CustomNetworkImage(
-                              width: 70,
-                              height: 70,
-                              localeImage: bytes,
-                              color: ColorName.white,
-                              border: Border.all(
-                                color: const Color.fromARGB(255, 212, 192, 192),
-                                width: 1,
-                              ),
-                              shape: BoxShape.circle,
-                              networkImage: state.profileData?.userImage,
-                              defImage: Assets.images.defimage.path,
-                            ),
-                            isEditInfo
-                                ? GestureDetector(
-                                    onTap: () async {
-                                      final ImagePicker picker = ImagePicker();
-                                      final XFile? image =
-                                          await picker.pickImage(
-                                        source: ImageSource.gallery,
-                                      );
-                                      bytes = await image?.readAsBytes();
-                                      fileNamae = image?.name;
-                                      setState(() {});
-                                    },
-                                    child: Container(
-                                      width: 30,
-                                      height: 30,
+                                      color: ColorName.white,
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorName.white,
-                                        border: Border.all(
-                                            color: ColorName.customColor,
-                                            width: 2),
-                                      ),
-                                      child: const Icon(
-                                        CupertinoIcons.plus,
-                                        color: ColorName.customColor,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                          ],
-                        ),
-                        20.h,
-                        UserInfoWidget(
-                          infoText: LocaleKeys.name.tr(),
-                          userInfo: nameController.text,
-                          isEditInfo: isEditInfo,
-                          controller: nameController,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              width: 200,
-                              child: Text(
-                                LocaleKeys.current_plan.tr(),
+                                    )
+                                  : 50.w,
+                              Text(
+                                LocaleKeys.profile.tr(),
                                 style: AppTextStyles.body24w7.copyWith(
                                   color: ColorName.white,
                                 ),
-                                textAlign: TextAlign.start,
                               ),
-                            ),
-                            Text(
-                              state.profileData?.plan ?? '',
-                              style: AppTextStyles.body20w4.copyWith(
-                                color: ColorName.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        50.h,
-                        // HelpAboutUsWIdget(
-                        //   nameSectionText: "Traffics",
-                        //   function: () {
-                        //     AutoRouter.of(context).push(
-                        //       const PlansRoute(),
-                        //     );
-                        //   },
-                        // ),
-                        // 15.h,
-                        HelpAboutUsWIdget(
-                          nameSectionText: LocaleKeys.about_us.tr(),
-                          function: () {
-                            AutoRouter.of(context).push(
-                              const AboutUsRoute(),
-                            );
-                          },
-                        ),
-                        15.h,
-                        HelpAboutUsWIdget(
-                          nameSectionText: LocaleKeys.help.tr(),
-                          function: () {
-                            openExternalApplication(telegramUrl);
-                          },
-                        ),
-                        70.h,
-                        BlocConsumer<AuthBloc, AuthState>(
-                          listenWhen: (previous, current) =>
-                              previous.logOutStatus != current.logOutStatus,
-                          listener: (context, state) {
-                            if (state.logOutStatus.isComplated) {
-                              context.replaceRoute(const SignInRoute());
-                            }
-                          },
-                          builder: (context, state) {
-                            return InkWell(
-                              onTap: () {
-                                showAccessDialog(
-                                  context,
-                                  onYes: () => context
-                                      .read<AuthBloc>()
-                                      .add(LogOutEvent()),
-                                );
-                              },
-                              child: InnerShadowWidget(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 25,
-                                  vertical: 5,
+                              InkWell(
+                                onTap: () {
+                                  if (!state.updateImageStatus.isProgress) {
+                                    if ((nameController.text.trim() !=
+                                            state.profileData?.fullName
+                                                ?.trim() ||
+                                        bytes != null)) {
+                                      context.read<ProfileBloc>().add(
+                                            UpdateProfileDataEvent(
+                                              byte: bytes,
+                                              fileName: fileNamae,
+                                              model:
+                                                  state.profileData!.copyWith(
+                                                fullName: nameController.text,
+                                              ),
+                                            ),
+                                          );
+                                    }
+                                    bytes = null;
+                                    fileNamae = null;
+                                    setState(() {
+                                      isEditInfo = !isEditInfo;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: Colors.transparent,
+                                  alignment: Alignment.center,
+                                  child: state
+                                          .updateProfileDataStatus.isProgress
+                                      ? UI.spinner()
+                                      : Text(
+                                          isEditInfo
+                                              ? LocaleKeys.save.tr()
+                                              : LocaleKeys.edit.tr(),
+                                          style:
+                                              AppTextStyles.body16w7.copyWith(
+                                            color: ColorName.white,
+                                          ),
+                                        ),
                                 ),
+                              ),
+                            ],
+                          ),
+                          32.h,
+                          Stack(
+                            fit: StackFit.loose,
+                            alignment: Alignment.bottomRight,
+                            children: [
+                              CustomNetworkImage(
+                                width: 70,
+                                height: 70,
+                                localeImage: bytes,
+                                color: ColorName.white,
+                                border: Border.all(
+                                  color:
+                                      const Color.fromARGB(255, 212, 192, 192),
+                                  width: 1,
+                                ),
+                                shape: BoxShape.circle,
+                                networkImage: state.profileData?.userImage,
+                                defImage: Assets.images.defimage.path,
+                              ),
+                              isEditInfo
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        final ImagePicker picker =
+                                            ImagePicker();
+                                        final XFile? image =
+                                            await picker.pickImage(
+                                          source: ImageSource.gallery,
+                                        );
+                                        bytes = await image?.readAsBytes();
+                                        fileNamae = image?.name;
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: ColorName.white,
+                                          border: Border.all(
+                                              color: ColorName.customColor,
+                                              width: 2),
+                                        ),
+                                        child: const Icon(
+                                          CupertinoIcons.plus,
+                                          color: ColorName.customColor,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ],
+                          ),
+                          20.h,
+                          UserInfoWidget(
+                            infoText: LocaleKeys.name.tr(),
+                            userInfo: nameController.text,
+                            isEditInfo: isEditInfo,
+                            controller: nameController,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                width: 200,
                                 child: Text(
-                                  LocaleKeys.quit.tr(),
-                                  style: AppTextStyles.body20w6.copyWith(
+                                  LocaleKeys.current_plan.tr(),
+                                  style: AppTextStyles.body24w7.copyWith(
                                     color: ColorName.white,
                                   ),
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ],
+                              Text(
+                                state.profileData?.plan ?? '',
+                                style: AppTextStyles.body20w4.copyWith(
+                                  color: ColorName.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          50.h,
+                          // HelpAboutUsWIdget(
+                          //   nameSectionText: "Traffics",
+                          //   function: () {
+                          //     AutoRouter.of(context).push(
+                          //       const PlansRoute(),
+                          //     );
+                          //   },
+                          // ),
+                          // 15.h,
+                          HelpAboutUsWIdget(
+                            nameSectionText: LocaleKeys.about_us.tr(),
+                            function: () {
+                              AutoRouter.of(context).push(
+                                const AboutUsRoute(),
+                              );
+                            },
+                          ),
+                          15.h,
+                          HelpAboutUsWIdget(
+                            nameSectionText: LocaleKeys.help.tr(),
+                            function: () {
+                              openExternalApplication(telegramUrl);
+                            },
+                          ),
+                          70.h,
+                          BlocConsumer<AuthBloc, AuthState>(
+                            listenWhen: (previous, current) =>
+                                previous.logOutStatus != current.logOutStatus,
+                            listener: (context, state) {
+                              if (state.logOutStatus.isComplated) {
+                                context.replaceRoute(const SignInRoute());
+                              }
+                            },
+                            builder: (context, state) {
+                              return InkWell(
+                                onTap: () {
+                                  showAccessDialog(
+                                    context,
+                                    onYes: () => context
+                                        .read<AuthBloc>()
+                                        .add(LogOutEvent()),
+                                  );
+                                },
+                                child: InnerShadowWidget(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 25,
+                                    vertical: 5,
+                                  ),
+                                  child: Text(
+                                    LocaleKeys.quit.tr(),
+                                    style: AppTextStyles.body20w6.copyWith(
+                                      color: ColorName.white,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            return const Center(
+              child: Text('Error, Please try again'),
+            );
+          }
         },
       ),
     );
