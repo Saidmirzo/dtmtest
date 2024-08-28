@@ -29,8 +29,25 @@ class HistoryPage extends StatelessWidget {
             return Center(child: UI.spinner());
           }
           if (listHistory.isEmpty) {
-            return const Center(
-              child: Text('History list is empty'),
+            return Container(
+              decoration: BoxDecoration(
+                gradient: AppGradient.backgroundGradient,
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('History of results is empty'),
+                    TextButton(
+                        onPressed: () {
+                          context.read<HistoryBloc>().add(GetAllHistoryEvent());
+                        },
+                        child: Text('Get history',
+                            style: AppTextStyles.body16w7
+                                .copyWith(color: ColorName.white))),
+                  ],
+                ),
+              ),
             );
           } else if (state.getAllHistoryStatus.isComplated) {
             return Container(
